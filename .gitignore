@@ -64,7 +64,18 @@
 ## Default Template Disabled Above ( #### )
 ## Custom Template Below
 
-## Mac.DS_Store._.DS_Store**/.DS_Store**/._.DS_Stor## Xcode and earlier*.xcscmblueprint*.xccheckout*.xcuserdata*.xcuserstate**/.xcuserdata### Xcode Patch ###*.xcodeproj/*e
+## Mac
 .DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Stor
 
+## Xcode and earlier
+*.xcscmblueprint
+*.xccheckout
+*.xcuserdata
 *.xcuserstate
+**/.xcuserdata
+
+### Xcode Patch ###
+*.xcodeproj/*e
