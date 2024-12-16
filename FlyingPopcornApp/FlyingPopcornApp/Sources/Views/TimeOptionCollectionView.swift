@@ -29,7 +29,7 @@ final class TimeOptionCollectionView: UICollectionView {
 }
 
 protocol TimeOptionCellDelegate: AnyObject {
-    func cellTapped(_ title: String)
+    func cellTapped(_ sender: UIButton)
 }
 
 final class TimeOptionCell: UICollectionViewCell {
@@ -71,9 +71,11 @@ final class TimeOptionCell: UICollectionViewCell {
         self.delegate = delegate
     }
     
-    @objc private func onTap() {
-        guard let title = timeOptionButton.title(for: .normal) else { return }
-        delegate?.cellTapped(title)
+    // 
+    @objc private func onTap(_ sender: UIButton) {
+        
+        delegate?.cellTapped(sender)
+        
     }
     
 }

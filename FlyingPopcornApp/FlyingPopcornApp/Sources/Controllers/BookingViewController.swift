@@ -10,6 +10,7 @@ import UIKit
 final class BookingViewController: UIViewController {
     
     private let collectionView: TimeOptionCollectionView = .init()
+    private var selectedButton: UIButton?
     let options = [
         "09:30 AM", "10:30 AM", "11:30 AM",
         "12:30 PM", "02:30 PM", "03:30 PM",
@@ -18,9 +19,11 @@ final class BookingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         collectionView.register(TimeOptionCell.self, forCellWithReuseIdentifier: TimeOptionCell.id)
         collectionView.dataSource = self
         collectionView.delegate = self
+        
         view.addSubview(collectionView)
         collectionView.frame = view.bounds
     }
@@ -28,8 +31,24 @@ final class BookingViewController: UIViewController {
 
 extension BookingViewController: TimeOptionCellDelegate {
     
-    func cellTapped(_ title: String) {
+    func cellTapped(_ sender: UIButton) {
+        guard let title = sender.titleLabel?.text else { return }
+        
         print("tapped: \(title)")
+        
+        if let previousButton = selectedButton {
+            UIView.animate(withDuration: 0.3) {
+                previousButton.backgroundColor = .available
+                previousButton.tintColor = .availableText
+            }
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            sender.backgroundColor = .selected
+            sender.tintColor = .selectedText
+        }
+        
+        selectedButton = sender
     }
     
 }
