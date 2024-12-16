@@ -18,6 +18,6 @@ final class MovieSearchViewController: UIViewController, UISearchResultsUpdating
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        <#code#>
+        
     }
 }
