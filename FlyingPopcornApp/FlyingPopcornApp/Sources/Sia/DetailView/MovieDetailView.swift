@@ -85,14 +85,6 @@ final class MovieDetailView: UIView {
         return view
     }()
     
-    private let genreLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = UIColor(named: "greyDark3")
-        label.text = "Action"
-        return label
-    }()
-    
     private let descriptionTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
@@ -131,12 +123,11 @@ final class MovieDetailView: UIView {
         contentView.addSubViews([imageView, roundView])
         roundView.addSubViews([titleLabel,
                                secondStackView,
-                               genreLabel,
+                               genreView,
                                scoreLabel,
                                descriptionTitleLabel,
                                descriptionLabel,
                                starView])
-
         
         secondStackView.addArrangedSubViews([runtimeLabel, releaseDatLabel])
         
@@ -183,17 +174,18 @@ final class MovieDetailView: UIView {
         }
         
         scoreLabel.snp.makeConstraints { make in
-            make.top.equalTo(secondStackView.snp.bottom).offset(8)
-            make.leading.equalTo(starView.snp.trailing).offset(8)
+            make.centerY.equalTo(starView.snp.centerY)
+            make.leading.equalTo(starView.snp.trailing).offset(16)
         }
         
-        genreLabel.snp.makeConstraints { make in
-            make.top.equalTo(scoreLabel.snp.bottom).offset(8)
+        genreView.snp.makeConstraints { make in
+            make.top.equalTo(scoreLabel.snp.bottom).offset(16)
             make.leading.trailing.equalTo(roundView).inset(16)
+            make.height.equalTo(30)
         }
         
         descriptionTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(genreLabel.snp.bottom).offset(16)
+            make.top.equalTo(genreView.snp.bottom).offset(16)
             make.leading.trailing.equalTo(roundView).inset(16)
         }
         
@@ -213,10 +205,47 @@ final class MovieDetailView: UIView {
         }
     }
     
+    private func setupGenreViews(genres: [String]) {
+        // Remove any existing genre views to avoid duplication
+        genreView.subviews.forEach { $0.removeFromSuperview() }
+        
+        var previousView: UIView? = nil
+        
+        for genre in genres {
+            let genreLabel = UILabel()
+            genreLabel.text = genre
+            genreLabel.font = UIFont.systemFont(ofSize: 12)
+            genreLabel.textColor = UIColor(named: "greyDark3")
+            genreLabel.textAlignment = .center
+            
+            // 장르 배경 뷰
+            let containerView = UIView()
+            containerView.layer.cornerRadius = 15
+            containerView.backgroundColor = UIColor(named: "redLight1")
+            containerView.clipsToBounds = true
+            containerView.addSubview(genreLabel)
+            
+            genreView.addSubview(containerView)
+            
+            genreLabel.snp.makeConstraints { make in
+                make.edges.equalToSuperview().inset(UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
+            }
+            
+            containerView.snp.makeConstraints { make in
+                if let previousView = previousView {
+                    make.leading.equalTo(previousView.snp.trailing).offset(8)
+                } else {
+                    make.leading.equalTo(genreView.snp.leading)
+                }
+                make.top.bottom.equalToSuperview()
+            }
+            
+            previousView = containerView
+        }
+    }
+    
     func configureView(with movie: SYMovie) {
         titleLabel.text = movie.title
-        
-        // Use voteAverage directly since it's a Float
         let rating = movie.voteAverage
         if rating > 0 {
             let normalizedRating = (rating / 10.0) * 5.0
@@ -225,15 +254,11 @@ final class MovieDetailView: UIView {
         } else {
             scoreLabel.text = "Invalid rating"
         }
-        
-        // Debug print (optional)
-        print("movie.voteAverage: \(movie.voteAverage)")
-        
-        // Set other properties
-        genreLabel.text = movie.genres.joined(separator: ", ") // Join genres if you want them listed
-        runtimeLabel.text = "Runtime: 120 mins"  // Update if you have runtime information
+        runtimeLabel.text = "Runtime: 120 mins"
         descriptionLabel.text = movie.overview
-        imageView.image = UIImage(named: "wall-e")  // Or load the image from movie.posterURL
+        imageView.image = UIImage(named: "wall-e")
+        
+        // Setup genres
+        setupGenreViews(genres: movie.genres) // 이미 genreView에 추가된 레이블 처리
     }
-
 }
