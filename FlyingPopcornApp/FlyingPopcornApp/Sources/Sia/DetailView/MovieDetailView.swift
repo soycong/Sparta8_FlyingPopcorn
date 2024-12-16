@@ -70,14 +70,7 @@ final class MovieDetailView: UIView {
         return label
     }()
     
-    private let starStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 4
-        stackView.alignment = .leading
-        stackView.distribution = .fillEqually
-        return stackView
-    }()
+    private let starView = RateView()
     
     private let scoreLabel: UILabel = {
         let label = UILabel()
@@ -113,7 +106,6 @@ final class MovieDetailView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor(named: "greyLight2")
-        label.text = "This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!This is a description label. The content here will be scrollable!"
         label.numberOfLines = 0
         return label
     }()
@@ -128,17 +120,14 @@ final class MovieDetailView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupUI()
     }
     
     private func setupUI() {
-        // Background Color
         backgroundColor = UIColor(named: "white")
         
         addSubViews([scrollView, bookingButton])
         scrollView.addSubview(contentView)
         
-        // Add Subviews
         contentView.addSubViews([imageView, roundView])
         roundView.addSubViews([titleLabel,
                                secondStackView,
@@ -146,16 +135,8 @@ final class MovieDetailView: UIView {
                                scoreLabel,
                                descriptionTitleLabel,
                                descriptionLabel,
-                               starStackView])
+                               starView])
 
-        // Star Ratings (5 stars)
-        for _ in 0..<5 {
-            let starImageView = UIImageView()
-            starImageView.contentMode = .scaleAspectFit
-            starImageView.image = UIImage(named: "icStarOn")
-            starImageViews.append(starImageView)
-            roundView.addSubview(starImageView)
-        }
         
         secondStackView.addArrangedSubViews([runtimeLabel, releaseDatLabel])
         
@@ -195,19 +176,19 @@ final class MovieDetailView: UIView {
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.leading.trailing.equalTo(roundView).inset(16)
         }
+
+        starView.snp.makeConstraints { make in
+            make.top.equalTo(secondStackView.snp.bottom).offset(8)
+            make.leading.equalTo(roundView).inset(16)
+        }
         
         scoreLabel.snp.makeConstraints { make in
             make.top.equalTo(secondStackView.snp.bottom).offset(8)
-            make.leading.equalTo(starStackView.snp.trailing).inset(16)
+            make.leading.equalTo(starView.snp.trailing).offset(8)
         }
         
         genreLabel.snp.makeConstraints { make in
             make.top.equalTo(scoreLabel.snp.bottom).offset(8)
-            make.leading.trailing.equalTo(roundView).inset(16)
-        }
-        
-        starStackView.snp.makeConstraints { make in
-            make.top.equalTo(genreLabel.snp.bottom).offset(8)
             make.leading.trailing.equalTo(roundView).inset(16)
         }
         
@@ -227,7 +208,7 @@ final class MovieDetailView: UIView {
             starImageView.snp.makeConstraints { make in
                 make.top.equalTo(secondStackView.snp.bottom).offset(8)
                 make.leading.equalTo(roundView).offset(CGFloat(index) * 30)
-                make.width.height.equalTo(20)
+                make.width.height.equalTo(24) // 높이와 너비를 24로 설정
             }
         }
     }
@@ -235,28 +216,24 @@ final class MovieDetailView: UIView {
     func configureView(with movie: SYMovie) {
         titleLabel.text = movie.title
         
-        if let rating = Double(movie.vote) {
-            let fullStars = Int(rating / 2)
-            let halfStars = (rating.truncatingRemainder(dividingBy: 2) > 0) ? 1 : 0
-            
-            // Create a string with star representation
-            var starString = ""
-            for _ in 0..<fullStars {
-                starString += "★"
-            }
-            if halfStars == 1 {
-                starString += "☆"
-            }
-            
-            // Update your score label with the star string
-            scoreLabel.text = "\(starString) \(rating)"
+        // Use voteAverage directly since it's a Float
+        let rating = movie.voteAverage
+        if rating > 0 {
+            let normalizedRating = (rating / 10.0) * 5.0
+            starView.currentStar = normalizedRating
+            scoreLabel.text = "\(String(format: "%.1f", normalizedRating)) / 5"
         } else {
             scoreLabel.text = "Invalid rating"
         }
         
-        genreLabel.text = "comedy"
-        runtimeLabel.text = "Runtime: mins"
-        descriptionLabel.text = "줄거리줄거리"
-        imageView.image = UIImage(named: "wall-e")
+        // Debug print (optional)
+        print("movie.voteAverage: \(movie.voteAverage)")
+        
+        // Set other properties
+        genreLabel.text = movie.genres.joined(separator: ", ") // Join genres if you want them listed
+        runtimeLabel.text = "Runtime: 120 mins"  // Update if you have runtime information
+        descriptionLabel.text = movie.overview
+        imageView.image = UIImage(named: "wall-e")  // Or load the image from movie.posterURL
     }
+
 }

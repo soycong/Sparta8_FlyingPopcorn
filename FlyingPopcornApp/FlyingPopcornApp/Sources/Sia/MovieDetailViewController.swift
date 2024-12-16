@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 
 final class MovieDetailViewController: UIViewController {
     private let movieDetailView = MovieDetailView()
@@ -18,6 +17,20 @@ final class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bookingButton()
+        
+        let movie = SYMovie(
+            adult: false,
+            id: 123,
+            genreIDS: [28, 35],
+            genres: ["Action", "Comedy"],
+            title: "Movie Title",
+            overview: "This is a movie overview.",
+            posterURL: "https://example.com/poster.jpg",
+            vote: "8.2 (200)",
+            voteAverage: 6.3,
+            releaseDate: "2023-12-16"
+        )
+        movieDetailView.configureView(with: movie)
     }
 }
 
