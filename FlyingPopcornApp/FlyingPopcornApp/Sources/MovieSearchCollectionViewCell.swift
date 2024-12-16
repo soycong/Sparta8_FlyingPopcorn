@@ -8,23 +8,33 @@ import UIKit
 
 final class MovieSearchCollectionViewCell: UICollectionViewCell {
     private let movieImageView = UIImageView().then {
-        $0.image = UIImage(named: "MoviePoster1")
-        $0.contentMode = .scaleAspectFit
+        $0.image = UIImage(named: "MoviePoster2")
+        $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 16
-        //$0.layer.borderWidth = 10
-        //$0.layer.borderColor = UIColor.white.cgColor
     }
     
     private let movieTitleLabel = UILabel().then {
         $0.text = "영화 제목입니다!!"
-        $0.font = .systemFont(ofSize: 15)
+        $0.font = .systemFont(ofSize: 10)
+        $0.textAlignment = .left
     }
     
     private let movieGenreLabel = UILabel().then {
         $0.text = "영화 장르입니다!!"
-        $0.font = .systemFont(ofSize: 12)
+        $0.font = .systemFont(ofSize: 8)
+        $0.textAlignment = .left
     }
+    
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [movieImageView, movieTitleLabel, movieGenreLabel]).then {
+            $0.axis = .vertical
+            $0.spacing = 5
+            $0.alignment = .center
+            $0.distribution = .fill
+        }
+        return stackView
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,32 +50,33 @@ final class MovieSearchCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        self.addSubview(movieImageView)
-        self.addSubview(movieTitleLabel)
-        self.addSubview(movieGenreLabel)
+        self.addSubview(stackView)
     }
     
     private func configureConstraints() {
+        
+        stackView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).inset(5)
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).inset(10)
+            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).inset(5)
+            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).inset(5)
+        }
+        
         movieImageView.snp.makeConstraints { make in
-            make.top.equalTo(self).offset(5)
-            make.leading.equalTo(self).offset(5)
-            make.trailing.equalTo(self).offset(-5)
-            make.bottom.equalTo(self).offset(-5) // 하단에 5의 여백 추가
-//            make.top.leading.trailing.equalTo(self)
-//            make.width.equalTo(itemWidth)
-//            make.height.equalTo(self.snp.width).multipliedBy(1.5) // 세로 길이를 가로 길이에 1.5배 비율로 설정
+            make.height.equalTo(130)
         }
         
         movieTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(movieImageView.snp.bottom).offset(5)
-            make.leading.equalTo(self).offset(5)
-            make.trailing.equalTo(self).offset(-5)
+            make.height.equalTo(12)
+            make.leading.equalTo(self.stackView.snp.leading)
+            make.trailing.equalTo(self.stackView.snp.trailing)
         }
         
-        movieTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(movieTitleLabel.snp.bottom).offset(5)
-            make.leading.equalTo(self).offset(5)
-            make.trailing.equalTo(self).offset(-5)
+        movieGenreLabel.snp.makeConstraints { make in
+            make.height.equalTo(10)
+            make.leading.equalTo(self.stackView.snp.leading)
+            make.trailing.equalTo(self.stackView.snp.trailing)
         }
     }
 }
