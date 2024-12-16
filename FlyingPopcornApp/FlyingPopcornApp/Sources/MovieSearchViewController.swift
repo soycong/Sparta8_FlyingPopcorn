@@ -12,6 +12,8 @@ final class MovieSearchViewController: UIViewController, UISearchResultsUpdating
     
     override func viewDidLoad() {
         view = movieSearchView
+        
+        configureUI()
     }
     
     private func configureUI() {
