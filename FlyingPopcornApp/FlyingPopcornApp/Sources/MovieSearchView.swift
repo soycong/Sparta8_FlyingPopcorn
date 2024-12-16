@@ -18,7 +18,7 @@ final class MovieSearchView: UIView, UICollectionViewDataSource, UICollectionVie
         }
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-            $0.backgroundColor = .white
+            $0.backgroundColor = .lightGray
             $0.dataSource = self
             $0.delegate = self
         }
@@ -28,7 +28,7 @@ final class MovieSearchView: UIView, UICollectionViewDataSource, UICollectionVie
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = .lightGray
         
         configureCollectionView()
         configureConstraints()
