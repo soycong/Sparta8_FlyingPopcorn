@@ -11,7 +11,8 @@ final class BookingViewController: UIViewController {
     
     private let collectionView: TimeOptionCollectionView = .init()
     private var selectedButton: UIButton?
-    let options = [
+    let formatOptions = ["2D", "3D", "IMAX"]
+    let timeOptions = [
         "09:30 AM", "10:30 AM", "11:30 AM",
         "12:30 PM", "02:30 PM", "03:30 PM",
         "04:30 PM", "05:30 PM", "06:30 PM",
@@ -57,7 +58,7 @@ extension BookingViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return options.count
+        return timeOptions.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -65,7 +66,7 @@ extension BookingViewController: UICollectionViewDataSource, UICollectionViewDel
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeOptionCell.id,
                                                       for: indexPath) as! TimeOptionCell
         
-        cell.setButton(to: options[indexPath.item], delegate: self)
+        cell.setButton(to: timeOptions[indexPath.item], delegate: self)
         
         return cell
     }
