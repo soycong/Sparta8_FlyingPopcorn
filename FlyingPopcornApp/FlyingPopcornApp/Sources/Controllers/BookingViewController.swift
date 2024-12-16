@@ -26,16 +26,23 @@ final class BookingViewController: UIViewController {
     }
 }
 
-extension BookingViewController: UICollectionViewDataSource, UICollectionViewDelegate, TimeOptionCellDelegate {
+extension BookingViewController: TimeOptionCellDelegate {
+    
     func cellTapped(_ title: String) {
         print("tapped: \(title)")
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+}
+
+extension BookingViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         return options.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeOptionCell.id,
                                                       for: indexPath) as! TimeOptionCell
         
@@ -44,6 +51,19 @@ extension BookingViewController: UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
     
-    
 }
 
+extension BookingViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let numberOfCellsInRow: CGFloat = 3
+        let spacing: CGFloat = 10
+        let totalSpacing = spacing * (numberOfCellsInRow - 1)
+        
+        let availableWidth = collectionView.bounds.width - totalSpacing
+        let cellWidth = availableWidth / numberOfCellsInRow
+        
+        return CGSize(width: cellWidth, height: 50)
+    }
+}
