@@ -39,7 +39,8 @@ final class TimeOptionCell: UICollectionViewCell {
     
     private let timeOptionButton = UIButton(type: .system).then {
         $0.layer.cornerRadius = 16
-        $0.backgroundColor = .redLight1
+        $0.backgroundColor = .available
+        $0.tintColor = .availableText
     }
     
     override init(frame: CGRect) {
@@ -74,4 +75,17 @@ final class TimeOptionCell: UICollectionViewCell {
         guard let title = timeOptionButton.title(for: .normal) else { return }
         delegate?.cellTapped(title)
     }
+    
+}
+
+
+
+extension UIColor {
+    static let available = UIColor(named: "redLight1")!
+    static let unavailable = UIColor(named: "greyLight3")!
+    static let selected = UIColor(named: "red")!
+
+    static let availableText = UIColor(named: "greyLight3")!
+    static let unavailableText = UIColor(named: "greyLight1")!
+    static let selectedText = UIColor(named: "white")!
 }
