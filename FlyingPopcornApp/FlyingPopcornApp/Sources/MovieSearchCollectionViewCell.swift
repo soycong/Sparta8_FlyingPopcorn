@@ -11,18 +11,18 @@ final class MovieSearchCollectionViewCell: UICollectionViewCell {
         $0.image = UIImage(named: "MoviePoster2")
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
-        $0.layer.cornerRadius = 16
+        $0.layer.cornerRadius = 10
     }
     
     private let movieTitleLabel = UILabel().then {
-        $0.text = "영화 제목입니다!!"
-        $0.font = .systemFont(ofSize: 10)
+        $0.text = "MovieTitle"
+        $0.font = .systemFont(ofSize: 12)
         $0.textAlignment = .left
     }
     
     private let movieGenreLabel = UILabel().then {
-        $0.text = "영화 장르입니다!!"
-        $0.font = .systemFont(ofSize: 8)
+        $0.text = "MovieGenre"
+        $0.font = .systemFont(ofSize: 10)
         $0.textAlignment = .left
     }
     
@@ -68,7 +68,7 @@ final class MovieSearchCollectionViewCell: UICollectionViewCell {
         }
         
         movieTitleLabel.snp.makeConstraints { make in
-            make.height.equalTo(12)
+            make.height.equalTo(14)
             make.leading.equalTo(self.stackView.snp.leading)
             make.trailing.equalTo(self.stackView.snp.trailing)
         }
