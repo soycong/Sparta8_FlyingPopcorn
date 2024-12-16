@@ -8,6 +8,11 @@ import UIKit
 
 final class MovieSearchViewController: UIViewController, UISearchResultsUpdating {
     private let searchController = UISearchController(searchResultsController: nil)
+    private let movieSearchView = MovieSearchView()
+    
+    override func viewDidLoad() {
+        view = movieSearchView
+    }
     
     private func configureUI() {
         searchController.searchResultsUpdater = self
