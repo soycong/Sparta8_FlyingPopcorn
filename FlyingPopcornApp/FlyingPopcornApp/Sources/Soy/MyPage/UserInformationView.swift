@@ -39,26 +39,20 @@ final class UserInformationView: UIView {
         $0.layer.cornerRadius = 8
     }
     
-    private lazy var verticalStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [userNicknameLabel, userEmailLabel]).then {
-            $0.axis = .vertical
-            $0.spacing = 5
-            $0.alignment = .center
-            $0.distribution = .fill
-        }
-        return stackView
-    }()
+    private lazy var verticalStackView = UIStackView(arrangedSubviews: [userNicknameLabel, userEmailLabel]).then {
+        $0.axis = .vertical
+        $0.spacing = 5
+        $0.alignment = .center
+        $0.distribution = .fill
+    }
     
-    private lazy var horizontalStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [profileImageView, verticalStackView, editButton]).then {
-            $0.axis = .horizontal
-            $0.spacing = 5
-            $0.alignment = .center
-            $0.distribution = .fill
-            $0.backgroundColor = .white
-        }
-        return stackView
-    }()
+    private lazy var horizontalStackView = UIStackView(arrangedSubviews: [profileImageView, verticalStackView, editButton]).then {
+        $0.axis = .horizontal
+        $0.spacing = 5
+        $0.alignment = .center
+        $0.distribution = .fill
+        $0.backgroundColor = .white
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()

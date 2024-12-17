@@ -44,26 +44,21 @@ final class MyPageTableViewCell: UITableViewCell {
         $0.textAlignment = .left
     }
     
-    private lazy var verticalStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [movieTitleLabel, movieGenreLabel, movieRunTimeLabel, movieScheduleLabel]).then {
-            $0.axis = .vertical
-            $0.spacing = 10
-            $0.alignment = .center
-            $0.distribution = .fill
-        }
-        return stackView
-    }()
+    private lazy var verticalStackView = UIStackView(arrangedSubviews: [movieTitleLabel, movieGenreLabel, movieRunTimeLabel, movieScheduleLabel]).then {
+        $0.axis = .vertical
+        $0.spacing = 10
+        $0.alignment = .center
+        $0.distribution = .fill
+    }
     
-    private lazy var horizontalStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [movieImageView, verticalStackView]).then {
-            $0.axis = .horizontal
-            $0.spacing = 5
-            $0.alignment = .center
-            $0.distribution = .fill
-            $0.backgroundColor = .white
-        }
-        return stackView
-    }()
+    private lazy var horizontalStackView = UIStackView(arrangedSubviews: [movieImageView, verticalStackView]).then {
+        $0.axis = .horizontal
+        $0.spacing = 5
+        $0.alignment = .center
+        $0.distribution = .fill
+        $0.backgroundColor = .white
+    }
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .white
