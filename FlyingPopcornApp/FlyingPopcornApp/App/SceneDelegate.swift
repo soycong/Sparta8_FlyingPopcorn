@@ -19,7 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let mainViewController = MainViewController()
         //let navigationController = UINavigationController(rootViewController: mainViewController)
-        let navigationController = MovieSearchViewController()
+        let navigationController = UINavigationController(rootViewController: MovieSearchViewController())
+        
         
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
