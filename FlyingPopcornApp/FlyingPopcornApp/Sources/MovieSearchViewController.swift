@@ -37,9 +37,9 @@ final class MovieSearchViewController: UIViewController {
     
     private func configureData() {
         movies = [
-            DummyMovieData(title: "Inception", genre: "Sci-Fi", posterImageName: "MoviePoster1"),
-            DummyMovieData(title: "The Dark Knight", genre: "Action", posterImageName: "MoviePoster2"),
-            DummyMovieData(title: "Interstellar", genre: "Sci-Fi", posterImageName: "MoviePoster3"),
+            DummyMovieData(title: "Coco", genre: "Animation", posterImageName: "MoviePoster1"),
+            DummyMovieData(title: "Joker", genre: "Thriller", posterImageName: "MoviePoster2"),
+            DummyMovieData(title: "The Avengers", genre: "Action", posterImageName: "MoviePoster3"),
         ]
         searchedMovies = movies // 초기 상태에선 전체 데이터 표시
     }
