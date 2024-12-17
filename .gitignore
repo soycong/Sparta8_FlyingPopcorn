@@ -80,3 +80,5 @@
 
 ### Xcode Patch ###
 *.xcodeproj/*e
+
+FlyingPopcornApp/FlyingPopcornApp/Resources/Secrets.xcconfig
