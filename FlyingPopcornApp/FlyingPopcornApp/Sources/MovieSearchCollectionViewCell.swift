@@ -16,13 +16,15 @@ final class MovieSearchCollectionViewCell: UICollectionViewCell {
     
     private let movieTitleLabel = UILabel().then {
         $0.text = "MovieTitle"
-        $0.font = .systemFont(ofSize: 12)
+        $0.font = .boldSystemFont(ofSize: 14)
+        $0.textColor = UIColor(named: "grayDark3")
         $0.textAlignment = .left
     }
     
     private let movieGenreLabel = UILabel().then {
         $0.text = "MovieGenre"
         $0.font = .systemFont(ofSize: 10)
+        $0.textColor = UIColor(named: "grayLight3")
         $0.textAlignment = .left
     }
     
