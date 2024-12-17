@@ -7,7 +7,7 @@
 import UIKit
 
 final class MovieSearchViewController: UIViewController {
-    private let movieSearchView = MovieSearchView()
+    private let movieSearchView = MovieSearchCollectionView()
     private let searchController = UISearchController()
     
     private var movies: [DummyMovieData] = [] // 전체 데이터

@@ -13,7 +13,7 @@ protocol MovieSearchViewDelegate: AnyObject {
     func movie(at index: Int) -> DummyMovieData
 }
 
-final class MovieSearchView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
+final class MovieSearchCollectionView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
     weak var delegate: MovieSearchViewDelegate?
 
     private lazy var collectionView: UICollectionView = {
