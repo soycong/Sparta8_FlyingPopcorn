@@ -54,8 +54,7 @@ extension MovieSearchViewController: UISearchResultsUpdating {
         }
         
         searchedMovies = movies.filter { movie in
-            movie.title.lowercased().contains(searchText.lowercased()) ||
-            movie.genre.lowercased().contains(searchText.lowercased())
+            movie.title.lowercased().contains(searchText.lowercased())
         }
         
         movieSearchView.reloadCollectionView()
