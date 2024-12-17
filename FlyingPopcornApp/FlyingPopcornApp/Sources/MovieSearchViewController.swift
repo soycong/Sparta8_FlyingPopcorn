@@ -10,6 +10,9 @@ final class MovieSearchViewController: UIViewController {
     private let movieSearchView = MovieSearchView()
     private let searchController = UISearchController()
     
+    private var movies: [DummyMovieData] = [] // 전체 데이터
+    private var searchedMovies: [DummyMovieData] = [] // 검색 결과 데이터
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,6 +31,15 @@ final class MovieSearchViewController: UIViewController {
         searchController.searchBar.placeholder = "Search Movies"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+    }
+    
+    private func configureData() {
+        movies = [
+            DummyMovieData(title: "Inception", genre: "Sci-Fi", posterImageName: "MoviePoster1"),
+            DummyMovieData(title: "The Dark Knight", genre: "Action", posterImageName: "MoviePoster2"),
+            DummyMovieData(title: "Interstellar", genre: "Sci-Fi", posterImageName: "MoviePoster3"),
+        ]
+        searchedMovies = movies // 초기 상태에선 전체 데이터 표시
     }
 }
 
