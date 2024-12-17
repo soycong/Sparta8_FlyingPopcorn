@@ -49,6 +49,7 @@ extension MovieSearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text, !searchText.isEmpty else {
             searchedMovies = movies // 검색어가 없으면 전체 데이터 표시
+            movieSearchView.reloadCollectionView()
             return
         }
         
