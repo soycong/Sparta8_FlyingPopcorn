@@ -4,6 +4,7 @@
 //
 //  Created by seohuibaek on 12/17/24.
 //
+
 import UIKit
 
 final class MyPageTableViewCell: UITableViewCell {
