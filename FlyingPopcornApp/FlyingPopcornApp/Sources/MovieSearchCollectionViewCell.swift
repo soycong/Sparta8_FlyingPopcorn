@@ -80,3 +80,11 @@ final class MovieSearchCollectionViewCell: UICollectionViewCell {
         }
     }
 }
+
+extension MovieSearchCollectionViewCell {
+    func configureData(with movie: DummyMovieData) {
+        movieImageView.image = UIImage(named: movie.posterImageName)
+        movieTitleLabel.text = movie.title
+        movieGenreLabel.text = movie.genre
+    }
+}
