@@ -8,7 +8,14 @@ import UIKit
 import SnapKit
 import Then
 
+protocol MovieSearchViewDelegate: AnyObject {
+    func numberOfItems() -> Int
+    func movie(at index: Int) -> DummyMovieData
+}
+
 final class MovieSearchView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
+    weak var delegate: MovieSearchViewDelegate?
+
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout().then {
             let itemWidth = (UIScreen.main.bounds.width - 52) / 3 // 각 셀의 너비 계산 (leading + trailing 여백 제외)
@@ -56,14 +63,23 @@ final class MovieSearchView: UIView, UICollectionViewDataSource, UICollectionVie
         }
     }
     
+    func reloadCollectionView() {
+        collectionView.reloadData()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return delegate?.numberOfItems() ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieSearchCollectionViewCell", for: indexPath) as? MovieSearchCollectionViewCell else {
             fatalError("Unable to dequeue MovieSearchCollectionViewCell")
         }
+        
+        if let movie = delegate?.movie(at: indexPath.row) {
+            cell.configureData(with: movie)
+        }
+        
         return cell
     }
 }
