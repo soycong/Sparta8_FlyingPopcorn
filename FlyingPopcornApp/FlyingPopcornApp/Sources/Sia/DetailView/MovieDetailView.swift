@@ -237,6 +237,7 @@ final class MovieDetailView: UIView {
     }
     
     func configureView(with movie: SYMovie) {
+        
         titleLabel.text = movie.title
         let rating = movie.voteAverage
         if rating > 0 {
@@ -246,11 +247,14 @@ final class MovieDetailView: UIView {
         } else {
             scoreLabel.text = "Invalid rating"
         }
-        runtimeLabel.text = "Runtime: 120 mins"
+        runtimeLabel.text = "Runtime: \(movie.runtime) min"
         releaseDateLabel.text = movie.releaseDate
         descriptionLabel.text = movie.overview
-        posterImage.image = UIImage(named: "wall-e")
         
+        // 포스터 이미지 로드
+        if let url = URL(string: movie.posterURL) {
+            posterImage.loadImage(from: url)
+        }
         setupGenreViews(genres: movie.genres)
     }
 }
