@@ -10,7 +10,10 @@ import SnapKit
 import Then
 
 final class MovieDetailView: UIView {
-    let scrollView = UIScrollView()
+    let scrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
+    }
+    
     let contentView = UIView()
     
     let bookingButton = UIButton().then {
@@ -122,7 +125,8 @@ final class MovieDetailView: UIView {
         secondStackView.addArrangedSubViews([runtimeStackView, releaseStackView])
         
         scrollView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(bookingButton.snp.top)
         }
         
@@ -137,15 +141,15 @@ final class MovieDetailView: UIView {
         }
         
         posterImage.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top)
+            make.top.equalToSuperview()
             make.leading.trailing.equalTo(contentView)
-            //make.height.equalTo(200)
+            make.height.equalTo(250)
         }
         
         roundView.snp.makeConstraints { make in
             make.top.equalTo(posterImage.snp.bottom).offset(-16)
             make.leading.trailing.equalTo(contentView)
-            make.bottom.equalTo(contentView.snp.bottom)
+            make.bottom.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -189,7 +193,7 @@ final class MovieDetailView: UIView {
             starImageView.snp.makeConstraints { make in
                 make.top.equalTo(secondStackView.snp.bottom).offset(8)
                 make.leading.equalTo(roundView).offset(CGFloat(index) * 30)
-                make.width.height.equalTo(24) // 높이와 너비를 24로 설정
+                make.width.height.equalTo(24)
             }
         }
     }
