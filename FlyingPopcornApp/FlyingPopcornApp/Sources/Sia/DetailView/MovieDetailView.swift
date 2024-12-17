@@ -7,103 +7,93 @@
 
 import UIKit
 import SnapKit
+import Then
 
 final class MovieDetailView: UIView {
     let scrollView = UIScrollView()
     let contentView = UIView()
     
-    let bookingButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("예매하기", for: .normal)
-        button.backgroundColor = UIColor(named: "red")
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 24
-        return button
-    }()
+    let bookingButton = UIButton().then {
+        $0.setTitle("예매하기", for: .normal)
+        $0.backgroundColor = UIColor(named: "red")
+        $0.setTitleColor(.white, for: .normal)
+        $0.layer.cornerRadius = 24
+    }
     
-    private let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.image = UIImage(named: "wall-e")
-        return imageView
-    }()
+    private let posterImage = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+    }
     
-    private let roundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "white")
-        view.layer.cornerRadius = 20
-        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        view.clipsToBounds = true
-        return view
-    }()
+    private let roundView = UIView().then {
+        $0.backgroundColor = UIColor(named: "white")
+        $0.layer.cornerRadius = 20
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        $0.clipsToBounds = true
+    }
     
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.text = "WALL-E"
-        label.textColor = UIColor(named: "greyDark3")
-        return label
-    }()
+    private let titleLabel = UILabel().then { $0.font = UIFont.systemFont(ofSize: 20)
+        $0.textColor = UIColor(named: "greyDark3")
+    }
     
-    private let secondStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 10
-        stackView.alignment = .leading
-        stackView.distribution = .fillEqually
-        return stackView
-    }()
+    private let secondStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.spacing = 10
+        $0.alignment = .leading
+        $0.distribution = .fillProportionally
+    }
     
-    private let runtimeLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = UIColor(named: "greyLight2")
-        label.text = "Runtime: 120 mins"
-        return label
-    }()
+    private let runtimeStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.spacing = 5
+        $0.alignment = .leading
+        $0.distribution = .fillProportionally
+    }
     
-    private let releaseDatLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = UIColor(named: "greyLight2")
-        label.text = "Jan 12, 2022"
-        return label
-    }()
+    private let runtimeImg = UIImageView().then { $0.image = UIImage(named: "icTime")
+        $0.contentMode = .scaleAspectFit
+    }
+    
+    private let runtimeLabel = UILabel().then { $0.font = UIFont.systemFont(ofSize: 12)
+        $0.textColor = UIColor(named: "greyLight2")
+    }
+    
+    private let releaseStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.spacing = 5
+        $0.alignment = .leading
+        $0.distribution = .fillProportionally
+    }
+    
+    private let releaseImg = UIImageView().then { $0.image = UIImage(named: "icRelease")
+        $0.contentMode = .scaleAspectFit
+    }
+    
+    private let releaseDateLabel = UILabel().then { $0.font = UIFont.systemFont(ofSize: 12)
+        $0.textColor = UIColor(named: "greyLight2")
+    }
     
     private let starView = RateView()
     
-    private let scoreLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor(named: "greyLight2")
-        label.text = "Score: 8.5"
-        return label
-    }()
+    private let scoreLabel = UILabel().then { $0.font = UIFont.systemFont(ofSize: 16)
+        $0.textColor = UIColor(named: "greyLight2")
+    }
     
-    private let genreView: UIView = {
-        let view = UIView()
-        return view
-    }()
+    private let genreView = UIView()
     
-    private let descriptionTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor(named: "greyDark3")
-        label.text = "Plot Summary"
-        label.numberOfLines = 0
-        return label
-    }()
+    private let descriptionTitleLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 16)
+        $0.textColor = UIColor(named: "greyDark3")
+        $0.text = "Plot Summary"
+        $0.numberOfLines = 1
+    }
     
-    private let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = UIColor(named: "greyLight2")
-        label.numberOfLines = 0
-        return label
-    }()
+    private let descriptionLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.textColor = UIColor(named: "greyLight2")
+        $0.numberOfLines = 0
+    }
     
     private var starImageViews: [UIImageView] = []
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -120,7 +110,7 @@ final class MovieDetailView: UIView {
         addSubViews([scrollView, bookingButton])
         scrollView.addSubview(contentView)
         
-        contentView.addSubViews([imageView, roundView])
+        contentView.addSubViews([posterImage, roundView])
         roundView.addSubViews([titleLabel,
                                secondStackView,
                                genreView,
@@ -129,7 +119,7 @@ final class MovieDetailView: UIView {
                                descriptionLabel,
                                starView])
         
-        secondStackView.addArrangedSubViews([runtimeLabel, releaseDatLabel])
+        secondStackView.addArrangedSubViews([runtimeStackView, releaseStackView])
         
         scrollView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -146,14 +136,14 @@ final class MovieDetailView: UIView {
             make.width.equalTo(scrollView)
         }
         
-        imageView.snp.makeConstraints { make in
+        posterImage.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top)
             make.leading.trailing.equalTo(contentView)
-            make.height.equalTo(200)
+            //make.height.equalTo(200)
         }
         
         roundView.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(-16)
+            make.top.equalTo(posterImage.snp.bottom).offset(-16)
             make.leading.trailing.equalTo(contentView)
             make.bottom.equalTo(contentView.snp.bottom)
         }
@@ -195,7 +185,6 @@ final class MovieDetailView: UIView {
             make.bottom.equalTo(roundView.snp.bottom).offset(-16)
         }
         
-        // Layout star image views
         for (index, starImageView) in starImageViews.enumerated() {
             starImageView.snp.makeConstraints { make in
                 make.top.equalTo(secondStackView.snp.bottom).offset(8)
@@ -206,25 +195,24 @@ final class MovieDetailView: UIView {
     }
     
     private func setupGenreViews(genres: [String]) {
-        // Remove any existing genre views to avoid duplication
         genreView.subviews.forEach { $0.removeFromSuperview() }
         
         var previousView: UIView? = nil
         
         for genre in genres {
-            let genreLabel = UILabel()
-            genreLabel.text = genre
-            genreLabel.font = UIFont.systemFont(ofSize: 12)
-            genreLabel.textColor = UIColor(named: "greyDark3")
-            genreLabel.textAlignment = .center
+            let genreLabel = UILabel().then { $0.text = genre
+                $0.font = UIFont.systemFont(ofSize: 12)
+                $0.textColor = UIColor(named: "greyDark3")
+                $0.textAlignment = .center
+            }
             
             // 장르 배경 뷰
-            let containerView = UIView()
-            containerView.layer.cornerRadius = 15
-            containerView.backgroundColor = UIColor(named: "redLight1")
-            containerView.clipsToBounds = true
-            containerView.addSubview(genreLabel)
+            let containerView = UIView().then { $0.layer.cornerRadius = 15
+                $0.backgroundColor = UIColor(named: "redLight1")
+                $0.clipsToBounds = true
+            }
             
+            containerView.addSubview(genreLabel)
             genreView.addSubview(containerView)
             
             genreLabel.snp.makeConstraints { make in
@@ -255,10 +243,10 @@ final class MovieDetailView: UIView {
             scoreLabel.text = "Invalid rating"
         }
         runtimeLabel.text = "Runtime: 120 mins"
+        releaseDateLabel.text = movie.releaseDate
         descriptionLabel.text = movie.overview
-        imageView.image = UIImage(named: "wall-e")
+        posterImage.image = UIImage(named: "wall-e")
         
-        // Setup genres
-        setupGenreViews(genres: movie.genres) // 이미 genreView에 추가된 레이블 처리
+        setupGenreViews(genres: movie.genres)
     }
 }

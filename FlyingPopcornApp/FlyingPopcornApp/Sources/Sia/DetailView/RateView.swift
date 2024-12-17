@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Then
 
 final class RateView: UIView {
     var maxStars: Int = 5 // Maximum number of stars
@@ -18,15 +19,12 @@ final class RateView: UIView {
     
     private var starImages: [UIImageView] = []
     
-    lazy var stackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.spacing = 8
-        view.alignment = .leading
-        view.distribution = .fillEqually
-        view.backgroundColor = .clear
-        return view
-    }()
+    lazy var stackView = UIStackView().then { $0.axis = .horizontal
+        $0.spacing = 8
+        $0.alignment = .leading
+        $0.distribution = .fillEqually
+        $0.backgroundColor = .clear
+    }
     
     lazy var starFillImage: UIImage? = {
         return UIImage(named: "icStarOn") // Filled star image
@@ -42,17 +40,13 @@ final class RateView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        addSubviews()
+        setupLayout()
+        bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configure() {
-        addSubviews()
-        setupLayout()
-        bind()
     }
     
     private func addSubviews() {
@@ -70,15 +64,13 @@ final class RateView: UIView {
         let fullStars = Int(currentStar)
         let hasHalfStar = (currentStar - Double(fullStars)) >= 0.5
         
-        // Ensure the starImages array has the required number of star image views
         while starImages.count < maxStars {
             let imageView = UIImageView()
-            imageView.contentMode = .scaleAspectFill
+            imageView.contentMode = .scaleAspectFit
             starImages.append(imageView)
             stackView.addArrangedSubview(imageView)
         }
         
-        // Update each star image based on the current rating
         for i in 0..<maxStars {
             if i < fullStars {
                 starImages[i].image = starFillImage // Full star (yellow)
@@ -91,10 +83,10 @@ final class RateView: UIView {
     }
 
     override var intrinsicContentSize: CGSize {
-        let buttonSize: CGFloat = 24 // Width and height of each star
+        let starSize: CGFloat = 24
         let spacing: CGFloat = 8 // Space between the stars
-        let width = CGFloat(maxStars) * buttonSize + CGFloat(maxStars - 1) * spacing
-        let height: CGFloat = buttonSize // Height of one star
+        let width = CGFloat(maxStars) * starSize + CGFloat(maxStars - 1) * spacing
+        let height: CGFloat = starSize // Height of one star
         
         return CGSize(width: width, height: height)
     }
