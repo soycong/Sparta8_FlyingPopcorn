@@ -45,14 +45,14 @@ final class FormatOptionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        contentView.backgroundColor = .clear
+        contentView.addSubview(formatOptionButton)
+        
         setConstraints()
         
         formatOptionButton.addTarget(self,
                                      action: #selector(onTap),
                                      for: .touchUpInside)
-        
-        contentView.backgroundColor = .clear
-        contentView.addSubview(formatOptionButton)
     }
     
     required init?(coder: NSCoder) {

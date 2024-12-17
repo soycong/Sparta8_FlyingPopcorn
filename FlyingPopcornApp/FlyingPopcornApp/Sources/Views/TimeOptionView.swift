@@ -25,6 +25,7 @@ final class TimeOptionView: UIView {
                                           forCellWithReuseIdentifier: TimeOptionCell.id)
         timeOptionCollectionView.dataSource = self
         timeOptionCollectionView.delegate = self
+        timeOptionCollectionView.isScrollEnabled = false
         
         addSubviews()
         setConstraints()

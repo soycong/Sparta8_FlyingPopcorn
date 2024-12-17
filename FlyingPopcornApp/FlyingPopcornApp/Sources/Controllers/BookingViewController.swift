@@ -12,26 +12,40 @@ import SnapKit
 final class BookingViewController: UIViewController {
 
     private let timeOptionView: TimeOptionView = .init()
-
-    private var selectedFormat: UIButton?
-    private var selectedTime: UIButton?
-
-    private let formatOptions = ["2D", "3D", "IMAX"]
-
+    private let formatOptionView: FormatOptionView = .init()
+    private let colorGuide: ColorGuide = .init()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setCollectionViews()
+        view.backgroundColor = .systemGray
+        
+        setViews()
         setConstraints()
     }
 
-    private func setCollectionViews() {
+    private func setViews() {
+        view.addSubview(formatOptionView)
         view.addSubview(timeOptionView)
+        view.addSubview(colorGuide)
     }
     
     private func setConstraints() {
+        formatOptionView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(150)
+        }
+        
         timeOptionView.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(formatOptionView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(200)
+        }
+        
+        colorGuide.snp.makeConstraints { make in
+            make.top.equalTo(timeOptionView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().inset(30)
         }
     }
 }
