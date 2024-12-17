@@ -15,10 +15,12 @@ final class MovieSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view = movieSearchView
+        movieSearchView.delegate = self
         
         configureUI()
+        configureData()
     }
     
     private func configureUI() {
@@ -45,5 +47,27 @@ final class MovieSearchViewController: UIViewController {
 
 extension MovieSearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text, !searchText.isEmpty else {
+            searchedMovies = movies // 검색어가 없으면 전체 데이터 표시
+            return
+        }
+        
+        searchedMovies = movies.filter { movie in
+            movie.title.lowercased().contains(searchText.lowercased()) ||
+            movie.genre.lowercased().contains(searchText.lowercased())
+        }
+        
+        movieSearchView.reloadCollectionView()
+    }
+    
+}
+
+extension MovieSearchViewController: MovieSearchViewDelegate {
+    func numberOfItems() -> Int {
+        return searchedMovies.count
+    }
+    
+    func movie(at index: Int) -> DummyMovieData {
+        return searchedMovies[index]
     }
 }
