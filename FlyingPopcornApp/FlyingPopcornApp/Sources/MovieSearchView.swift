@@ -19,7 +19,7 @@ final class MovieSearchView: UIView, UICollectionViewDataSource, UICollectionVie
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout().then {
             let itemWidth = (UIScreen.main.bounds.width - 52) / 3 // 각 셀의 너비 계산 (leading + trailing 여백 제외)
-            $0.itemSize = CGSize(width: itemWidth, height: 180)
+            $0.itemSize = CGSize(width: itemWidth, height: itemWidth*1.8)
             $0.minimumLineSpacing = 10
             $0.minimumInteritemSpacing = 10
         }

@@ -65,8 +65,9 @@ final class MovieSearchCollectionViewCell: UICollectionViewCell {
             make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).inset(5)
         }
         
+        let itemWidth = (UIScreen.main.bounds.width - 52) / 3 // 각 셀의 너비 계산 (leading + trailing 여백 제외)
         movieImageView.snp.makeConstraints { make in
-            make.height.equalTo(130)
+            make.height.equalTo(itemWidth*1.5)
         }
         
         movieTitleLabel.snp.makeConstraints { make in
