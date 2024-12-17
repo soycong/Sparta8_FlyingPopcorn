@@ -119,7 +119,7 @@ final class DYMovieCell: UICollectionViewCell {
     // MARK: - 데이터 설정 메서드
     func configure(with movie: DYMovie) {
         let imageURL = URL(string: movie.posterURL)
-        posterImageView.loadImage(from: imageURL!)
+        // posterImageView.loadImage(from: imageURL!)
         titleLabel.text = movie.title
         genreLabel.text = movie.genres.prefix(2).joined(separator: ", ") // Genres에서 앞의 2개만 표시
         runtimeLabel.text = "\(movie.runtime) min"
