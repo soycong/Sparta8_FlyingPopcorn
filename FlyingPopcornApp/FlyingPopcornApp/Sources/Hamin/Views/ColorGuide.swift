@@ -29,17 +29,17 @@ final class ColorGuide: UIView {
     
     private let availableLabel = UILabel().then {
         $0.text = "선택 가능"
-        $0.textColor = .greyLight3
+        $0.textColor = ._100
     }
     
     private let unavailableLabel = UILabel().then {
         $0.text = "선택 불가"
-        $0.textColor = .greyLight3
+        $0.textColor = ._100
     }
     
     private let selectedLabel = UILabel().then {
         $0.text = "선택됨"
-        $0.textColor = .greyLight3
+        $0.textColor = ._100
     }
     
     override init(frame: CGRect) {

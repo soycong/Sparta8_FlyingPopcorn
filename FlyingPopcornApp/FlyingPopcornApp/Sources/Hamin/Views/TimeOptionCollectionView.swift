@@ -83,11 +83,11 @@ final class TimeOptionCell: UICollectionViewCell {
 
 
 extension UIColor {
-    static let available = UIColor(named: "redLight1")!
-    static let unavailable = UIColor(named: "greyLight3")!
-    static let selected = UIColor(named: "red")!
+    static let available = UIColor.fpRedLight1
+    static let unavailable = UIColor._150
+    static let selected = UIColor.fpRed
 
-    static let availableText = UIColor(named: "greyLight3")!
-    static let unavailableText = UIColor(named: "greyLight1")!
-    static let selectedText = UIColor(named: "white")!
+    static let availableText = UIColor._150
+    static let unavailableText = UIColor._50
+    static let selectedText = UIColor._00
 }
