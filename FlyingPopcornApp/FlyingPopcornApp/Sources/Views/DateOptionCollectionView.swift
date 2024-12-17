@@ -28,7 +28,7 @@ final class DateOptionCollectionView: UICollectionView {
 }
 
 protocol DateOptionCellDelegate: AnyObject {
-    func cellTapped(_ sender: UIButton)
+    func dateOptionTapped(_ sender: UIButton)
 }
 
 final class DateOptionCell: UICollectionViewCell {
@@ -72,6 +72,6 @@ final class DateOptionCell: UICollectionViewCell {
     }
     
     @objc private func onTap(_ sender: UIButton) {
-        delegate?.cellTapped(sender)
+        delegate?.dateOptionTapped(sender)
     }
 }

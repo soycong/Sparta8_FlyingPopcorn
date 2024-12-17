@@ -28,7 +28,7 @@ final class FormatOptionCollectionView: UICollectionView {
 }
 
 protocol FormatOptionCellDelegate: AnyObject {
-    func cellTapped(_ sender: UIButton)
+    func formatOptionTapped(_ sender: UIButton)
 }
 
 final class FormatOptionCell: UICollectionViewCell {
@@ -72,6 +72,6 @@ final class FormatOptionCell: UICollectionViewCell {
     
     @objc private func onTap(_ sender: UIButton) {
         
-        delegate?.cellTapped(sender)
+        delegate?.formatOptionTapped(sender)
     }
 }
