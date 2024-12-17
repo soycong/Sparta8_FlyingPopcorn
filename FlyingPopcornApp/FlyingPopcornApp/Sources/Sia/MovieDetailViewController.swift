@@ -9,10 +9,10 @@ import UIKit
 
 final class MovieDetailViewController: UIViewController {
     private let movieDetailView = MovieDetailView()
-    private let movieNetwork: SYMovieNetwork
+    private let movieNetwork: MovieNetwork
     private var movieID: Int // 영화 ID
     
-    init(movieNetwork: SYMovieNetwork, movieID: Int) {
+    init(movieNetwork: MovieNetwork, movieID: Int) {
         self.movieNetwork = movieNetwork
         self.movieID = movieID
         super.init(nibName: nil, bundle: nil)
@@ -28,6 +28,8 @@ final class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 네트워크 상태 확인
+        checkNetworkStatus()
         bookingButton()
         fetchMovieDetail()
     }
@@ -43,10 +45,10 @@ final class MovieDetailViewController: UIViewController {
     }
 }
 
-
-extension MovieDetailViewController {
+// MARK: - Network 요청
+private extension MovieDetailViewController {
     // 영화 상세 정보 네트워크 요청
-    private func fetchMovieDetail() {
+    func fetchMovieDetail() {
         movieNetwork.getMovieDetail(movieID: movieID) { [weak self] result in
             switch result {
             case .success(let movie):

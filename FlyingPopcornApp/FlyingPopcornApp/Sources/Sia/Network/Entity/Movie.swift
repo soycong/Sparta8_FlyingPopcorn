@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct SYMovieListModel: Decodable {
-    let results: [SYMovie]
+struct MovieListModel: Decodable {
+    let results: [Movie]
 }
 
-struct SYMovie: Decodable, Hashable {
+struct Movie: Decodable, Hashable {
     let adult: Bool
     let id: Int
     let genreIDS: [Int]
@@ -54,7 +54,7 @@ struct SYMovie: Decodable, Hashable {
         } else if let genreIDS = try? container.decode([Int].self, forKey: .genreIDS) {
             // For movie list endpoint
             self.genreIDS = genreIDS
-            genres = genreIDS.compactMap { SYMovie.genreMap[($0)] }
+            genres = genreIDS.compactMap { Movie.genreMap[($0)] }
         } else {
             genreIDS = []
             genres = []

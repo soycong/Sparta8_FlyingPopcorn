@@ -7,15 +7,15 @@
 
 import Foundation
 
-final class SYNetworkProvider {
+final class NetworkProvider {
     private let endPoint: String
     
     init() {
         self.endPoint = "https://api.themoviedb.org/3"
     }
     
-    func makeMovieNetwork() -> SYMovieNetwork {
-        let network = SYNetwork<SYMovieListModel>(endPoint: endPoint)
-        return SYMovieNetwork(network: network)
+    func makeMovieNetwork() -> MovieNetwork {
+        let network = Network<MovieListModel>(endPoint: endPoint)
+        return MovieNetwork(network: network)
     }
 }

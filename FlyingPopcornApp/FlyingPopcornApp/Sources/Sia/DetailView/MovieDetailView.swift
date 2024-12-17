@@ -236,7 +236,7 @@ final class MovieDetailView: UIView {
         }
     }
     
-    func configureView(with movie: SYMovie) {
+    func configureView(with movie: Movie) {
         
         titleLabel.text = movie.title
         let rating = movie.voteAverage

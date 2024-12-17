@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class SYNetwork<T: Decodable> {
+class Network<T: Decodable> {
     private let endPoint: String
     
     init(endPoint: String) {
@@ -40,7 +40,7 @@ class SYNetwork<T: Decodable> {
     }
     
     // 영화 상세 정보 가져오기
-    func getMovieDetail(movieID: Int, language: String = "ko", completion: @escaping (Result<SYMovie, Error>) -> Void) {
+    func getMovieDetail(movieID: Int, language: String = "ko", completion: @escaping (Result<Movie, Error>) -> Void) {
         let fullPath = "\(endPoint)/movie/\(movieID)?api_key=c4b5ea8e9a3529d8c20e127dc7fda0a0&language=\(language)"
         print("Full API Request Path: \(fullPath)")
         
@@ -50,7 +50,7 @@ class SYNetwork<T: Decodable> {
                 switch response.result {
                 case .success(let data):
                     do {
-                        let decodeData = try JSONDecoder().decode(SYMovie.self, from: data)
+                        let decodeData = try JSONDecoder().decode(Movie.self, from: data)
                         completion(.success(decodeData))
                     } catch {
                         print("Error decoding JSON: \(error)")

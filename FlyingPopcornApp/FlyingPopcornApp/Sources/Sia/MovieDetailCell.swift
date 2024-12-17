@@ -57,7 +57,7 @@ class MovieDetailCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with movie: SYMovie) {
+    func configure(with movie: Movie) {
         titleLabel.text = movie.title
         scoreLabel.text = "Score: \(movie.vote)"
         //genreLabel.text = movie.genre
