@@ -7,10 +7,17 @@
 
 import UIKit
 
+protocol MovieDetailDelegate: AnyObject {
+    // 예매하기 버튼 탭시 movieId 전달
+    func didTapBokkingButton(movieId: Int)
+}
+
 final class MovieDetailViewController: UIViewController {
     private let movieDetailView = MovieDetailView()
     private let movieNetwork: MovieNetwork
     private var movieID: Int // 영화 ID
+    
+    weak var delegate: MovieDetailDelegate?
     
     init(movieNetwork: MovieNetwork, movieID: Int) {
         self.movieNetwork = movieNetwork
@@ -64,5 +71,10 @@ private extension MovieDetailViewController {
     
     @objc func bookPushView() {
         print("예매하기버튼 탭")
+        
+        // TODO: - 로그인 여부 체크
+        
+        // 로그인 완료 후 예매하기 버튼 탭시
+        delegate?.didTapBokkingButton(movieId: movieID)
     }
 }
