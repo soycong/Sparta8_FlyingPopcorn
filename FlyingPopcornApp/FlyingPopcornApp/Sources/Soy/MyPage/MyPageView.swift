@@ -98,12 +98,6 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
         cell.selectionStyle = .none
         cell.backgroundColor = .clear
         
-//        let dummyMovieData = DummyMovieData[indexPath.row]
-//        
-//        cell.movieTitleLabel.text = dummyMovieData.title
-//        cell.movieGenreLabel.text = dummyMovieData.genre
-//        cell.movieImageView.image = dummyMovieData.posterImageName
-        
         if let movie = delegate?.movie(at: indexPath.row) {
             cell.configureData(with: movie)
         }
