@@ -4,6 +4,7 @@
 //
 //  Created by seohuibaek on 12/16/24.
 //
+
 import UIKit
 
 final class MovieSearchCollectionViewCell: UICollectionViewCell {
@@ -28,15 +29,12 @@ final class MovieSearchCollectionViewCell: UICollectionViewCell {
         $0.textAlignment = .left
     }
     
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [movieImageView, movieTitleLabel, movieGenreLabel]).then {
-            $0.axis = .vertical
-            $0.spacing = 5
-            $0.alignment = .center
-            $0.distribution = .fill
-        }
-        return stackView
-    }()
+    private lazy var stackView = UIStackView(arrangedSubviews: [movieImageView, movieTitleLabel, movieGenreLabel]).then {
+        $0.axis = .vertical
+        $0.spacing = 5
+        $0.alignment = .center
+        $0.distribution = .fill
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -71,7 +69,7 @@ final class MovieSearchCollectionViewCell: UICollectionViewCell {
         }
         
         movieTitleLabel.snp.makeConstraints { make in
-            make.height.equalTo(14)
+            make.height.equalTo(16)
             make.leading.equalTo(self.stackView.snp.leading)
             make.trailing.equalTo(self.stackView.snp.trailing)
         }

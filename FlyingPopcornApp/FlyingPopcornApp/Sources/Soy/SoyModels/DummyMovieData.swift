@@ -9,4 +9,6 @@ struct DummyMovieData {
     let title: String
     let genre: String
     let posterImageName: String
+    let runTime: String
+    let schedule: String
 }
