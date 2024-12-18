@@ -9,7 +9,7 @@ import UIKit
 
 final class HomeViewController: UIViewController {
     private let movieNetwork: MovieNetwork
-
+    
     init(movieNetwork: MovieNetwork) {
         self.movieNetwork = movieNetwork
         super.init(nibName: nil, bundle: nil)
@@ -20,7 +20,9 @@ final class HomeViewController: UIViewController {
     }
     
     // MARK: - Properties
-    private var filters: [String] = ["All", "Adventure", "Action", "Drama", "Comedy", "Horror"]
+    private var filters: [String] {
+        return ["All"] + Movie.genreMap.values.sorted()
+    }
     private var allNowShowingMovies: [Movie] = []
     private var allComingSoonMovies: [Movie] = []
     private var filteredNowShowingMovies: [Movie] = []
@@ -36,16 +38,8 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-        setupDummyData()
+        fetchMoviesData()
         applyFilter(index: 0)
-        
-        DispatchQueue.main.async {
-            let firstIndexPath = IndexPath(item: 0, section: 0)
-            self.homeView.collectionView.selectItem(at: firstIndexPath, animated: false, scrollPosition: .left)
-            if let firstCell = self.homeView.collectionView.cellForItem(at: firstIndexPath) as? DYFilterCell {
-                firstCell.updateSelectionState(isSelected: true)
-            }
-        }
     }
     
     // MARK: - Setup
@@ -62,51 +56,39 @@ final class HomeViewController: UIViewController {
         collectionView.collectionViewLayout = createCompositionalLayout()
     }
     
-    // MARK: - 더미 데이터 설정
-    private func setupDummyData() {
-        let dummy1 = Movie(adult: false,
-                           id: 001,
-                           genreIDS: [1, 2, 3],
-                           genres: ["Adventure", "Action", "Horror"],
-                           title: "WALL-A",
-                           overview: "",
-                           posterURL: "https://www.tallengestore.com/cdn/shop/products/WALL_E-HollywoodAnimationClassicMoviePoster_e1aa7d6e-de2c-4476-9793-e2c7dd74e6aa.jpg?v=1591603143",
-                           vote: "",
-                           voteAverage: 0.0,
-                           releaseDate: "",
-                           runtime: 200)
+    // MARK: - Fetch Movies Data
+    private func fetchMoviesData() {
+        let group = DispatchGroup()
         
-        let dummy2 = Movie(adult: false,
-                           id: 001,
-                           genreIDS: [1, 2, 3],
-                           genres: ["Adventure", "Action", "Horror"],
-                           title: "WALL-B",
-                           overview: "",
-                           posterURL: "https://www.tallengestore.com/cdn/shop/products/WALL_E-HollywoodAnimationClassicMoviePoster_e1aa7d6e-de2c-4476-9793-e2c7dd74e6aa.jpg?v=1591603143",
-                           vote: "",
-                           voteAverage: 0.0,
-                           releaseDate: "",
-                           runtime: 200)
+        // Now Playing Movies
+        group.enter()
+        movieNetwork.getNowPlayingList { [weak self] result in
+            defer { group.leave() }
+            switch result {
+            case .success(let movieListModel):
+                self?.allNowShowingMovies = movieListModel.results
+                self?.filteredNowShowingMovies = movieListModel.results
+            case .failure(let error):
+                print("Failed to fetch now playing movies: \(error)")
+            }
+        }
         
-        let dummy3 = Movie(adult: false,
-                           id: 001,
-                           genreIDS: [1, 2, 3],
-                           genres: ["Adventure", "Action", "Horror"],
-                           title: "WALL-C",
-                           overview: "",
-                           posterURL: "https://www.tallengestore.com/cdn/shop/products/WALL_E-HollywoodAnimationClassicMoviePoster_e1aa7d6e-de2c-4476-9793-e2c7dd74e6aa.jpg?v=1591603143",
-                           vote: "",
-                           voteAverage: 0.0,
-                           releaseDate: "",
-                           runtime: 200)
+        // Popular Movies
+        group.enter()
+        movieNetwork.getPopularList { [weak self] result in
+            defer { group.leave() }
+            switch result {
+            case .success(let movieListModel):
+                self?.allComingSoonMovies = movieListModel.results
+                self?.filteredComingSoonMovies = movieListModel.results
+            case .failure(let error):
+                print("Failed to fetch popular movies: \(error)")
+            }
+        }
         
-        [
-            dummy1,
-            dummy2,
-            dummy3
-        ].forEach {
-            allNowShowingMovies.append($0)
-            allComingSoonMovies.append($0)
+        // 모든 데이터가 로드된 후 한 번에 CollectionView 업데이트
+        group.notify(queue: .main) { [weak self] in
+            self?.homeView.collectionView.reloadData()
         }
     }
     
@@ -122,7 +104,9 @@ final class HomeViewController: UIViewController {
         }
         
         print("[HomeViewController] Filter Selected: \(filter)")
-        homeView.collectionView.reloadSections(IndexSet([1, 2]))
+        
+        // 전체 CollectionView를 한 번에 리로드
+        homeView.collectionView.reloadData()
     }
     
     // MARK: - Compositional Layout
@@ -144,13 +128,12 @@ final class HomeViewController: UIViewController {
         let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(80), heightDimension: .absolute(32))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
-        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = 16
         section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 0)
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(32))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(26))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         section.boundarySupplementaryItems = [header]
         
@@ -194,7 +177,6 @@ final class HomeViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
     }
@@ -234,7 +216,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             header.configure(with: "Now Showing", andSize: 27)
         case 2:
-            header.configure(with: "Coming Soon", andSize: 22)
+            header.configure(with: "Popular Picks", andSize: 22)
         default:
             break
         }
@@ -243,41 +225,13 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 }
 
-
-// MARK: - UICOllectionViewDelegate
+// MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0: // Filter Section
-            applyFilter(index: indexPath.item)
-            filters.enumerated().forEach { index, _ in
-                let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? DYFilterCell
-                cell?.updateSelectionState(isSelected: index == indexPath.item)
-            }
-        case 1: // Now Showing Section
+        if indexPath.section == 1 { 
             let selectedMovie = filteredNowShowingMovies[indexPath.item]
-            print("[HomeViewController] Selected Now Showing Movie: \(selectedMovie.title)")
-            
-            // TODO: - MovieNetwork 연결 필요
-            let id = 929590
-            
-            let movieDetailViewController = MovieDetailViewController(movieNetwork: movieNetwork, movieID: id)
-            navigationController?.pushViewController(movieDetailViewController, animated: true)
-            //present(movieDetailViewController, animated: true)
-            
-        case 2: // Coming Soon Section
-            let selectedMovie = filteredComingSoonMovies[indexPath.item]
-            print("[HomeViewController] Selected Coming Soon Movie: \(selectedMovie.title)")
-        default:
-            break
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            let cell = collectionView.cellForItem(at: indexPath) as? DYFilterCell
-            cell?.updateSelectionState(isSelected: false)
+            let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movieID: selectedMovie.id)
+            navigationController?.pushViewController(detailVC, animated: true)
         }
     }
 }

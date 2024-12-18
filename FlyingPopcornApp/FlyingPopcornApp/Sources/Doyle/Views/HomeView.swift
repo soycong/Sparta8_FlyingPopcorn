@@ -48,6 +48,7 @@ final class HomeView: UIView {
     // MARK: - UI 설정
     private func setupUI() {
         backgroundColor = .fp50
+        collectionView.backgroundColor = .fp50
         
         let topStackView = UIStackView(arrangedSubviews: [logoImageView, searchButton])
         topStackView.axis = .horizontal

@@ -14,6 +14,14 @@ final class MovieNetwork {
         self.network = network
     }
     
+    func getNowPlayingList(completion: @escaping (Result<MovieListModel, Error>) -> Void) {
+        network.getMovieList(path: "movie/now_playing", completion: completion)
+    }
+    
+    func getPopularList(completion: @escaping (Result<MovieListModel, Error>) -> Void) {
+        network.getMovieList(path: "movie/popular", completion: completion)
+    }
+    
     func getUpcomingMovies(completion: @escaping (Result<MovieListModel, Error>) -> Void) {
         network.getMovieList(path: "movie/upcoming", completion: completion)
     }

@@ -22,7 +22,7 @@ struct Movie: Decodable, Hashable {
     let vote: String
     let voteAverage: Double
     let releaseDate: String
-    let runtime: Int
+    let runtime: Int?
     
     // Custom CodingKeys to handle different API endpoint structures
     private enum CodingKeys: String, CodingKey {
@@ -39,20 +39,16 @@ struct Movie: Decodable, Hashable {
         case runtime
     }
     
-    // Initializer for custom decoding
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         adult = try container.decode(Bool.self, forKey: .adult)
         id = try container.decode(Int.self, forKey: .id)
         
-        // Handle genres differently based on the API endpoint
         if let genreObjects = try? container.decode([Genre].self, forKey: .genres) {
-            // For movie detail endpoint
             genreIDS = genreObjects.map { $0.id }
             genres = genreObjects.map { $0.name }
         } else if let genreIDS = try? container.decode([Int].self, forKey: .genreIDS) {
-            // For movie list endpoint
             self.genreIDS = genreIDS
             genres = genreIDS.compactMap { Movie.genreMap[($0)] }
         } else {
@@ -71,7 +67,7 @@ struct Movie: Decodable, Hashable {
         vote = "\(voteAverage) (\(voteCount))"
         
         releaseDate = try container.decode(String.self, forKey: .releaseDate)
-        runtime = try container.decode(Int.self, forKey: .runtime)
+        runtime = try? container.decode(Int.self, forKey: .runtime)
     }
     
     // Helper struct to decode genre objects
@@ -81,26 +77,26 @@ struct Movie: Decodable, Hashable {
     }
     
     // Existing genre mapping
-    private static let genreMap: [Int: String] = [
-        28: "Action",
-        12: "Adventure",
-        16: "Animation",
-        35: "Comedy",
-        80: "Crime",
-        99: "Documentary",
-        18: "Drama",
-        10751: "Family",
-        14: "Fantasy",
-        36: "History",
-        27: "Horror",
-        10402: "Music",
-        9648: "Mystery",
-        10749: "Romance",
-        878: "Science Fiction",
+    static let genreMap: [Int: String] = [
+        28: "액션",
+        12: "어드벤처",
+        16: "애니메이션",
+        35: "코미디",
+        80: "범죄",
+        99: "다큐멘터리",
+        18: "드라마",
+        10751: "가족",
+        14: "판타지",
+        36: "역사",
+        27: "공포",
+        10402: "음악",
+        9648: "미스터리",
+        10749: "로맨스",
+        878: "픽션",
         10770: "TV Movie",
-        53: "Thriller",
-        10752: "War",
-        37: "Western"
+        53: "스릴러",
+        10752: "전쟁",
+        37: "서부"
     ]
     
     // Default initializer
