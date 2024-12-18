@@ -10,9 +10,11 @@ import UIKit
 import SnapKit
 
 final class FormatOptionView: UIView {
+   
+    var selectedFormat: UIButton?
+    
     private let formatOptionCollectionView: FormatOptionCollectionView = .init()
     private let formatOptions = ["2D", "3D", "IMAX"]
-    private var selectedFormat: UIButton?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

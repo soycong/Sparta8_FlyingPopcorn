@@ -14,7 +14,7 @@ final class DateOptionCollectionView: UICollectionView {
     
     convenience init() {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+        layout.scrollDirection = .horizontal
         self.init(frame: .zero, collectionViewLayout: layout)
     }
     
@@ -39,21 +39,26 @@ final class DateOptionCell: UICollectionViewCell {
     private let dateOptionButton = UIButton(type: .system).then {
         $0.layer.cornerRadius = 16
         // TO-DO: get right button colors
-        $0.backgroundColor = .white
-        $0.tintColor = .black
+        $0.backgroundColor = .available
+        $0.tintColor = ._00
+        
+        $0.titleLabel?.numberOfLines = 2
+        $0.titleLabel?.textAlignment = .center
+        $0.titleLabel?.lineBreakMode = .byWordWrapping
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setConstraints()
+        contentView.addSubview(dateOptionButton)
         
         dateOptionButton.addTarget(self,
                                    action: #selector(onTap),
                                    for: .touchUpInside)
         
         contentView.backgroundColor = .clear
-        contentView.addSubview(dateOptionButton)
+        
+        setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -66,6 +71,7 @@ final class DateOptionCell: UICollectionViewCell {
         }
     }
     
+    // TO-DO?: rework title format from String to Date?
     func setButton(to title: String, delegate: DateOptionCellDelegate) {
         dateOptionButton.setTitle(title, for: .normal)
         self.delegate = delegate

@@ -29,22 +29,22 @@ final class ColorGuide: UIView {
     
     private let availableLabel = UILabel().then {
         $0.text = "선택 가능"
-        $0.textColor = .greyLight3
+        $0.textColor = ._100
     }
     
     private let unavailableLabel = UILabel().then {
         $0.text = "선택 불가"
-        $0.textColor = .greyLight3
+        $0.textColor = ._100
     }
     
     private let selectedLabel = UILabel().then {
         $0.text = "선택됨"
-        $0.textColor = .greyLight3
+        $0.textColor = ._100
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .systemBackground
+        backgroundColor = .whiteMain
         setViews()
         setConstraints()
     }
@@ -54,18 +54,24 @@ final class ColorGuide: UIView {
     }
     
     private func setViews() {
-//        [
-//            availableBox, availableLabel,
-//            unavailableBox, unavailableLabel,
-//            selectedBox, selectedBox
-//        ].forEach { addSubview($0) }
-        
-        addSubview(availableBox)
-        addSubview(availableLabel)
-        addSubview(unavailableBox)
-        addSubview(unavailableLabel)
-        addSubview(selectedBox)
-        addSubview(selectedLabel)
+       
+//        let views = [availableBox, availableLabel,
+//                     unavailableBox, unavailableLabel,
+//                     selectedBox, selectedBox]
+//        for view in views { addSubview(view) }
+//        
+//                [
+//                    availableBox, availableLabel,
+//                    unavailableBox, unavailableLabel,
+//                    selectedBox, selectedBox
+//                ].forEach { addSubview($0) }
+
+                addSubview(availableBox)
+                addSubview(availableLabel)
+                addSubview(unavailableBox)
+                addSubview(unavailableLabel)
+                addSubview(selectedBox)
+                addSubview(selectedLabel)
     }
     
     private func setConstraints() {
