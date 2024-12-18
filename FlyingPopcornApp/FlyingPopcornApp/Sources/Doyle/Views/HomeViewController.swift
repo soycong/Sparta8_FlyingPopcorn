@@ -31,10 +31,10 @@ final class HomeViewController: UIViewController {
     
     // collectionView 데이터
     private var filters: [String] = ["All", "Adventure", "Action", "Drama", "Comedy", "Horror"] // 더미 데이터
-    private var allNowShowingMovies: [DYMovie] = []
-    private var allComingSoonMovies: [DYMovie] = []
-    private var filteredNowShowingMovies: [DYMovie] = []
-    private var filteredComingSoonMovies: [DYMovie] = []
+    private var allNowShowingMovies: [Movie] = []
+    private var allComingSoonMovies: [Movie] = []
+    private var filteredNowShowingMovies: [Movie] = []
+    private var filteredComingSoonMovies: [Movie] = []
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -42,6 +42,14 @@ final class HomeViewController: UIViewController {
         setupUI()
         setupDummyData()
         applyFilter(index: 0) // 초기 필터: "All"
+        
+        DispatchQueue.main.async {
+            let firstIndexPath = IndexPath(item: 0, section: 0)
+            self.collectionView?.selectItem(at: firstIndexPath, animated: false, scrollPosition: .left)
+            if let firstCell = self.collectionView?.cellForItem(at: firstIndexPath) as? DYFilterCell {
+                firstCell.updateSelectionState(isSelected: true)
+            }
+        }
     }
     
     /*
@@ -115,47 +123,64 @@ final class HomeViewController: UIViewController {
     
     // MARK: - 더미 데이터 설정
     private func setupDummyData() {
-        let dummy1 = DYMovie(
-            posterURL: "https://www.tallengestore.com/cdn/shop/products/WALL_E-HollywoodAnimationClassicMoviePoster_e1aa7d6e-de2c-4476-9793-e2c7dd74e6aa.jpg?v=1591603143",
-            title: "WALL-E",
-            genres: ["Adventure", "Action", "Comedy", "Horror"],
-            runtime: 100
-        )
+        let dummy1 = Movie(adult: false,
+                           id: 001,
+                           genreIDS: [1, 2, 3],
+                           genres: ["Adventure", "Action", "Horror"],
+                           title: "WALL-A",
+                           overview: "",
+                           posterURL: "https://www.tallengestore.com/cdn/shop/products/WALL_E-HollywoodAnimationClassicMoviePoster_e1aa7d6e-de2c-4476-9793-e2c7dd74e6aa.jpg?v=1591603143",
+                           vote: "",
+                           voteAverage: 0.0,
+                           releaseDate: "",
+                           runtime: 200)
         
-        let dummy2 = DYMovie(
-            posterURL: "https://www.tallengestore.com/cdn/shop/products/WALL_E-HollywoodAnimationClassicMoviePoster_e1aa7d6e-de2c-4476-9793-e2c7dd74e6aa.jpg?v=1591603143",
-            title: "WALL-E",
-            genres: ["Adventure", "Action", "Horror"],
-            runtime: 200
-        )
-
+        let dummy2 = Movie(adult: false,
+                           id: 001,
+                           genreIDS: [1, 2, 3],
+                           genres: ["Adventure", "Action", "Horror"],
+                           title: "WALL-B",
+                           overview: "",
+                           posterURL: "https://www.tallengestore.com/cdn/shop/products/WALL_E-HollywoodAnimationClassicMoviePoster_e1aa7d6e-de2c-4476-9793-e2c7dd74e6aa.jpg?v=1591603143",
+                           vote: "",
+                           voteAverage: 0.0,
+                           releaseDate: "",
+                           runtime: 200)
+        
+        let dummy3 = Movie(adult: false,
+                           id: 001,
+                           genreIDS: [1, 2, 3],
+                           genres: ["Adventure", "Action", "Horror"],
+                           title: "WALL-C",
+                           overview: "",
+                           posterURL: "https://www.tallengestore.com/cdn/shop/products/WALL_E-HollywoodAnimationClassicMoviePoster_e1aa7d6e-de2c-4476-9793-e2c7dd74e6aa.jpg?v=1591603143",
+                           vote: "",
+                           voteAverage: 0.0,
+                           releaseDate: "",
+                           runtime: 200)
+        
         [
             dummy1,
-            dummy2
+            dummy2,
+            dummy3
         ].forEach {
             allNowShowingMovies.append($0)
             allComingSoonMovies.append($0)
         }
     }
-    
     // MARK: - Filter Logic
     private func applyFilter(index: Int) {
         let filter = filters[index]
-        
         if filter == "All" {
-            
             filteredNowShowingMovies = allNowShowingMovies
             filteredComingSoonMovies = allComingSoonMovies
         } else {
-            // 필터링 로직: 예시로 장르에 포함된 단어로 필터링
             filteredNowShowingMovies = allNowShowingMovies.filter { $0.genres.contains(filter) }
             filteredComingSoonMovies = allComingSoonMovies.filter { $0.genres.contains(filter) }
         }
-        
-        // 섹션 1과 섹션 2만 리로드
+
         print("[HomeViewController] Filter Selected: \(filter)")
-        collectionView?.reloadSections(IndexSet(integer: 1))
-        collectionView?.reloadSections(IndexSet(integer: 2))
+        collectionView?.reloadSections(IndexSet([1, 2]))
     }
     
     // MARK: - Compositional Layout
@@ -225,6 +250,7 @@ final class HomeViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
@@ -275,14 +301,32 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 }
 
+
+// MARK: - UICOllectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as? DYFilterCell
-        cell?.isSelected = true
+        switch indexPath.section {
+        case 0: // Filter Section
+            applyFilter(index: indexPath.item)
+            filters.enumerated().forEach { index, _ in
+                let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? DYFilterCell
+                cell?.updateSelectionState(isSelected: index == indexPath.item)
+            }
+        case 1: // Now Showing Section
+            let selectedMovie = filteredNowShowingMovies[indexPath.item]
+            print("[HomeViewController] Selected Now Showing Movie: \(selectedMovie.title)")
+        case 2: // Coming Soon Section
+            let selectedMovie = filteredComingSoonMovies[indexPath.item]
+            print("[HomeViewController] Selected Coming Soon Movie: \(selectedMovie.title)")
+        default:
+            break
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as? DYFilterCell
-        cell?.isSelected = false
+        if indexPath.section == 0 {
+            let cell = collectionView.cellForItem(at: indexPath) as? DYFilterCell
+            cell?.updateSelectionState(isSelected: false)
+        }
     }
 }

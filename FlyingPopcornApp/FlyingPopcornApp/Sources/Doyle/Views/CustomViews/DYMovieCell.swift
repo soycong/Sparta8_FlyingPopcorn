@@ -117,7 +117,7 @@ final class DYMovieCell: UICollectionViewCell {
     }
     
     // MARK: - 데이터 설정 메서드
-    func configure(with movie: DYMovie) {
+    func configure(with movie: Movie) {
         let imageURL = URL(string: movie.posterURL)
         posterImageView.loadImage(from: imageURL!)
         titleLabel.text = movie.title

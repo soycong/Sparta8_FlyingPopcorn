@@ -32,7 +32,7 @@ final class DYPosterCell: UICollectionViewCell {
     }
     
     // MARK: - 데이터 설정 메서드
-    func configure(with movie: DYMovie) {
+    func configure(with movie: Movie) {
         let url = URL(string: movie.posterURL)
         imageView.loadImage(from: url!)
     }
