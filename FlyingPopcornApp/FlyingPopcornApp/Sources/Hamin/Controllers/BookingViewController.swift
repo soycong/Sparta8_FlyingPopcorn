@@ -48,19 +48,19 @@ final class BookingViewController: UIViewController {
         dateOptionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(50)
+            make.height.equalTo(70)
         }
         
         formatOptionView.snp.makeConstraints { make in
             make.top.equalTo(dateOptionView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(150)
+            make.height.equalTo(50)
         }
         
         timeOptionView.snp.makeConstraints { make in
             make.top.equalTo(formatOptionView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(200)
+            make.height.equalTo(170)
         }
         
         quantityOptionView.snp.makeConstraints { make in

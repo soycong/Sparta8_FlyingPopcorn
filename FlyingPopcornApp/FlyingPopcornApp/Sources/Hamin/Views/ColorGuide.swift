@@ -44,7 +44,7 @@ final class ColorGuide: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .systemBackground
+        backgroundColor = .whiteMain
         setViews()
         setConstraints()
     }
