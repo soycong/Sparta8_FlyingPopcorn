@@ -58,6 +58,13 @@ final class MyPageTableViewCell: UITableViewCell {
         $0.distribution = .fill
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 16
+        
+        // 그림자 설정
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOpacity = 0.1 // 그림자 투명도
+        $0.layer.shadowOffset = CGSize(width: 0, height: 2) // 그림자 위치
+        $0.layer.shadowRadius = 2 // 그림자 퍼짐 정도
+        $0.layer.masksToBounds = false // 그림자가 표시되도록 설정
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

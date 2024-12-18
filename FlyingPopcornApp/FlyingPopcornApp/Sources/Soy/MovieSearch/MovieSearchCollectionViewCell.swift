@@ -34,6 +34,13 @@ final class MovieSearchCollectionViewCell: UICollectionViewCell {
         $0.spacing = 5
         $0.alignment = .center
         $0.distribution = .fill
+        
+        // 그림자 설정
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOpacity = 0.1 // 그림자 투명도
+        $0.layer.shadowOffset = CGSize(width: 0, height: 2) // 그림자 위치
+        $0.layer.shadowRadius = 3 // 그림자 퍼짐 정도
+        $0.layer.masksToBounds = false // 그림자가 표시되도록 설정
     }
     
     override init(frame: CGRect) {
