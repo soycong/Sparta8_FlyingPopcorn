@@ -8,13 +8,19 @@
 import UIKit
 
 final class MyPageViewController: UIViewController {
-    private let userInformationView = UserInformationView()
-    //private let myPageView = MyPageView()
+    //private let userInformationView = UserInformationView()
+    private let myPageView = MyPageView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view = userInformationView
-        view.backgroundColor = .gray
+        view = myPageView
+        view.backgroundColor = UIColor(named: "50")
+        
+        configureUI()
+    }
+    
+    private func configureUI() {
+        navigationItem.title = "MyPage"
     }
 }
