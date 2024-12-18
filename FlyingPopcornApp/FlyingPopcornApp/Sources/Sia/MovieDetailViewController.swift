@@ -29,7 +29,6 @@ final class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 네트워크 상태 확인
-        checkNetworkStatus()
         bookingButton()
         fetchMovieDetail()
     }
