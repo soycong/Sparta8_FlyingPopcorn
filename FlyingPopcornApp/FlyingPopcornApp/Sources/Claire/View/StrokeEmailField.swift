@@ -23,7 +23,6 @@ final class StrokeEmailField: StrokeTextField {
     private func setupEmailField() {
         keyboardType = .emailAddress
         textContentType = .emailAddress
-        delegate = self
     }
     
     private func checkIsEmail() -> Bool {
@@ -31,20 +30,12 @@ final class StrokeEmailField: StrokeTextField {
         return true
     }
     
-}
-
-extension StrokeEmailField: UITextFieldDelegate {
-
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        return true
+    // 이메일 형식 검사
+    func isValidEmail(email: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        
-    }
 }
+

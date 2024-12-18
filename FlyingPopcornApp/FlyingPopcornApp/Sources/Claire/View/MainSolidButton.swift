@@ -26,7 +26,7 @@ final class MainSolidButton: UIButton {
         setTitleColor(.white, for: .normal)
         titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
         
-        backgroundColor = UIColor(red: 220/255, green: 71/255, blue: 71/255, alpha: 1.0)
+        backgroundColor = UIColor(named: "FPRed")
         
         layer.cornerRadius = 8
         layer.masksToBounds = true
