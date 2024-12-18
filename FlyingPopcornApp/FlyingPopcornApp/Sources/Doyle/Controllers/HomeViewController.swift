@@ -109,7 +109,7 @@ final class HomeViewController: UIViewController {
             filteredNowShowingMovies = allNowShowingMovies.filter { $0.genres.contains(filter) }
             filteredComingSoonMovies = allComingSoonMovies.filter { $0.genres.contains(filter) }
         }
-
+        
         print("[HomeViewController] Filter Selected: \(filter)")
         homeView.collectionView.reloadSections(IndexSet([1, 2]))
     }
@@ -183,12 +183,11 @@ final class HomeViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
-    // 섹션 개수
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
     }
     
-    // 섹션별 셀 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0: return filters.count
@@ -198,7 +197,6 @@ extension HomeViewController: UICollectionViewDataSource {
         }
     }
     
-    // 데이터 설정
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
@@ -218,7 +216,6 @@ extension HomeViewController: UICollectionViewDataSource {
         }
     }
     
-    // Header 설정
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DYHeaderView.identifier, for: indexPath) as! DYHeaderView
         
@@ -239,7 +236,6 @@ extension HomeViewController: UICollectionViewDataSource {
 // MARK: - UICOllectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     
-    // 셀 선택 액션
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0: // Filter Section
@@ -259,7 +255,6 @@ extension HomeViewController: UICollectionViewDelegate {
         }
     }
     
-    // 셀 선택 해제 액션
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             let cell = collectionView.cellForItem(at: indexPath) as? DYFilterCell
