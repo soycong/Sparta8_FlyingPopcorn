@@ -15,9 +15,9 @@ final class HomeViewController: UIViewController {
     }
     
     private let searchButton = UIButton(type: .system).then { // 임의의 스타일: 후에 검색 화면에 맞춰 변경
-        $0.backgroundColor = .white
+        $0.backgroundColor = .fp00
         $0.setTitle("     Search...", for: .normal)
-        $0.setTitleColor(.systemGray, for: .normal)
+        $0.setTitleColor(.fp500, for: .normal)
         $0.contentHorizontalAlignment = .left
         $0.layer.cornerRadius = 16
         $0.layer.shadowColor = UIColor.black.cgColor
