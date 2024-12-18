@@ -12,7 +12,7 @@ import Then
 
 protocol MovieSearchViewDelegate: AnyObject {
     func numberOfItems() -> Int
-    func movie(at index: Int) -> DummyMovieData
+    func movie(at index: Int) -> Movie
 }
 
 final class MovieSearchCollectionView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {

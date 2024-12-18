@@ -90,9 +90,17 @@ final class MovieSearchCollectionViewCell: UICollectionViewCell {
 }
 
 extension MovieSearchCollectionViewCell {
-    func configureData(with movie: DummyMovieData) {
-        movieImageView.image = UIImage(named: movie.posterImageName)
+    func configureData(with movie: Movie) {
+        // 포스터 이미지 로드
+        if let url = URL(string: movie.posterURL) {
+            movieImageView.loadImage(from: url)
+        } else {
+            movieImageView.image = UIImage(named: "placeholder")
+        }
+        
         movieTitleLabel.text = movie.title
-        movieGenreLabel.text = movie.genre
+        
+        movieGenreLabel.text = movie.genres.joined(separator: ", ")
     }
 }
+
