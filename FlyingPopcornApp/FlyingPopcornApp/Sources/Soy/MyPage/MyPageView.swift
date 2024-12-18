@@ -10,8 +10,14 @@ import UIKit
 import SnapKit
 import Then
 
+protocol MyPageViewDelegate: AnyObject {
+    func numberOfItems() -> Int
+    func movie(at index: Int) -> DummyMovieData
+}
+
 final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
-    
+    weak var delegate: MyPageViewDelegate?
+
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
     private let userInformationView = UserInformationView()
@@ -84,7 +90,7 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return delegate?.numberOfItems() ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -97,6 +103,11 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
 //        cell.movieTitleLabel.text = dummyMovieData.title
 //        cell.movieGenreLabel.text = dummyMovieData.genre
 //        cell.movieImageView.image = dummyMovieData.posterImageName
+        
+        if let movie = delegate?.movie(at: indexPath.row) {
+            cell.configureData(with: movie)
+        }
+        
         return cell
     }
 }

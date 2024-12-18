@@ -132,3 +132,13 @@ final class MyPageTableViewCell: UITableViewCell {
         }
     }
 }
+
+extension MyPageTableViewCell {
+    func configureData(with movie: DummyMovieData) {
+        movieImageView.image = UIImage(named: movie.posterImageName)
+        movieTitleLabel.text = movie.title
+        movieGenreLabel.text = movie.genre
+        movieRunTimeLabel.text = movie.runTime
+        movieScheduleLabel.text = movie.schedule
+    }
+}
