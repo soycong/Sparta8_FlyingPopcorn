@@ -69,7 +69,7 @@ final class MovieSearchCollectionViewCell: UICollectionViewCell {
         }
         
         movieTitleLabel.snp.makeConstraints { make in
-            make.height.equalTo(14)
+            make.height.equalTo(16)
             make.leading.equalTo(self.stackView.snp.leading)
             make.trailing.equalTo(self.stackView.snp.trailing)
         }
