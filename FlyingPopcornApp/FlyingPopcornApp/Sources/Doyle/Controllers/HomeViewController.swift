@@ -228,8 +228,12 @@ extension HomeViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 1 { 
+        if indexPath.section == 1 {
             let selectedMovie = filteredNowShowingMovies[indexPath.item]
+            let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movieID: selectedMovie.id)
+            navigationController?.pushViewController(detailVC, animated: true)
+        } else if indexPath.section == 2 {
+            let selectedMovie = filteredComingSoonMovies[indexPath.item]
             let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movieID: selectedMovie.id)
             navigationController?.pushViewController(detailVC, animated: true)
         }
