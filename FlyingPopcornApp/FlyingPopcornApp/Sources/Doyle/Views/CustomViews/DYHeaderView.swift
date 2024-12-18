@@ -13,7 +13,7 @@ final class DYHeaderView: UICollectionReusableView {
     static let identifier = "DYHeaderView"
     
     private let titleLabel = UILabel().then {
-        $0.textColor = UIColor(named: "greyDark2")
+        $0.textColor = .fp800
     }
     
     override init(frame: CGRect) {

@@ -14,7 +14,7 @@ final class DYFilterCell: UICollectionViewCell {
     
     private let filterLabel = DYPaddedLabel().then {
         $0.font = UIFont.systemFont(ofSize: 12)
-        $0.textColor = UIColor(named: "red")
+        $0.textColor = .fpRed
         $0.textAlignment = .center
     }
     
@@ -39,11 +39,11 @@ final class DYFilterCell: UICollectionViewCell {
     // MARK: - 선택 시 스타일 변경
     private func updateStyle(isSelected: Bool) {
         if isSelected {
-            contentView.backgroundColor = UIColor(named: "red")
-            filterLabel.textColor = UIColor(named: "white")
+            contentView.backgroundColor = .fpRed
+            filterLabel.textColor = .red
         } else {
-            contentView.backgroundColor = UIColor(named: "redLight1")
-            filterLabel.textColor = UIColor(named: "greyDark2")
+            contentView.backgroundColor = .fpRedLight1
+            filterLabel.textColor = .black
         }
     }
     

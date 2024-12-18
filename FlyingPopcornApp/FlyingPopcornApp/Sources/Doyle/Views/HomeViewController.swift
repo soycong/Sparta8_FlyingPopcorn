@@ -15,10 +15,15 @@ final class HomeViewController: UIViewController {
     }
     
     private let searchButton = UIButton(type: .system).then { // 임의의 스타일: 후에 검색 화면에 맞춰 변경
-        $0.backgroundColor = UIColor(named: "white")
-        $0.setTitle("Search...", for: .normal)
-        $0.setTitleColor(UIColor(named: "grey"), for: .normal)
+        $0.backgroundColor = .white
+        $0.setTitle("     Search...", for: .normal)
+        $0.setTitleColor(.systemGray, for: .normal)
+        $0.contentHorizontalAlignment = .left
         $0.layer.cornerRadius = 16
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOpacity = 0.2
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.layer.shadowRadius = 3
     }
     
     private var collectionView: UICollectionView?
@@ -55,7 +60,7 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Setup UI
     private func setupUI() {
-        view.backgroundColor = UIColor(named: "whiteMain")
+        view.backgroundColor = .fp50
         
         // 상단 StackView
         let topStackView = UIStackView(arrangedSubviews: [logoImageView, searchButton])
@@ -66,7 +71,7 @@ final class HomeViewController: UIViewController {
         
         view.addSubview(topStackView)
         setupCollectionView()
-        collectionView?.backgroundColor = UIColor(named: "whiteMain")
+        collectionView?.backgroundColor = .fp50
         
         // SnapKit으로 레이아웃 설정
         topStackView.snp.makeConstraints { make in
@@ -195,7 +200,7 @@ final class HomeViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPagingCentered
         section.interGroupSpacing = 16
-        // .contentInsets 필요할 시 설정
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 24, trailing: 0)
         
         return section
     }
@@ -210,7 +215,7 @@ final class HomeViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = 16
-        // .contentInsets 필요할 시 설정
+        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 0)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(26))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
