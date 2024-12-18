@@ -12,7 +12,7 @@ import Then
 
 final class QuantityOptionView: UIView {
     
-    private var quantity = 0
+    var selectedQuantity = 0
     
     private let label = UILabel().then {
         $0.text = "수량"
@@ -20,15 +20,15 @@ final class QuantityOptionView: UIView {
     }
     
     private let quantityLabel = UILabel().then {
-        $0.text = "0"
+        $0.text = "1"
         $0.textColor = ._450
     }
     
     private let stepper = UIStepper().then {
-        $0.minimumValue = 0
+        $0.minimumValue = 1
         $0.maximumValue = 10 // 1회 최대 구매 가능 갯수 임의로 설정
         $0.stepValue = 1
-        $0.value = 0
+        $0.value = 1
     }
     
     override init(frame: CGRect) {
@@ -75,8 +75,8 @@ final class QuantityOptionView: UIView {
     }
     
     @objc private func stepperValueChanged(_ sender: UIStepper) {
-        quantity = Int(sender.value)
-        quantityLabel.text = quantity.description
-        print("quantity changed to \(quantity)")
+        selectedQuantity = Int(sender.value)
+        quantityLabel.text = selectedQuantity.description
+        print("quantity changed to \(selectedQuantity)")
     }
 }

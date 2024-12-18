@@ -7,6 +7,13 @@
 
 import Foundation
 
+struct Ticket {
+    let movie: String
+    let date: Date
+    let format: String
+    let quantity: Int
+}
+
 extension Date {
     private static let monthOnlyFormatter = {
         let formatter = Date.FormatStyle()

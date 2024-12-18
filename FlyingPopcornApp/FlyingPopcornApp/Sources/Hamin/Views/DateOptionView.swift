@@ -11,6 +11,9 @@ import SnapKit
 import Then
 
 final class DateOptionView: UIView {
+    
+    var selectedDate: UIButton?
+    
     private let dateOptionCollectionView: DateOptionCollectionView = .init()
     private let dateOptions = [
         "15\n일",
@@ -21,7 +24,6 @@ final class DateOptionView: UIView {
         "20\n금",
         "21\n토",
     ]
-    private var selectedDate: UIButton?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

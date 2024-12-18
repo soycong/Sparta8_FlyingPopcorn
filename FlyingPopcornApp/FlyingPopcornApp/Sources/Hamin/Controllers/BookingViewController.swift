@@ -10,6 +10,10 @@ import UIKit
 import SnapKit
 
 final class BookingViewController: UIViewController {
+    
+    let dateModel: [Date] = []
+    let formatModel: [String] = []
+    
 
     private let dateOptionView: DateOptionView = .init()
     private let timeOptionView: TimeOptionView = .init()
@@ -19,7 +23,7 @@ final class BookingViewController: UIViewController {
     
     private let confirmButton = UIButton().then {
         $0.setTitle("결제하기", for: .normal)
-        $0.backgroundColor = .fpRed
+        $0.backgroundColor = ._150
         $0.setTitleColor(._00, for: .normal)
         $0.layer.cornerRadius = 24
     }
@@ -88,5 +92,9 @@ final class BookingViewController: UIViewController {
     
     @objc private func onTap() {
         print("confirmButton Tapped")
+        print(dateOptionView.selectedDate?.titleLabel?.text ?? "no value")
+        print(formatOptionView.selectedFormat?.titleLabel?.text ?? "no value")
+        print(timeOptionView.selectedTime?.titleLabel?.text ?? "no value")
+        print(quantityOptionView.selectedQuantity.description)
     }
 }

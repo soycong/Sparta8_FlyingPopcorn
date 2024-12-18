@@ -10,13 +10,15 @@ import UIKit
 import SnapKit
 
 final class TimeOptionView: UIView {
+    
+    var selectedTime: UIButton?
+    
     private let timeOptionCollectionView: TimeOptionCollectionView = .init()
     private let timeOptions = [
         "09:30 AM", "10:30 AM", "11:30 AM",
         "12:30 PM", "02:30 PM", "03:30 PM",
         "04:30 PM", "05:30 PM", "06:30 PM",
     ]
-    private var selectedTime: UIButton?
         
     override init(frame: CGRect) {
         super.init(frame: frame)
