@@ -38,12 +38,12 @@ private extension BottomTabbarViewController {
         appearanceTabbar.stackedLayoutAppearance.normal.titleTextAttributes = [
             .foregroundColor: UIColor.gray
         ]
-//        appearanceTabbar.stackedLayoutAppearance.selected.titleTextAttributes = [
-//            .foregroundColor: UIColor(named: "FPRed")?.cgColor
-//        ]
+        appearanceTabbar.stackedLayoutAppearance.selected.titleTextAttributes = [
+            .foregroundColor: UIColor.fpRed
+        ]
         
         // 탭바 아이콘 색상 설정
-        appearanceTabbar.stackedLayoutAppearance.selected.iconColor = UIColor(named: "FPRed")
+        appearanceTabbar.stackedLayoutAppearance.selected.iconColor = UIColor.fpRed
         
         tabBar.standardAppearance = appearanceTabbar
         tabBar.scrollEdgeAppearance = appearanceTabbar
