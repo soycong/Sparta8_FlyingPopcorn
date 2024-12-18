@@ -7,10 +7,17 @@
 
 import UIKit
 
+protocol MovieDetailDelegate: AnyObject {
+    // 예매하기 버튼 탭시 movieId 전달
+    func didTapBokkingButton(movieId: Int)
+}
+
 final class MovieDetailViewController: UIViewController {
     private let movieDetailView = MovieDetailView()
     private let movieNetwork: MovieNetwork
     private var movieID: Int // 영화 ID
+    
+    weak var delegate: MovieDetailDelegate?
     
     init(movieNetwork: MovieNetwork, movieID: Int) {
         self.movieNetwork = movieNetwork
@@ -29,7 +36,7 @@ final class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 네트워크 상태 확인
-        checkNetworkStatus()
+        checkNetworkAndFetchMovieDetail()
         bookingButton()
         fetchMovieDetail()
     }
@@ -47,6 +54,14 @@ final class MovieDetailViewController: UIViewController {
 
 // MARK: - Network 요청
 private extension MovieDetailViewController {
+    func checkNetworkAndFetchMovieDetail() {
+        if NetworkMonitor.shared.isConnected {
+            fetchMovieDetail()
+        } else {
+            showAlert(message: "네트워크가 연결되지 않았습니다. 인터넷 연결을 확인해주세요.")
+        }
+    }
+    
     // 영화 상세 정보 네트워크 요청
     func fetchMovieDetail() {
         movieNetwork.getMovieDetail(movieID: movieID) { [weak self] result in
@@ -65,5 +80,19 @@ private extension MovieDetailViewController {
     
     @objc func bookPushView() {
         print("예매하기버튼 탭")
+        
+        // TODO: - 로그인 여부 체크
+        
+        // 로그인 완료 후 예매하기 버튼 탭시
+        delegate?.didTapBokkingButton(movieId: movieID)
+    }
+}
+
+private extension MovieDetailViewController {
+    // 네트워크 연결이 없을 때 alert
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
 }
