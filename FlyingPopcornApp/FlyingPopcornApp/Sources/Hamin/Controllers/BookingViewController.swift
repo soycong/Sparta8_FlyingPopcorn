@@ -15,7 +15,14 @@ final class BookingViewController: UIViewController {
     private let timeOptionView: TimeOptionView = .init()
     private let formatOptionView: FormatOptionView = .init()
     private let quantityOptionView: QuantityOptionView = .init()
-    private let colorGuide: ColorGuide = .init()
+    private let colorGuideView: ColorGuideView = .init()
+    
+    private let confirmButton = UIButton().then {
+        $0.setTitle("결제하기", for: .normal)
+        $0.backgroundColor = .fpRed
+        $0.setTitleColor(._00, for: .normal)
+        $0.layer.cornerRadius = 24
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +30,9 @@ final class BookingViewController: UIViewController {
         view.backgroundColor = .systemGray
         
         setViews()
+        setButton()
         setConstraints()
+
     }
 
     private func setViews() {
@@ -31,7 +40,8 @@ final class BookingViewController: UIViewController {
         view.addSubview(formatOptionView)
         view.addSubview(timeOptionView)
         view.addSubview(quantityOptionView)
-        view.addSubview(colorGuide)
+        view.addSubview(colorGuideView)
+        view.addSubview(confirmButton)
     }
     
     private func setConstraints() {
@@ -59,9 +69,24 @@ final class BookingViewController: UIViewController {
             make.leading.trailing.equalToSuperview()
         }
         
-        colorGuide.snp.makeConstraints { make in
+        colorGuideView.snp.makeConstraints { make in
             make.top.equalTo(quantityOptionView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().inset(30)
+            make.leading.trailing.equalToSuperview()
         }
+        
+        confirmButton.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview().inset(16)
+            make.height.equalTo(48)
+        }
+    }
+    
+    private func setButton() {
+        confirmButton.addTarget(self,
+                                action: #selector(onTap),
+                                for: .touchUpInside)
+    }
+    
+    @objc private func onTap() {
+        print("confirmButton Tapped")
     }
 }
