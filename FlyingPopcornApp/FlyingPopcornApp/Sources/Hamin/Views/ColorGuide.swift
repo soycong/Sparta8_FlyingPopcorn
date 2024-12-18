@@ -29,22 +29,22 @@ final class ColorGuide: UIView {
     
     private let availableLabel = UILabel().then {
         $0.text = "선택 가능"
-        $0.textColor = ._100
+        $0.textColor = .fp100
     }
     
     private let unavailableLabel = UILabel().then {
         $0.text = "선택 불가"
-        $0.textColor = ._100
+        $0.textColor = .fp100
     }
     
     private let selectedLabel = UILabel().then {
         $0.text = "선택됨"
-        $0.textColor = ._100
+        $0.textColor = .fp100
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .whiteMain
+        backgroundColor = .fp950
         setViews()
         setConstraints()
     }

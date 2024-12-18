@@ -63,13 +63,13 @@ extension DateOptionView: DateOptionCellDelegate {
         if let previousButton = selectedDate {
             UIView.animate(withDuration: 0.3) {
                 previousButton.backgroundColor = .available
-                previousButton.tintColor = ._00
+                previousButton.tintColor = .fp300
             }
         }
         
         UIView.animate(withDuration: 0.3) {
             sender.backgroundColor = .fpIvory
-            sender.tintColor = ._450
+            sender.tintColor = .fp700
         }
         
         selectedDate = sender
