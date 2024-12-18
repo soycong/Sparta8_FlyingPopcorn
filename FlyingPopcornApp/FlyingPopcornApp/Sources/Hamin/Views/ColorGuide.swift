@@ -54,18 +54,24 @@ final class ColorGuide: UIView {
     }
     
     private func setViews() {
-//        [
-//            availableBox, availableLabel,
-//            unavailableBox, unavailableLabel,
-//            selectedBox, selectedBox
-//        ].forEach { addSubview($0) }
-        
-        addSubview(availableBox)
-        addSubview(availableLabel)
-        addSubview(unavailableBox)
-        addSubview(unavailableLabel)
-        addSubview(selectedBox)
-        addSubview(selectedLabel)
+       
+//        let views = [availableBox, availableLabel,
+//                     unavailableBox, unavailableLabel,
+//                     selectedBox, selectedBox]
+//        for view in views { addSubview(view) }
+//        
+//                [
+//                    availableBox, availableLabel,
+//                    unavailableBox, unavailableLabel,
+//                    selectedBox, selectedBox
+//                ].forEach { addSubview($0) }
+
+                addSubview(availableBox)
+                addSubview(availableLabel)
+                addSubview(unavailableBox)
+                addSubview(unavailableLabel)
+                addSubview(selectedBox)
+                addSubview(selectedLabel)
     }
     
     private func setConstraints() {
