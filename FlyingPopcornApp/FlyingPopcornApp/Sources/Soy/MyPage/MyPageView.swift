@@ -24,7 +24,7 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        self.backgroundColor = UIColor(named: "50")
+        self.backgroundColor = UIColor(named: "fp100")
         configureTableView()
     }
     
@@ -38,7 +38,7 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
         tableView.delegate = self
         
         tableView.separatorStyle = .none // 구분선 제거
-        tableView.backgroundColor = UIColor(named: "50")
+        tableView.backgroundColor = UIColor(named: "fp100")
         
         tableView.showsVerticalScrollIndicator = false //스크롤바 제거
         

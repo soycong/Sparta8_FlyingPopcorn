@@ -26,7 +26,7 @@ final class MovieSearchViewController: UIViewController {
     
     private func configureUI() {
         title = "Search" // 네비게이션 타이틀 추가
-        view.backgroundColor = UIColor(named: "greyLight1")
+        view.backgroundColor = UIColor(named: "fp100")
         
         // Search Controller 설정
         searchController.searchResultsUpdater = self

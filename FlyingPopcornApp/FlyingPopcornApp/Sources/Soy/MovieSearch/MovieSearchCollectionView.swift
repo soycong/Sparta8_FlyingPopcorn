@@ -27,7 +27,7 @@ final class MovieSearchCollectionView: UIView, UICollectionViewDataSource, UICol
         }
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-            $0.backgroundColor = UIColor(named: "greyLight1")
+            $0.backgroundColor = UIColor(named: "fp100")
             $0.showsVerticalScrollIndicator = false // 스크롤바 지우기
             $0.dataSource = self
             $0.delegate = self

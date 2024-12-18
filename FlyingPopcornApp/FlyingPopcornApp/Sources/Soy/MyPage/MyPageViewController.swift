@@ -17,7 +17,7 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
         
         view = myPageView
-        view.backgroundColor = UIColor(named: "50")
+        view.backgroundColor = UIColor(named: "fp100")
         
         myPageView.delegate = self
         
