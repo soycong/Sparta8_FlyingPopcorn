@@ -8,6 +8,17 @@
 import UIKit
 
 final class HomeViewController: UIViewController {
+    private let movieNetwork: MovieNetwork
+
+    init(movieNetwork: MovieNetwork) {
+        self.movieNetwork = movieNetwork
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Properties
     private var filters: [String] = ["All", "Adventure", "Action", "Drama", "Comedy", "Horror"]
     private var allNowShowingMovies: [Movie] = []
@@ -247,6 +258,14 @@ extension HomeViewController: UICollectionViewDelegate {
         case 1: // Now Showing Section
             let selectedMovie = filteredNowShowingMovies[indexPath.item]
             print("[HomeViewController] Selected Now Showing Movie: \(selectedMovie.title)")
+            
+            // TODO: - MovieNetwork 연결 필요
+            let id = 929590
+            
+            let movieDetailViewController = MovieDetailViewController(movieNetwork: movieNetwork, movieID: id)
+            navigationController?.pushViewController(movieDetailViewController, animated: true)
+            //present(movieDetailViewController, animated: true)
+            
         case 2: // Coming Soon Section
             let selectedMovie = filteredComingSoonMovies[indexPath.item]
             print("[HomeViewController] Selected Coming Soon Movie: \(selectedMovie.title)")

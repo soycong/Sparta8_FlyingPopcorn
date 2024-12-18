@@ -16,9 +16,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
     
         window = UIWindow(windowScene: windowScene)
-        let tabBarVC = BottomTabbarViewController()
-
-        window?.rootViewController = tabBarVC
+        
+        // MovieNetwork 초기화
+        let movieNetwork = MovieNetwork(network: Network<MovieListModel>(endPoint: "https://api.themoviedb.org/3"))
+        
+        let tabBarVC = BottomTabbarViewController(movieNetwork: movieNetwork)
+        let navigationController = UINavigationController(rootViewController: tabBarVC)
+        
+        // UINavigationController를 루트로 설정
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 
