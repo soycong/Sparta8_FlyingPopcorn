@@ -13,6 +13,7 @@ final class BookingViewController: UIViewController {
 
     private let timeOptionView: TimeOptionView = .init()
     private let formatOptionView: FormatOptionView = .init()
+    private let quantityOptionView: QuantityOptionView = .init()
     private let colorGuide: ColorGuide = .init()
     
     override func viewDidLoad() {
@@ -27,6 +28,7 @@ final class BookingViewController: UIViewController {
     private func setViews() {
         view.addSubview(formatOptionView)
         view.addSubview(timeOptionView)
+        view.addSubview(quantityOptionView)
         view.addSubview(colorGuide)
     }
     
@@ -43,8 +45,14 @@ final class BookingViewController: UIViewController {
             make.height.equalTo(200)
         }
         
-        colorGuide.snp.makeConstraints { make in
+        quantityOptionView.snp.makeConstraints { make in
             make.top.equalTo(timeOptionView.snp.bottom).offset(10)
+            make.bottom.equalTo(quantityOptionView.snp.top).offset(50)
+            make.leading.trailing.equalToSuperview()
+        }
+        
+        colorGuide.snp.makeConstraints { make in
+            make.top.equalTo(quantityOptionView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(30)
         }
     }
