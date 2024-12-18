@@ -52,6 +52,13 @@ final class UserInformationView: UIView {
         $0.alignment = .center
         $0.distribution = .fill
         $0.backgroundColor = .white
+        
+        // 그림자 설정
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOpacity = 0.1 // 그림자 투명도
+        $0.layer.shadowOffset = CGSize(width: 0, height: 2) // 그림자 위치
+        $0.layer.shadowRadius = 2 // 그림자 퍼짐 정도
+        $0.layer.masksToBounds = false // 그림자가 표시되도록 설정
     }
     
     override func layoutSubviews() {
@@ -62,7 +69,7 @@ final class UserInformationView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
-        self.layer.cornerRadius = 16
+        //self.layer.cornerRadius = 16
         
         configureUI()
         configureConstraints()
@@ -79,9 +86,7 @@ final class UserInformationView: UIView {
     private func configureConstraints() {
         
         horizontalStackView.snp.makeConstraints { make in
-            //make.centerY.equalToSuperview()
             make.top.equalTo(self.profileImageView.snp.top).offset(-10)
-            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).inset(5)
             make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading)
             make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing)
         }
