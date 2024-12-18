@@ -11,6 +11,7 @@ import SnapKit
 
 final class BookingViewController: UIViewController {
 
+    private let dateOptionView: DateOptionView = .init()
     private let timeOptionView: TimeOptionView = .init()
     private let formatOptionView: FormatOptionView = .init()
     private let quantityOptionView: QuantityOptionView = .init()
@@ -26,6 +27,7 @@ final class BookingViewController: UIViewController {
     }
 
     private func setViews() {
+        view.addSubview(dateOptionView)
         view.addSubview(formatOptionView)
         view.addSubview(timeOptionView)
         view.addSubview(quantityOptionView)
@@ -33,8 +35,14 @@ final class BookingViewController: UIViewController {
     }
     
     private func setConstraints() {
-        formatOptionView.snp.makeConstraints { make in
+        dateOptionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(50)
+        }
+        
+        formatOptionView.snp.makeConstraints { make in
+            make.top.equalTo(dateOptionView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(150)
         }
