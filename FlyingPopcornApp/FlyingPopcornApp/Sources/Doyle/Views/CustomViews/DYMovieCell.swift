@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
 
@@ -19,7 +20,7 @@ final class DYMovieCell: UICollectionViewCell {
         $0.layer.shadowColor = UIColor.black.cgColor
         $0.layer.shadowOpacity = 0.2
         $0.layer.shadowOffset = CGSize(width: 0, height: 4)
-        $0.layer.shadowRadius = 8
+        $0.layer.shadowRadius = 4
         $0.layer.masksToBounds = false
     }
     
@@ -30,25 +31,25 @@ final class DYMovieCell: UICollectionViewCell {
     
     private let titleLabel = UILabel().then{
         $0.font = UIFont.boldSystemFont(ofSize: 16)
-        $0.textColor = UIColor(named: "greyDark1")
+        $0.textColor = .fp800
         $0.numberOfLines = 1
     }
     
     private let genreLabel = UILabel().then{
         $0.font = UIFont.boldSystemFont(ofSize: 12)
-        $0.textColor = UIColor(named: "greyLight2")
+        $0.textColor = .fp400
         $0.numberOfLines = 1
     }
 
     private let runtimeIconView = UIImageView().then {
         $0.image = UIImage(systemName: "clock")
-        $0.tintColor = UIColor(named: "red")
+        $0.tintColor = .fpRed
         $0.contentMode = .scaleAspectFit
     }
 
     private let runtimeLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 10)
-        $0.textColor = UIColor(named: "greyLight3")
+        $0.textColor = .fp400
     }
     
     private lazy var runtimeStackView = UIStackView(arrangedSubviews: [runtimeIconView, runtimeLabel]).then{
@@ -76,7 +77,7 @@ final class DYMovieCell: UICollectionViewCell {
         layer.masksToBounds = false
         backgroundColor = .clear
         
-        contentView.backgroundColor = UIColor(named: "white")
+        contentView.backgroundColor = .fp00
         contentView.layer.cornerRadius = 16
         contentView.clipsToBounds = true
         
@@ -117,9 +118,9 @@ final class DYMovieCell: UICollectionViewCell {
     }
     
     // MARK: - 데이터 설정 메서드
-    func configure(with movie: DYMovie) {
+    func configure(with movie: Movie) {
         let imageURL = URL(string: movie.posterURL)
-        // posterImageView.loadImage(from: imageURL!)
+        posterImageView.loadImage(from: imageURL!)
         titleLabel.text = movie.title
         genreLabel.text = movie.genres.prefix(2).joined(separator: ", ") // Genres에서 앞의 2개만 표시
         runtimeLabel.text = "\(movie.runtime) min"
