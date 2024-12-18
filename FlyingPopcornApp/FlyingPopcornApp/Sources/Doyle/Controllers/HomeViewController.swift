@@ -9,117 +9,46 @@ import UIKit
 
 final class HomeViewController: UIViewController {
     // MARK: - Properties
-    private let logoImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "star") // 임시 이미지: 후에 로고로 변경
-        $0.contentMode = .scaleAspectFit
-    }
-    
-    private let searchButton = UIButton(type: .system).then { // 임의의 스타일: 후에 검색 화면에 맞춰 변경
-        $0.backgroundColor = .fp00
-        $0.setTitle("     Search...", for: .normal)
-        $0.setTitleColor(.fp500, for: .normal)
-        $0.contentHorizontalAlignment = .left
-        $0.layer.cornerRadius = 16
-        $0.layer.shadowColor = UIColor.black.cgColor
-        $0.layer.shadowOpacity = 0.2
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
-        $0.layer.shadowRadius = 3
-    }
-    
-    private var collectionView: UICollectionView?
-//    private var isInitialSelectionDone = false
-    
-    // collectionView 데이터
-    private var filters: [String] = ["All", "Adventure", "Action", "Drama", "Comedy", "Horror"] // 더미 데이터
+    private var filters: [String] = ["All", "Adventure", "Action", "Drama", "Comedy", "Horror"]
     private var allNowShowingMovies: [Movie] = []
     private var allComingSoonMovies: [Movie] = []
     private var filteredNowShowingMovies: [Movie] = []
     private var filteredComingSoonMovies: [Movie] = []
     
+    private let homeView = HomeView()
+    
     // MARK: - LifeCycle
+    override func loadView() {
+        self.view = homeView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupCollectionView()
         setupDummyData()
-        applyFilter(index: 0) // 초기 필터: "All"
+        applyFilter(index: 0)
         
         DispatchQueue.main.async {
             let firstIndexPath = IndexPath(item: 0, section: 0)
-            self.collectionView?.selectItem(at: firstIndexPath, animated: false, scrollPosition: .left)
-            if let firstCell = self.collectionView?.cellForItem(at: firstIndexPath) as? DYFilterCell {
+            self.homeView.collectionView.selectItem(at: firstIndexPath, animated: false, scrollPosition: .left)
+            if let firstCell = self.homeView.collectionView.cellForItem(at: firstIndexPath) as? DYFilterCell {
                 firstCell.updateSelectionState(isSelected: true)
             }
         }
     }
     
-    /*
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        // 처음 한 번만 기본 필터가 선택되도록 처리
-        if !isInitialSelectionDone {
-            let firstIndexPath = IndexPath(item:0 , section: 0)
-            collectionView?.selectItem(at: firstIndexPath, animated: false, scrollPosition: .left)
-            collectionView(collectionView!, didSelectItemAt: firstIndexPath)
-            isInitialSelectionDone = true
-        }
-    }
-     */
-    
-    // MARK: - Setup UI
-    private func setupUI() {
-        view.backgroundColor = .fp50
-        
-        // 상단 StackView
-        let topStackView = UIStackView(arrangedSubviews: [logoImageView, searchButton])
-        topStackView.axis = .horizontal
-        topStackView.spacing = 12
-        topStackView.alignment = .center
-        topStackView.distribution = .fill
-        
-        view.addSubview(topStackView)
-        setupCollectionView()
-        collectionView?.backgroundColor = .fp50
-        
-        // SnapKit으로 레이아웃 설정
-        topStackView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
-        }
-        
-        logoImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(45)
-        }
-        
-        searchButton.snp.makeConstraints { make in
-            make.height.equalTo(45)
-        }
-        
-        collectionView?.snp.makeConstraints{ make in
-            make.top.equalTo(topStackView.snp.bottom).offset(16)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
-    }
-    
+    // MARK: - Setup
     private func setupCollectionView() {
-        // Compositional Layout 생성
-        let layout = createCompositionalLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
-        // CollectionView 설정
+        let collectionView = homeView.collectionView
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        // 셀 및 헤더 등록
         collectionView.register(DYFilterCell.self, forCellWithReuseIdentifier: DYFilterCell.identifier)
         collectionView.register(DYMovieCell.self, forCellWithReuseIdentifier: DYMovieCell.identifier)
         collectionView.register(DYPosterCell.self, forCellWithReuseIdentifier: DYPosterCell.identifier)
         collectionView.register(DYHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DYHeaderView.identifier)
         
-        // 컬렉션 뷰를 뷰에 추가
-        view.addSubview(collectionView)
-        self.collectionView = collectionView
+        collectionView.collectionViewLayout = createCompositionalLayout()
     }
     
     // MARK: - 더미 데이터 설정
@@ -182,7 +111,7 @@ final class HomeViewController: UIViewController {
         }
 
         print("[HomeViewController] Filter Selected: \(filter)")
-        collectionView?.reloadSections(IndexSet([1, 2]))
+        homeView.collectionView.reloadSections(IndexSet([1, 2]))
     }
     
     // MARK: - Compositional Layout
@@ -254,10 +183,12 @@ final class HomeViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
+    // 섹션 개수
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
     }
     
+    // 섹션별 셀 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0: return filters.count
@@ -267,6 +198,7 @@ extension HomeViewController: UICollectionViewDataSource {
         }
     }
     
+    // 데이터 설정
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
@@ -306,6 +238,8 @@ extension HomeViewController: UICollectionViewDataSource {
 
 // MARK: - UICOllectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
+    
+    // 셀 선택 액션
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0: // Filter Section
@@ -324,7 +258,8 @@ extension HomeViewController: UICollectionViewDelegate {
             break
         }
     }
-
+    
+    // 셀 선택 해제 액션
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             let cell = collectionView.cellForItem(at: indexPath) as? DYFilterCell
