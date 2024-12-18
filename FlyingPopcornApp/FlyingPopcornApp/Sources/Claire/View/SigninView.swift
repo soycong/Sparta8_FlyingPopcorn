@@ -49,7 +49,7 @@ final class SigninView: UIView {
         subTitleLabel.textColor = UIColor.systemGray4
         
         withoutSigninButton.setTitle("로그인 없이 둘러보기 >", for: .normal)
-        withoutSigninButton.setTitleColor(UIColor(red: 220/255, green: 71/255, blue: 71/255, alpha: 1.0), for: .normal)
+        withoutSigninButton.setTitleColor(UIColor(named: "FPRed"), for: .normal)
         withoutSigninButton.titleLabel?.font = .systemFont(ofSize: 14)
         withoutSigninButton.addTarget(self, action: #selector(takeAroundWithout), for: .touchUpInside)
         

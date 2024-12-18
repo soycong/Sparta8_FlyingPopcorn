@@ -10,10 +10,10 @@ struct UserDefaultsHelper {
     
     func saveUserData(user: UserData) {
         
-
     }
     
-    func checkUserData(email: String, password: String)  {
+    func checkUserData(email: String, password: String) -> (response: Bool, password: String)  {
     
+        return (response: true, password: "")
     }
 }
