@@ -109,6 +109,7 @@ final class HomeViewController: UIViewController {
         
         // CollectionView 설정
         collectionView.dataSource = self
+        collectionView.delegate = self
         
         // 셀 및 헤더 등록
         collectionView.register(DYFilterCell.self, forCellWithReuseIdentifier: DYFilterCell.identifier)
@@ -168,6 +169,7 @@ final class HomeViewController: UIViewController {
             allComingSoonMovies.append($0)
         }
     }
+    
     // MARK: - Filter Logic
     private func applyFilter(index: Int) {
         let filter = filters[index]
@@ -259,8 +261,8 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0: return filters.count
-        case 1: return allNowShowingMovies.count
-        case 2: return allComingSoonMovies.count
+        case 1: return filteredNowShowingMovies.count
+        case 2: return filteredComingSoonMovies.count
         default: return 0
         }
     }
@@ -273,11 +275,11 @@ extension HomeViewController: UICollectionViewDataSource {
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DYMovieCell.identifier, for: indexPath) as! DYMovieCell
-            cell.configure(with: allNowShowingMovies[indexPath.item])
+            cell.configure(with: filteredNowShowingMovies[indexPath.item])
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DYPosterCell.identifier, for: indexPath) as! DYPosterCell
-            cell.configure(with: allComingSoonMovies[indexPath.item])
+            cell.configure(with: filteredComingSoonMovies[indexPath.item])
             return cell
         default:
             return UICollectionViewCell()
