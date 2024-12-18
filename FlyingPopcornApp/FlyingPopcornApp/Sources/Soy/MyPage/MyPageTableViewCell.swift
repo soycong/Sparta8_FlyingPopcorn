@@ -57,12 +57,11 @@ final class MyPageTableViewCell: UITableViewCell {
         $0.alignment = .center
         $0.distribution = .fill
         $0.backgroundColor = .white
+        $0.layer.cornerRadius = 16
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 16
         
         configureUI()
         configureConstraints()
@@ -72,6 +71,13 @@ final class MyPageTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        //contentView.frame = self.bounds
+        //contentView.frame = self.bounds.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        //contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
+    }
+    
     private func configureUI() {
         self.addSubview(horizontalStackView)
     }
@@ -79,22 +85,23 @@ final class MyPageTableViewCell: UITableViewCell {
     private func configureConstraints() {
         
         horizontalStackView.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).inset(5)
-            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).inset(5)
-            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).inset(5)
-            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).inset(5)
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(5)
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-5)
+            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(16)
+            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).offset(-16)
         }
         
         verticalStackView.snp.makeConstraints { make in
             make.top.equalTo(self.horizontalStackView.snp.top).inset(5)
             make.bottom.equalTo(self.horizontalStackView.snp.bottom).inset(5)
-            //make.leading.equalTo(self.horizontalStackView.snp.leading).inset(5)
-            //make.trailing.equalTo(self.horizontalStackView.snp.trailing).inset(5)
+            make.trailing.equalTo(self.horizontalStackView.snp.trailing)
         }
         
         let itemWidth = (UIScreen.main.bounds.width - 52) / 3 // 각 셀의 너비 계산 (leading + trailing 여백 제외)
         movieImageView.snp.makeConstraints { make in
-            make.leading.equalTo(self.horizontalStackView.snp.leading)
+            make.leading.equalTo(self.horizontalStackView.snp.leading).inset(5)
+            make.top.equalTo(self.horizontalStackView.snp.top).offset(5)
+            make.bottom.equalTo(self.horizontalStackView.snp.bottom).offset(-5)
             make.width.equalTo(itemWidth)
             make.height.equalTo(itemWidth*1.5)
         }
