@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
 
@@ -14,12 +15,20 @@ final class DYFilterCell: UICollectionViewCell {
     
     private let filterLabel = DYPaddedLabel().then {
         $0.font = UIFont.systemFont(ofSize: 12)
-        $0.textColor = UIColor(named: "red")
         $0.textAlignment = .center
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - UI 설정
+    private func setupUI() {
         contentView.addSubview(filterLabel)
         contentView.layer.cornerRadius = 6
         contentView.clipsToBounds = true
@@ -28,22 +37,18 @@ final class DYFilterCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
         
-        // 초기 스타일 설정
-        updateStyle(isSelected: false)
+        // 기본 셀 스타일링
+        contentView.backgroundColor = .fpRedLight1
+        filterLabel.textColor = .fp500
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - 선택 시 스타일 변경
-    private func updateStyle(isSelected: Bool) {
+    func updateSelectionState(isSelected: Bool) {
         if isSelected {
-            contentView.backgroundColor = UIColor(named: "red")
-            filterLabel.textColor = UIColor(named: "white")
+            contentView.backgroundColor = .fpRed
+            filterLabel.textColor = .white
         } else {
-            contentView.backgroundColor = UIColor(named: "redLight1")
-            filterLabel.textColor = UIColor(named: "greyDark2")
+            contentView.backgroundColor = .fpRedLight1
+            filterLabel.textColor = .fp500
         }
     }
     
