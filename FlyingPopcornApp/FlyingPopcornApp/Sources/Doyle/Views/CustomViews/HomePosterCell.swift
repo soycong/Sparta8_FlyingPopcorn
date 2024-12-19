@@ -21,6 +21,14 @@ final class HomePosterCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.2
+        layer.shadowOffset = CGSize(width: 0, height: 2)
+        layer.shadowRadius = 6
+        layer.masksToBounds = false
+        backgroundColor = .clear
+        
         contentView.addSubview(imageView)
         
         imageView.snp.makeConstraints { make in
