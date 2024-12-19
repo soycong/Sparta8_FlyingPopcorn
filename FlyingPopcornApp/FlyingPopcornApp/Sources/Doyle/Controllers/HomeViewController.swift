@@ -42,6 +42,20 @@ final class HomeViewController: UIViewController {
         applyFilter(index: 0)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // 이 화면에 들어올 때 Navigation Bar 숨기기
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // 이 화면을 떠날 때 Navigation Bar 다시 보이게 하기
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     // MARK: - Setup
     private func setupCollectionView() {
         let collectionView = homeView.collectionView
