@@ -109,3 +109,18 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
         tableView.insertRows(at: indexPaths, with: animation)
     }
 }
+
+// 유저 데이터 업데이트
+extension MyPageView {
+    func updateUserInformation(with userData: UserData) {
+        if let familyName = userData.familyName,
+           let name = userData.name {
+            userInformationView.updateDisplay(
+                name: "\(familyName) \(name)",
+                email: userData.email ?? ""
+            )
+        } else {
+            userInformationView.showLoginRequired()
+        }
+    }
+}
