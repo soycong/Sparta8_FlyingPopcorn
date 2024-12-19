@@ -266,6 +266,7 @@ extension HomeViewController: UICollectionViewDelegate {
             
             // MovieDetailViewController로 영화 데이터 전달
             let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie) // 생성자 주입
+            detailVC.hidesBottomBarWhenPushed = true // 탭바 숨기기 설정
             navigationController?.pushViewController(detailVC, animated: true)
         case 2: // Coming Soon Section
             let selectedMovie = filteredPopularMovies[indexPath.item]
@@ -273,6 +274,7 @@ extension HomeViewController: UICollectionViewDelegate {
             
             // MovieDetailViewController로 영화 데이터 전달
             let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie) // 생성자 주입
+            detailVC.hidesBottomBarWhenPushed = true // 탭바 숨기기 설정
             navigationController?.pushViewController(detailVC, animated: true)
         default:
             break
