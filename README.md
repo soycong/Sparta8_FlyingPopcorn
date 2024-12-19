@@ -46,7 +46,7 @@
 | 박시연 <br> ( Siyeon Park ) | [@sy0201](https://github.com/sy0201) | Project Coordinator <br> Present Lead | 영화 상세 화면, 하단 탭바, 화면 연결 <br> 영화 데이터 네트워크 모델 |
 | 박채현 <br> ( Chaehyun Park ) | [@claire-blue-park](https://github.com/claire-blue-park) | Design Specialist <br> Vibe Energizer | 인트로/로고 디자인, 로그인/회원가입 화면 <br> 회원 정보 관리 모델 |
 | 백서희 <br> ( Seohui Baek ) | [@soycong](https://github.com/soycong) | Design Organizer <br> Present Coordinator | 검색 화면, 마이페이지/예매내역 화면 <br> 영화 검색 모델 |
-| 황도일 <br> ( Doyle Hwang ) | [@DoyleHWorks](https://github.com/DoyleHWorks) | Git Admin <br> Docs Manager | 홈 화면, 화면 연결 보조 <br> 팀 리딩, 프로젝트 리소스 관리 |
+| 황도일 <br> ( Doyle Hwang ) | [@DoyleHWorks](https://github.com/DoyleHWorks) | Team Resource Manager <br> Present Lead | 홈 화면, 화면 연결 보조 <br> 팀 리딩, 프로젝트 리소스 관리 |
 
 ## ⏰ Project Scope
 - **시작일**: 2024/12/13
