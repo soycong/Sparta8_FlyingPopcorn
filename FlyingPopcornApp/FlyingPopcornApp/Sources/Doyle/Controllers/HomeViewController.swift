@@ -32,6 +32,7 @@ final class HomeViewController: UIViewController {
     
     // MARK: - LifeCycle
     override func loadView() {
+        homeView.searchButton.addTarget(self, action: #selector(goToSearchPage), for: .touchUpInside)
         self.view = homeView
     }
     
@@ -123,7 +124,16 @@ final class HomeViewController: UIViewController {
         homeView.collectionView.reloadData()
     }
     
-    // MARK: - Compositional Layout
+    // MARK: - Button Action for Search Bar
+    @objc func goToSearchPage() {
+        if let tabBar = self.tabBarController {
+            tabBar.selectedIndex = 1 // 검색 페이지로 이동
+        }
+    }
+}
+
+// MARK: - CollectionView: Compositional Layout
+extension HomeViewController {
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { sectionIndex, _ in
             switch sectionIndex {
