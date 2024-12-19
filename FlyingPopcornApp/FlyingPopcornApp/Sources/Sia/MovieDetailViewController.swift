@@ -15,13 +15,13 @@ protocol MovieDetailDelegate: AnyObject {
 final class MovieDetailViewController: UIViewController {
     private let movieDetailView = MovieDetailView()
     private let movieNetwork: MovieNetwork
-    private var movieID: Int // 영화 ID
+    private var movie: Movie // 영화
     
     weak var delegate: MovieDetailDelegate?
     
-    init(movieNetwork: MovieNetwork, movieID: Int) {
+    init(movieNetwork: MovieNetwork, movie: Movie) {
         self.movieNetwork = movieNetwork
-        self.movieID = movieID
+        self.movie = movie
         super.init(nibName: nil, bundle: nil)
     }
     
