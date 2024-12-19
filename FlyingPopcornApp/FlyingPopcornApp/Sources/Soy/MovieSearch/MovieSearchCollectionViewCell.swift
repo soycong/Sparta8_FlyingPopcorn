@@ -100,7 +100,7 @@ extension MovieSearchCollectionViewCell {
         
         movieTitleLabel.text = movie.title
         
-        movieGenreLabel.text = movie.genres.joined(separator: ", ")
+        movieGenreLabel.text = "\(movie.genres[0]) · \(movie.genres[1])"
     }
 }
 
