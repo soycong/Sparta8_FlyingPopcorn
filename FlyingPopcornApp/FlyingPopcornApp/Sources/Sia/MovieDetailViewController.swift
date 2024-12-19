@@ -105,14 +105,14 @@ private extension MovieDetailViewController {
         // 로그인 여부 체크
         if userData.email == nil {
             // 데이터가 없으면 로그인 화면으로 이동
-            let signUpVC = SignupViewController()
-            let signUpNavController = UINavigationController(rootViewController: signUpVC)
-            signUpNavController.modalPresentationStyle = .fullScreen
+            let signInVC = SigninViewController()
+            let signInNavController = UINavigationController(rootViewController: signInVC)
+            signInNavController.modalPresentationStyle = .fullScreen
             
             // 현재 윈도우 가져와서 루트 변경
             if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? UIWindowSceneDelegate,
                let window = sceneDelegate.window {
-                window?.rootViewController = signUpNavController
+                window?.rootViewController = signInNavController
                 window?.makeKeyAndVisible()
             }
         } else {
