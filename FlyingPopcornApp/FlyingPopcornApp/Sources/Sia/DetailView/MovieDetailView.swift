@@ -18,7 +18,7 @@ final class MovieDetailView: UIView {
     
     let bookingButton = UIButton().then {
         $0.setTitle("예매하기", for: .normal)
-        $0.backgroundColor = UIColor(named: "red")
+        $0.backgroundColor = .fpRed
         $0.setTitleColor(.white, for: .normal)
         $0.layer.cornerRadius = 24
     }
@@ -28,14 +28,14 @@ final class MovieDetailView: UIView {
     }
     
     private let roundView = UIView().then {
-        $0.backgroundColor = UIColor(named: "white")
+        $0.backgroundColor = .fp00
         $0.layer.cornerRadius = 20
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         $0.clipsToBounds = true
     }
     
     private let titleLabel = UILabel().then { $0.font = UIFont.systemFont(ofSize: 20)
-        $0.textColor = UIColor(named: "greyDark3")
+        $0.textColor = .fp900
     }
     
     private let secondStackView = UIStackView().then {
@@ -57,7 +57,7 @@ final class MovieDetailView: UIView {
     }
     
     private let runtimeLabel = UILabel().then { $0.font = UIFont.systemFont(ofSize: 12)
-        $0.textColor = UIColor(named: "greyLight2")
+        $0.textColor = .fp200
     }
     
     private let releaseStackView = UIStackView().then {
@@ -72,27 +72,27 @@ final class MovieDetailView: UIView {
     }
     
     private let releaseDateLabel = UILabel().then { $0.font = UIFont.systemFont(ofSize: 12)
-        $0.textColor = UIColor(named: "greyLight2")
+        $0.textColor = .fp200
     }
     
     private let starView = RateView()
     
     private let scoreLabel = UILabel().then { $0.font = UIFont.systemFont(ofSize: 16)
-        $0.textColor = UIColor(named: "greyLight2")
+        $0.textColor = .fp400
     }
     
     private let genreView = UIView()
     
     private let descriptionTitleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 16)
-        $0.textColor = UIColor(named: "greyDark3")
+        $0.textColor = .fp900
         $0.text = "Plot Summary"
         $0.numberOfLines = 1
     }
     
     private let descriptionLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 12)
-        $0.textColor = UIColor(named: "greyLight2")
+        $0.textColor = .fp900
         $0.numberOfLines = 0
     }
     
@@ -108,7 +108,7 @@ final class MovieDetailView: UIView {
     }
     
     private func setupUI() {
-        backgroundColor = UIColor(named: "white")
+        backgroundColor = .fp00
         
         addSubViews([scrollView, bookingButton])
         scrollView.addSubview(contentView)
@@ -206,13 +206,13 @@ final class MovieDetailView: UIView {
         for genre in genres {
             let genreLabel = UILabel().then { $0.text = genre
                 $0.font = UIFont.systemFont(ofSize: 12)
-                $0.textColor = UIColor(named: "greyDark3")
+                $0.textColor = .fp800
                 $0.textAlignment = .center
             }
             
             // 장르 배경 뷰
             let containerView = UIView().then { $0.layer.cornerRadius = 15
-                $0.backgroundColor = UIColor(named: "redLight1")
+                $0.backgroundColor = .fpRedLight1
                 $0.clipsToBounds = true
             }
             
@@ -237,7 +237,6 @@ final class MovieDetailView: UIView {
     }
     
     func configureView(with movie: Movie) {
-        
         titleLabel.text = movie.title
         let rating = movie.voteAverage
         if rating > 0 {
