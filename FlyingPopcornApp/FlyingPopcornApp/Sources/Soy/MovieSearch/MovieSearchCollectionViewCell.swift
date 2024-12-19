@@ -9,23 +9,20 @@ import UIKit
 
 final class MovieSearchCollectionViewCell: UICollectionViewCell {
     private let movieImageView = UIImageView().then {
-        $0.image = UIImage(named: "MoviePoster2")
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
     }
     
     private let movieTitleLabel = UILabel().then {
-        $0.text = "MovieTitle"
         $0.font = .boldSystemFont(ofSize: 14)
-        $0.textColor = UIColor(named: "grayDark3")
+        $0.textColor = .fp900
         $0.textAlignment = .left
     }
     
     private let movieGenreLabel = UILabel().then {
-        $0.text = "MovieGenre"
         $0.font = .systemFont(ofSize: 10)
-        $0.textColor = UIColor(named: "grayLight3")
+        $0.textColor = .fp900
         $0.textAlignment = .left
     }
     
@@ -45,7 +42,7 @@ final class MovieSearchCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = .fp00
         self.layer.cornerRadius = 16
         
         configureUI()

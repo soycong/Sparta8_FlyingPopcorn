@@ -10,6 +10,11 @@ import UIKit
 import SnapKit
 import Then
 
+//로그인 화면 없을 경우 델리게이트
+protocol MyPageViewLoginDelegate: AnyObject {
+    func myPageViewDidRequestLogin()
+}
+
 protocol MyPageViewDelegate: AnyObject {
     func numberOfItems() -> Int
     func ticket(at index: Int) -> Ticket
@@ -17,6 +22,7 @@ protocol MyPageViewDelegate: AnyObject {
 
 final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
     weak var delegate: MyPageViewDelegate?
+    weak var loginDelegate: MyPageViewLoginDelegate?
 
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
@@ -24,8 +30,9 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        self.backgroundColor = UIColor(named: "fp100")
+        self.backgroundColor = .fp100
         configureTableView()
+        userInformationView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -38,7 +45,7 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
         tableView.delegate = self
         
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(named: "fp100")
+        tableView.backgroundColor = .fp100
         
         tableView.showsVerticalScrollIndicator = false //스크롤바 제거
         
@@ -67,7 +74,7 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
         let titleLabel = UILabel().then {
             $0.text = "🍿 최근 예매 목록"
             $0.font = UIFont.boldSystemFont(ofSize: 18)
-            $0.textColor = .black
+            $0.textColor = .fp950
         }
         
         headerView.addSubview(titleLabel)
@@ -122,5 +129,11 @@ extension MyPageView {
         } else {
             userInformationView.showLoginRequired()
         }
+    }
+}
+
+extension MyPageView: UserInformationViewDelegate {
+    func userInformationViewDidTapForLogin() {
+        loginDelegate?.myPageViewDidRequestLogin()
     }
 }

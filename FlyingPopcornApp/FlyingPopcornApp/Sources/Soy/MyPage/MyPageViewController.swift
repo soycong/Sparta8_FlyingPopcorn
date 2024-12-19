@@ -16,9 +16,10 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
         
         view = myPageView
-        view.backgroundColor = UIColor(named: "fp100")
+        view.backgroundColor = .fp100
         
         myPageView.delegate = self
+        myPageView.loginDelegate = self
         
         configureUI()
         updateUserInformation()
@@ -51,7 +52,6 @@ extension MyPageViewController: MyPageViewDelegate {
     }
     
     func numberOfItems() -> Int {
-        print("티켓 개수 \(tickets.count)")
         return tickets.count
     }
     
@@ -65,5 +65,14 @@ extension MyPageViewController {
     private func updateUserInformation() {
         let userData = UserData.loginedUser
         myPageView.updateUserInformation(with: userData)
+    }
+}
+
+extension MyPageViewController: MyPageViewLoginDelegate {
+    func myPageViewDidRequestLogin() {
+        let signinVC = SigninViewController()
+        let navController = UINavigationController(rootViewController: signinVC)
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
     }
 }
