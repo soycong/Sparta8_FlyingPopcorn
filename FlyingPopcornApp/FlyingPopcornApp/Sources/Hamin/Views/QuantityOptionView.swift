@@ -16,12 +16,12 @@ final class QuantityOptionView: UIView {
     
     private let label = UILabel().then {
         $0.text = "수량"
-        $0.textColor = ._450
+        $0.textColor = .fp950
     }
     
     private let quantityLabel = UILabel().then {
         $0.text = "1"
-        $0.textColor = ._450
+        $0.textColor = .fp950
     }
     
     private let stepper = UIStepper().then {

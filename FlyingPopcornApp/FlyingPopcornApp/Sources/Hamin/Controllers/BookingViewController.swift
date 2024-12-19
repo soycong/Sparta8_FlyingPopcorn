@@ -21,10 +21,11 @@ final class BookingViewController: UIViewController {
     private let quantityOptionView: QuantityOptionView = .init()
     private let colorGuideView: ColorGuideView = .init()
     
+    // TO-DO: 모든 옵션을 선택하지 않았으면 버튼 회색처리 + 탭 안되게
     private let confirmButton = UIButton().then {
         $0.setTitle("결제하기", for: .normal)
-        $0.backgroundColor = ._150
-        $0.setTitleColor(._00, for: .normal)
+        $0.backgroundColor = .fpRed
+        $0.setTitleColor(.fp00, for: .normal)
         $0.layer.cornerRadius = 24
     }
     
