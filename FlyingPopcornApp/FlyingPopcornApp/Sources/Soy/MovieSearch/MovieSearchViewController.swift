@@ -11,8 +11,10 @@ final class MovieSearchViewController: UIViewController {
     private let movieSearchView = MovieSearchCollectionView()
     private let searchController = UISearchController()
     
-    private var movies: [DummyMovieData] = [] // 전체 데이터
-    private var searchedMovies: [DummyMovieData] = [] // 검색 결과 데이터
+    private var movies: [Movie] = [] // 전체 데이터
+    private var searchedMovies: [Movie] = [] // 검색 결과 데이터
+    
+    private var movieNetwork: MovieNetwork?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,15 +22,17 @@ final class MovieSearchViewController: UIViewController {
         view = movieSearchView
         movieSearchView.delegate = self
         
+        let networkProvider = NetworkProvider()
+        movieNetwork = networkProvider.makeMovieNetwork()
+        
         configureUI()
-        configureData()
+        fetchMovies()
     }
     
     private func configureUI() {
-        title = "Search" // 네비게이션 타이틀 추가
-        view.backgroundColor = UIColor(named: "greyLight1")
+        title = "Search"
+        view.backgroundColor = UIColor(named: "fp100")
         
-        // Search Controller 설정
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Movies"
@@ -36,13 +40,21 @@ final class MovieSearchViewController: UIViewController {
         definesPresentationContext = true
     }
     
-    private func configureData() {
-        movies = [
-            DummyMovieData(title: "Coco", genre: "Animation", posterImageName: "MoviePoster1", runTime: "", schedule: ""),
-            DummyMovieData(title: "Joker", genre: "Thriller", posterImageName: "MoviePoster2", runTime: "", schedule: ""),
-            DummyMovieData(title: "The Avengers", genre: "Action", posterImageName: "MoviePoster3", runTime: "", schedule: ""),
-        ]
-        searchedMovies = movies // 초기 상태에선 전체 데이터 표시
+    // API에서 영화 목록 가져오기
+    private func fetchMovies() {
+        movieNetwork?.getUpcomingMovies { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let movieList):
+                    self?.movies = movieList.results
+                    self?.searchedMovies = movieList.results
+                    self?.movieSearchView.reloadCollectionView()
+                case .failure(let error):
+                    print("영화 목록 로딩 실패: \(error)")
+                    print("에러 세부 정보: \(error.localizedDescription)")
+                }
+            }
+        }
     }
 }
 
@@ -68,7 +80,14 @@ extension MovieSearchViewController: MovieSearchViewDelegate {
         return searchedMovies.count
     }
     
-    func movie(at index: Int) -> DummyMovieData {
+    func movie(at index: Int) -> Movie {
         return searchedMovies[index]
+    }
+    
+    func didSelectMovie(at index: Int) {
+        let selectedMovie = searchedMovies[index]
+       // let movieDetailVC = MovieDetailViewController(movieID: selectedMovie.id)
+        let movieDetailVC = MyPageViewController() //임의로 설정
+        navigationController?.pushViewController(movieDetailVC, animated: true)
     }
 }
