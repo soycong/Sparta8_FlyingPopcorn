@@ -12,12 +12,11 @@ import SnapKit
 final class BookingViewController: UIViewController {
     
     var movie: Movie
-    var bookedTicket: Ticket?
     
     private let cinemaModel: Cinema = .init()
     
     private let dateOptionView: DateOptionView = .init(with: Cinema.schedule)
-    private let timeOptionView: TimeOptionView = .init(with: Cinema.schedule)
+    private let timeOptionView: TimeOptionView = .init()
     private let formatOptionView: FormatOptionView = .init(with: Cinema.availableFormat)
     private let quantityOptionView: QuantityOptionView = .init()
     private let colorGuideView: ColorGuideView = .init()
@@ -60,22 +59,15 @@ final class BookingViewController: UIViewController {
     }
     
     private func setConstraints() {
-        dateOptionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(70)
+        confirmButton.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview().inset(24)
+            make.height.equalTo(48)
         }
         
-        formatOptionView.snp.makeConstraints { make in
-            make.top.equalTo(dateOptionView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(50)
-        }
-        
-        timeOptionView.snp.makeConstraints { make in
-            make.top.equalTo(formatOptionView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(170)
+        colorGuideView.snp.makeConstraints { make in
+            make.width.equalTo(confirmButton.snp.width)
+            make.bottom.equalTo(confirmButton.snp.top).offset(-40)
+            make.centerX.equalTo(confirmButton)
         }
         
         quantityOptionView.snp.makeConstraints { make in
@@ -84,14 +76,22 @@ final class BookingViewController: UIViewController {
             make.leading.trailing.equalToSuperview()
         }
         
-        colorGuideView.snp.makeConstraints { make in
-            make.top.equalTo(quantityOptionView.snp.bottom).offset(10)
+        timeOptionView.snp.makeConstraints { make in
+            make.top.equalTo(formatOptionView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
+            make.height.equalTo(170)
         }
         
-        confirmButton.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview().inset(16)
-            make.height.equalTo(48)
+        formatOptionView.snp.makeConstraints { make in
+            make.top.equalTo(dateOptionView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(50)
+        }
+        
+        dateOptionView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(70)
         }
     }
     
@@ -103,16 +103,53 @@ final class BookingViewController: UIViewController {
     
     @objc private func onTap() {
         print("confirmButton Tapped")
-        print(dateOptionView.selectedDate?.titleLabel?.text ?? "no value")
-        print(formatOptionView.selectedFormat?.titleLabel?.text ?? "no value")
-        print(timeOptionView.selectedTime?.titleLabel?.text ?? "no value")
-        print(quantityOptionView.selectedQuantity.description)
+        guard let time = dateOptionView.selectedDate?.date?.description,
+              let format = formatOptionView.selectedFormat?.titleLabel?.text else { return }
+        let quantity = quantityOptionView.selectedQuantity.description
         
-        bookedTicket = Ticket(movie: movie,
-                              date: Date(), // 작업중이라 임시로 현재 시간 넣음
-                              format: (formatOptionView.selectedFormat?.titleLabel?.text)!,
-                              quantity: quantityOptionView.selectedQuantity)
+        // TO-DO: alert창 띄워서 예매 목록 or 홈화면으로 가게 선택
+        let alert = UIAlertController(title: "예매 내역 확인",
+                                      message: "영화: \(movie.title)\n 시간: \(time)\n 포맷: \(format)\n 수량: \(quantity)",
+                                      preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+            print("확인 버튼 누름")
+            
+//            self.confirmBooking()
+            
+            
+        }))
+
+//        alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: { _ in
+//            print("취소됨")
+//        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        self.present(alert, animated: true, completion: nil)
+        
+        let bookedTicket = Ticket(movie: movie,
+                                  date: dateOptionView.selectedDate?.date ?? Date.distantPast,
+                                  format: (formatOptionView.selectedFormat?.titleLabel?.text)!,
+                                  quantity: quantityOptionView.selectedQuantity)
+        
+        Tickets.bookedTickets.append(bookedTicket)
+        
+        print("Ticket 생성됨: \(String(describing: bookedTicket))")
+        
+        self.navigationController?.popToRootViewController(animated: true)
     }
+    
+//    func confirmBooking() {
+//        let bookedTicket = Ticket(movie: movie,
+//                                  date: dateOptionView.selectedDate?.date ?? Date.distantPast,
+//                                  format: (formatOptionView.selectedFormat?.titleLabel?.text)!,
+//                                  quantity: quantityOptionView.selectedQuantity)
+//        
+//        Tickets.bookedTickets.append(bookedTicket)
+//        
+//        print("Ticket 생성됨: \(String(describing: bookedTicket))")
+//    }
 }
 
 extension BookingViewController: DateOptionViewDelegate {
@@ -120,8 +157,10 @@ extension BookingViewController: DateOptionViewDelegate {
         guard let date = sender.date else { return }
         let selectedDate = Calendar.current.startOfDay(for: date)
         
-        Cinema.schedule.filter { date in
+        let filteredDate = Cinema.schedule.filter { date in
             Calendar.current.isDate(date, inSameDayAs: selectedDate)
         }
+        
+        timeOptionView.setTimetable(with: filteredDate)
     }
 }

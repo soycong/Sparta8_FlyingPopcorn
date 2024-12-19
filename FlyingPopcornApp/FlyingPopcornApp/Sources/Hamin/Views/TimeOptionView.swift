@@ -9,13 +9,8 @@ import UIKit
 
 import SnapKit
 
-protocol TimeOptionViewDelegate: AnyObject {
-    
-}
-
 final class TimeOptionView: UIView {
     
-    weak var delegate: TimeOptionViewDelegate?
     var selectedTime: UIButton?
     
     private let timeOptionCollectionView: TimeOptionCollectionView = .init()
@@ -23,7 +18,7 @@ final class TimeOptionView: UIView {
     
     convenience init(with timeOptions: [Date]) {
         self.init()
-        self.timeOptions = timeOptions
+        self.timeOptions = []
     }
         
     override init(frame: CGRect) {
@@ -51,6 +46,11 @@ final class TimeOptionView: UIView {
         timeOptionCollectionView.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalToSuperview()
         }
+    }
+    
+    func setTimetable(with table: [Date]) {
+        timeOptions = table
+        timeOptionCollectionView.reloadData()
     }
     
 }
