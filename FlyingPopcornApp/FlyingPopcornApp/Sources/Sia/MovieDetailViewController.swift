@@ -36,7 +36,8 @@ final class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 네트워크 상태 확인
-        checkNetworkAndFetchMovieDetail()
+        //checkNetworkAndFetchMovieDetail()
+        setupNavigationBar()
         bookingButton()
         fetchMovieDetail()
     }
@@ -54,6 +55,28 @@ final class MovieDetailViewController: UIViewController {
 
 // MARK: - Network 요청
 private extension MovieDetailViewController {
+     func setupNavigationBar() {
+         let appearance = UINavigationBarAppearance()
+         appearance.configureWithOpaqueBackground()
+         appearance.shadowColor = nil
+         appearance.shadowImage = UIImage()
+         
+         navigationController?.navigationBar.standardAppearance = appearance
+         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+         
+         let naviLeftItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(handleBackButton))
+         naviLeftItem.tintColor = .fp00
+         navigationItem.leftBarButtonItem = naviLeftItem
+     }
+    
+    // 네비게이션 스택에서 이전 화면으로 이동
+    @objc func handleBackButton() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     func checkNetworkAndFetchMovieDetail() {
         if NetworkMonitor.shared.isConnected {
             fetchMovieDetail()
