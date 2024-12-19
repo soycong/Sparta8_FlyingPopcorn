@@ -24,7 +24,7 @@ final class SigninView: UIView {
     )
     
     // 입력정보 부족시 띄울 알러트
-    var showAlert: ((String, String) -> Void)?
+    var showAlert: ((String, String, (() -> Void)?) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -84,7 +84,8 @@ final class SigninView: UIView {
         
         withoutSigninButton.snp.makeConstraints { make in
             make.top.equalTo(signinButton.snp.bottom)
-            make.leading.trailing.height.equalTo(emailTextField)
+            make.height.equalTo(emailTextField)
+            make.centerX.equalTo(signinButton.snp.centerX)
         }
         
         signSwitchLabel.snp.makeConstraints { make in
@@ -100,28 +101,34 @@ final class SigninView: UIView {
         
         // 1. 이메일과 비밀번호 값이 비어있는 경우
         if email.isEmpty || password.isEmpty {
-            showAlert?("로그인 오류", "모든 항목을 기입해주세요.")
+            showAlert?("로그인 오류", "모든 항목을 기입해주세요.", nil)
             
         // 2. 유효하지 않은 이메일일 경우
         } else if !emailTextField.isValidEmail(email: email) {
-            showAlert?("이메일 오류", "올바른 이메일을 입력해주세요.")
+            showAlert?("이메일 오류", "올바른 이메일을 입력해주세요.", nil)
             
         // 3. 이메일과 비밀번호 일치하는지 검사
         } else {
             switch UserDefaultsHelper.userDefaultsHelper.checkUserData(email: email, password: password).response {
             // 3-1. 이메일과 비밀번호 일치
             case true:
-                // TODO: 값이 올바를 경우 화면 이동 - result.user 싱글톤?
-                showAlert?("테스트", "로그인완료.")
+                // 현재 사용자 이메일 저장
+                UserDefaultsHelper.userDefaultsHelper.saveCurrentUser(email: email)
+                // UserData 업데이트
+                UserDefaultsHelper.userDefaultsHelper.loadUserData(email: email)
+                // 화면 이동
+                showAlert?("로그인 성공", "환영합니다!") { [weak self] in
+                    self?.delegate?.moveToMain()
+                }
             // 3-2. 이메일과 비밀번호 불일치
             case false:
-                showAlert?("로그인 오류", "이메일과 비밀번호가 일치하지 않습니다.")
+                showAlert?("로그인 오류", "이메일과 비밀번호가 일치하지 않습니다.", nil)
             }
         }
     }
     
     @objc private func takeAroundWithout() {
-        // 로그인 없이 화면 이동
+        delegate?.moveToMain()
     }
     
     @objc private func switchToSignup() {
