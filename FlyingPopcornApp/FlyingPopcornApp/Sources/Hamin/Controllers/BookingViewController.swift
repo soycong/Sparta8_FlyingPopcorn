@@ -11,13 +11,14 @@ import SnapKit
 
 final class BookingViewController: UIViewController {
     
-    let dateModel: [Date] = []
-    let formatModel: [String] = []
+    var movie: Movie
+    var bookedTicket: Ticket?
     
-
-    private let dateOptionView: DateOptionView = .init()
-    private let timeOptionView: TimeOptionView = .init()
-    private let formatOptionView: FormatOptionView = .init()
+    private let cinemaModel: Cinema = .init()
+    
+    private let dateOptionView: DateOptionView = .init(with: Cinema.schedule)
+    private let timeOptionView: TimeOptionView = .init(with: Cinema.schedule)
+    private let formatOptionView: FormatOptionView = .init(with: Cinema.availableFormat)
     private let quantityOptionView: QuantityOptionView = .init()
     private let colorGuideView: ColorGuideView = .init()
     
@@ -29,6 +30,14 @@ final class BookingViewController: UIViewController {
         $0.layer.cornerRadius = 24
     }
     
+//    convenience init(movie: Movie) {
+//        self.init(movie: movie)
+//    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,7 +46,7 @@ final class BookingViewController: UIViewController {
         setViews()
         setButton()
         setConstraints()
-
+        dateOptionView.setDelegate(to: self)
     }
 
     private func setViews() {
@@ -97,5 +106,21 @@ final class BookingViewController: UIViewController {
         print(formatOptionView.selectedFormat?.titleLabel?.text ?? "no value")
         print(timeOptionView.selectedTime?.titleLabel?.text ?? "no value")
         print(quantityOptionView.selectedQuantity.description)
+        
+        bookedTicket = Ticket(movie: movie,
+                              date: Date(), // 작업중이라 임시로 현재 시간 넣음
+                              format: (formatOptionView.selectedFormat?.titleLabel?.text)!,
+                              quantity: quantityOptionView.selectedQuantity)
+    }
+}
+
+extension BookingViewController: DateOptionViewDelegate {
+    func dateTapped(_ sender: DateButton) {
+        guard let date = sender.date else { return }
+        let selectedDate = Calendar.current.startOfDay(for: date)
+        
+        Cinema.schedule.filter { date in
+            Calendar.current.isDate(date, inSameDayAs: selectedDate)
+        }
     }
 }
