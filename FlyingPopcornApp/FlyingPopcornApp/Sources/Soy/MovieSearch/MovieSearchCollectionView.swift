@@ -12,7 +12,8 @@ import Then
 
 protocol MovieSearchViewDelegate: AnyObject {
     func numberOfItems() -> Int
-    func movie(at index: Int) -> DummyMovieData
+    func movie(at index: Int) -> Movie
+    func didSelectMovie(at index: Int)
 }
 
 final class MovieSearchCollectionView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -27,7 +28,7 @@ final class MovieSearchCollectionView: UIView, UICollectionViewDataSource, UICol
         }
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-            $0.backgroundColor = UIColor(named: "greyLight1")
+            $0.backgroundColor = UIColor(named: "fp100")
             $0.showsVerticalScrollIndicator = false // 스크롤바 지우기
             $0.dataSource = self
             $0.delegate = self
@@ -83,5 +84,9 @@ final class MovieSearchCollectionView: UIView, UICollectionViewDataSource, UICol
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.didSelectMovie(at: indexPath.row)
     }
 }

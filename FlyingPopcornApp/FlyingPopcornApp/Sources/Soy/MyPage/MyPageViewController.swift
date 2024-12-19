@@ -17,12 +17,13 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
         
         view = myPageView
-        view.backgroundColor = UIColor(named: "50")
+        view.backgroundColor = UIColor(named: "fp100")
         
         myPageView.delegate = self
         
         configureUI()
         configureData()
+        // loadUserData() 싱글톤?
     }
     
     private func configureUI() {
@@ -47,3 +48,12 @@ extension MyPageViewController: MyPageViewDelegate {
         return movies[index]
     }
 }
+
+// 싱글톤?
+//extension MyPageViewController {
+//    private func loadUserData() {
+//        if let userData = UserDefaultsHelper.shared.getUserData() {
+//            myPageView.userInformationView.updateUserInfo(with: userData)
+//        }
+//    }
+//}

@@ -90,7 +90,7 @@ final class UserInformationView: UIView {
             make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading)
             make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing)
         }
-
+        
         profileImageView.snp.makeConstraints { make in
             make.leading.equalTo(self.horizontalStackView.snp.leading).offset(16)
             make.width.equalTo(self.profileImageView.snp.height)
@@ -113,5 +113,11 @@ final class UserInformationView: UIView {
             make.width.equalTo(profileImageView.snp.height)
             make.trailing.equalTo(self.horizontalStackView.snp.trailing)
         }
+    }
+    
+    // 싱글톤 코드?
+    func updateUserInfo(with userData: UserData) {
+        userNicknameLabel.text = "\(userData.familyName) \(userData.name)"
+        userEmailLabel.text = userData.email
     }
 }
