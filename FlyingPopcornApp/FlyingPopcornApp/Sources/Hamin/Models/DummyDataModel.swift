@@ -39,9 +39,21 @@ struct Cinema {
         Date.now + TimeInterval(60 * 60 * 7 + 7593) + TimeInterval(60 * 60 * 24),
     ]
     
-    static func filteredByWeekDays() {
-        self.schedule
-    }
+    
+    
+    static let scheduleInWeekDays: [Date] = {
+        let calendar = Calendar.current
+        var uniqueDatesByWeekday: [Int: Date] = [:]
+        
+        for date in schedule {
+            let weekday = calendar.component(.weekday, from: date)
+            if uniqueDatesByWeekday[weekday] == nil {
+                uniqueDatesByWeekday[weekday] = date
+            }
+        }
+        print(uniqueDatesByWeekday)
+        return Array(uniqueDatesByWeekday.values)
+    }()
     
 }
 

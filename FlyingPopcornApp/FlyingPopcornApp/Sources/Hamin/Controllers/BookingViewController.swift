@@ -29,7 +29,7 @@ final class BookingViewController: UIViewController {
         $0.clipsToBounds = true
     }
     
-    private let dateOptionView: DateOptionView = .init(with: Cinema.schedule)
+    private let dateOptionView: DateOptionView = .init(with: Cinema.scheduleInWeekDays)
     private let timeOptionView: TimeOptionView = .init()
     private let formatOptionView: FormatOptionView = .init(with: Cinema.availableFormat)
     private let quantityOptionView: QuantityOptionView = .init()
@@ -62,6 +62,8 @@ final class BookingViewController: UIViewController {
         
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+        
+        print("bookingVC: \(Cinema.scheduleInWeekDays)")
     }
     
     override func viewDidLoad() {
