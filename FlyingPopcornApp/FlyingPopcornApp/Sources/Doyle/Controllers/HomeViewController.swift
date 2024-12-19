@@ -32,7 +32,7 @@ final class HomeViewController: UIViewController {
     
     // MARK: - LifeCycle
     override func loadView() {
-        homeView.searchButton.addTarget(self, action: #selector(goToSearchPage), for: .touchUpInside)
+//        homeView.searchButton.addTarget(self, action: #selector(goToSearchPage), for: .touchUpInside)
         self.view = homeView
     }
     
