@@ -41,6 +41,7 @@ final class HomeMovieCell: UICollectionViewCell {
         $0.numberOfLines = 1
     }
 
+    /*
     private let runtimeIconView = UIImageView().then {
         $0.image = UIImage(systemName: "clock")
         $0.tintColor = .fpRed
@@ -57,6 +58,7 @@ final class HomeMovieCell: UICollectionViewCell {
         $0.spacing = 3
         $0.alignment = .center
     }
+     **/
     
     // MARK: - Initialization
     override init(frame: CGRect) {
@@ -85,7 +87,7 @@ final class HomeMovieCell: UICollectionViewCell {
         imageContainerView.addSubview(posterImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(genreLabel)
-        contentView.addSubview(runtimeStackView)
+//        contentView.addSubview(runtimeStackView)
         
         imageContainerView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -100,6 +102,7 @@ final class HomeMovieCell: UICollectionViewCell {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(posterImageView.snp.bottom).offset(8)
             make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
         }
         
         genreLabel.snp.makeConstraints { make in
@@ -107,6 +110,7 @@ final class HomeMovieCell: UICollectionViewCell {
             make.leading.equalTo(titleLabel.snp.leading)
         }
         
+        /*
         runtimeStackView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.top)
             make.trailing.equalToSuperview().offset(-16)
@@ -115,6 +119,7 @@ final class HomeMovieCell: UICollectionViewCell {
         runtimeIconView.snp.makeConstraints { make in
             make.width.height.equalTo(12)
         }
+        **/
     }
     
     // MARK: - 데이터 설정 메서드
@@ -122,7 +127,7 @@ final class HomeMovieCell: UICollectionViewCell {
         let imageURL = URL(string: movie.posterURL)
         posterImageView.loadImage(from: imageURL!)
         titleLabel.text = movie.title
-        genreLabel.text = movie.genres.prefix(2).joined(separator: ", ") // Genres에서 앞의 2개만 표시
-        runtimeLabel.text = "\(movie.runtime) min"
+        genreLabel.text = movie.genres.prefix(3).joined(separator: ", ") // Genres에서 앞의 3개만 표시
+//        runtimeLabel.text = "\(movie.runtime) min"
     }
 }
