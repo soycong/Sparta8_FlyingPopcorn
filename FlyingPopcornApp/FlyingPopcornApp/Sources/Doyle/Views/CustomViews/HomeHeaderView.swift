@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 import Then
 
-final class DYHeaderView: UICollectionReusableView {
-    static let identifier = "DYHeaderView"
+final class HomeHeaderView: UICollectionReusableView {
+    static let identifier = "HomeHeaderView"
     
     private let titleLabel = UILabel().then {
         $0.textColor = .fp800

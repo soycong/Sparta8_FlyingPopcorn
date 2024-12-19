@@ -1,5 +1,5 @@
 //
-//  DYPaddedLabel.swift
+//  HomePaddedLabel.swift
 //  FlyingPopcornApp
 //
 //  Created by t0000-m0112 on 2024-12-17.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DYPaddedLabel: UILabel {
+final class HomePaddedLabel: UILabel {
     
     // 패딩 설정
     var textInsets = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)

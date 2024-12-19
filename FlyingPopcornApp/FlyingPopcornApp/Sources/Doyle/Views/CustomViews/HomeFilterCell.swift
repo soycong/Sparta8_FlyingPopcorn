@@ -1,5 +1,5 @@
 //
-//  DYFilterCell.swift
+//  HomeFilterCell.swift
 //  FlyingPopcornApp
 //
 //  Created by t0000-m0112 on 2024-12-16.
@@ -10,11 +10,11 @@ import UIKit
 import SnapKit
 import Then
 
-final class DYFilterCell: UICollectionViewCell {
-    static let identifier = "DYFilterCell"
+final class HomeFilterCell: UICollectionViewCell {
+    static let identifier = "HomeFilterCell"
     
-    private let filterLabel = DYPaddedLabel().then {
-        $0.font = UIFont.systemFont(ofSize: 12)
+    private let filterLabel = HomePaddedLabel().then {
+        $0.font = UIFont.boldSystemFont(ofSize: 12)
         $0.textAlignment = .center
     }
     
