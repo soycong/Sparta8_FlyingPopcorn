@@ -70,13 +70,26 @@ private extension MovieDetailViewController {
     
     // 영화 상세 정보 네트워크 요청
     func fetchMovieDetail() {
+        print("Fetching details for movie ID: \(movie.id)")
         movieNetwork.getMovieDetail(movieID: movie.id) { [weak self] result in
-            switch result {
-            case .success(let movie):
-                self?.movie = movie
-                self?.movieDetailView.configureView(with: movie)
-            case .failure(let error):
-                print("Failed to fetch movie detail: \(error)")
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let movieDetail):
+                    print("Fetched movie details: \(movieDetail)")
+                    self?.movie = movieDetail
+                    
+                    if let runtime = movieDetail.runtime {
+                        self?.movieDetailView.runtimeLabel.text = "Runtime: \(runtime) min"
+                    } else {
+                        self?.movieDetailView.runtimeLabel.text = "Runtime: N/A"
+                    }
+                    
+                    self?.movieDetailView.configureView(with: movieDetail)
+                    
+                case .failure(let error):
+                    print("Failed to fetch movie detail: \(error.localizedDescription)")
+                    self?.movieDetailView.runtimeLabel.text = "Runtime: N/A"
+                }
             }
         }
     }
@@ -86,12 +99,26 @@ private extension MovieDetailViewController {
     }
     
     @objc func bookPushView() {
-        print("예매하기버튼 탭")
+        // UserData 싱글톤 가져오기
+        let userData = UserData.loginedUser
         
-        // TODO: - 로그인 여부 체크
-        
-        // 로그인 완료 후 예매하기 버튼 탭시
-        let bookingVC = BookingViewController(movie: movie) // 생성자 주입
-        navigationController?.pushViewController(bookingVC, animated: true)
+        // 로그인 여부 체크
+        if userData.email == nil {
+            // 데이터가 없으면 로그인 화면으로 이동
+            let signUpVC = SignupViewController()
+            let signUpNavController = UINavigationController(rootViewController: signUpVC)
+            signUpNavController.modalPresentationStyle = .fullScreen
+            
+            // 현재 윈도우 가져와서 루트 변경
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? UIWindowSceneDelegate,
+               let window = sceneDelegate.window {
+                window?.rootViewController = signUpNavController
+                window?.makeKeyAndVisible()
+            }
+        } else {
+            // 데이터가 있으면 예매 화면으로 이동
+            let bookingVC = BookingViewController(movie: movie) // 생성자 주입
+            navigationController?.pushViewController(bookingVC, animated: true)
+        }
     }
 }

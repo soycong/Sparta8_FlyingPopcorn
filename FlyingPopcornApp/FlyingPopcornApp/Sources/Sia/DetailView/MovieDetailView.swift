@@ -34,7 +34,8 @@ final class MovieDetailView: UIView {
         $0.clipsToBounds = true
     }
     
-    private let titleLabel = UILabel().then { $0.font = UIFont.systemFont(ofSize: 20)
+    private let titleLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 20)
         $0.textColor = .fp900
     }
     
@@ -48,36 +49,41 @@ final class MovieDetailView: UIView {
     private let runtimeStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 5
-        $0.alignment = .leading
+        $0.alignment = .center
         $0.distribution = .fillProportionally
     }
     
-    private let runtimeImg = UIImageView().then { $0.image = UIImage(named: "icTime")
+    private let runtimeImg = UIImageView().then {
+        $0.image = UIImage(named: "icTime")
         $0.contentMode = .scaleAspectFit
     }
     
-    private let runtimeLabel = UILabel().then { $0.font = UIFont.systemFont(ofSize: 12)
-        $0.textColor = .fp200
+    let runtimeLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.textColor = .fp400
     }
     
     private let releaseStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 5
-        $0.alignment = .leading
+        $0.alignment = .center
         $0.distribution = .fillProportionally
     }
     
-    private let releaseImg = UIImageView().then { $0.image = UIImage(named: "icRelease")
+    private let releaseImg = UIImageView().then {
+        $0.image = UIImage(named: "icRelease")
         $0.contentMode = .scaleAspectFit
     }
     
-    private let releaseDateLabel = UILabel().then { $0.font = UIFont.systemFont(ofSize: 12)
-        $0.textColor = .fp200
+    private let releaseDateLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.textColor = .fp400
     }
     
     private let starView = RateView()
     
-    private let scoreLabel = UILabel().then { $0.font = UIFont.systemFont(ofSize: 16)
+    private let scoreLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 16)
         $0.textColor = .fp400
     }
     
@@ -123,6 +129,8 @@ final class MovieDetailView: UIView {
                                starView])
         
         secondStackView.addArrangedSubViews([runtimeStackView, releaseStackView])
+        runtimeStackView.addArrangedSubViews([runtimeImg, runtimeLabel])
+        releaseStackView.addArrangedSubViews([releaseImg, releaseDateLabel])
         
         scrollView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -131,7 +139,7 @@ final class MovieDetailView: UIView {
         }
         
         bookingButton.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview().inset(16)
+            make.leading.trailing.bottom.equalToSuperview().inset(24)
             make.height.equalTo(48)
         }
         
@@ -160,10 +168,19 @@ final class MovieDetailView: UIView {
         secondStackView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.leading.trailing.equalTo(roundView).inset(16)
+            make.height.equalTo(20)
+        }
+
+        runtimeStackView.snp.makeConstraints { make in
+            make.centerY.equalTo(secondStackView.snp.centerY)
+        }
+        
+        releaseStackView.snp.makeConstraints { make in
+            make.centerY.equalTo(secondStackView.snp.centerY)
         }
 
         starView.snp.makeConstraints { make in
-            make.top.equalTo(secondStackView.snp.bottom).offset(8)
+            make.top.equalTo(secondStackView.snp.bottom).offset(16)
             make.leading.equalTo(roundView).inset(16)
         }
         
@@ -246,7 +263,7 @@ final class MovieDetailView: UIView {
         } else {
             scoreLabel.text = "Invalid rating"
         }
-        runtimeLabel.text = "Runtime: \(movie.runtime) min"
+        //runtimeLabel.text = "Runtime: \(movie.runtime) min"
         releaseDateLabel.text = movie.releaseDate
         descriptionLabel.text = movie.overview
         
