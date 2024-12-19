@@ -13,6 +13,11 @@ final class TimeOptionView: UIView {
     
     var selectedTime: UIButton?
     
+    private let timeOptionTitle = UILabel().then {
+        $0.text = "상영 시간"
+        $0.font = .boldSystemFont(ofSize: 16)
+        $0.textAlignment = .left
+    }
     private let timeOptionCollectionView: TimeOptionCollectionView = .init()
     private var timeOptions: [Date] = []
     
@@ -39,12 +44,18 @@ final class TimeOptionView: UIView {
     }
     
     private func addSubviews() {
+        addSubview(timeOptionTitle)
         addSubview(timeOptionCollectionView)
     }
     
     private func setConstraints() {
+        timeOptionTitle.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview()
+        }
+        
         timeOptionCollectionView.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(timeOptionTitle.snp.bottom).offset(10)
+            make.leading.trailing.bottom.equalToSuperview()
         }
     }
     

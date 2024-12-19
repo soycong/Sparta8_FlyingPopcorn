@@ -41,7 +41,7 @@ final class BookingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .systemGray
+        view.backgroundColor = .fp00
         
         setViews()
         setButton()
@@ -66,32 +66,32 @@ final class BookingViewController: UIViewController {
         
         colorGuideView.snp.makeConstraints { make in
             make.width.equalTo(confirmButton.snp.width)
-            make.bottom.equalTo(confirmButton.snp.top).offset(-40)
+            make.bottom.equalTo(confirmButton.snp.top).offset(-50)
             make.centerX.equalTo(confirmButton)
         }
         
         quantityOptionView.snp.makeConstraints { make in
-            make.top.equalTo(timeOptionView.snp.bottom).offset(10)
-            make.bottom.equalTo(quantityOptionView.snp.top).offset(50)
-            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(50)
+            make.bottom.equalTo(colorGuideView.snp.top).offset(-40)
+            make.leading.trailing.equalToSuperview().inset(16)
         }
         
         timeOptionView.snp.makeConstraints { make in
-            make.top.equalTo(formatOptionView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(170)
+            make.bottom.equalTo(quantityOptionView.snp.top).offset(-40)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(200)
         }
         
         formatOptionView.snp.makeConstraints { make in
-            make.top.equalTo(dateOptionView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(50)
+            make.bottom.equalTo(timeOptionView.snp.top).offset(-40)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(90)
         }
         
         dateOptionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(70)
+            make.bottom.equalTo(formatOptionView.snp.top).offset(-40)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(100)
         }
     }
     
