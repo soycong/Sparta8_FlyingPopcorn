@@ -8,6 +8,8 @@ import UIKit
 
 // 로그인 화면
 final class SigninView: UIView {
+    weak var delegate: SigninViewDelegate?
+    
     private let titleLabel = UILabel()
     private let subTitleLabel = UILabel()
     private let emailTextField = StrokeEmailField(hintText: "이메일")
@@ -123,7 +125,7 @@ final class SigninView: UIView {
     }
     
     @objc private func switchToSignup() {
-        
+        delegate?.didTapSignupButton()
     }
 }
 

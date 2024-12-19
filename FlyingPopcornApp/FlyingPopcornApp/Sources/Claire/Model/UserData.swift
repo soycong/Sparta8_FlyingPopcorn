@@ -7,19 +7,20 @@
 
 import Foundation
 
-final class UserData {
-    // 저장할 데이터: UUID, FamilyName, Name, Email, Password
-//    var uuid: String
+
+// Mark: - Movie, Ticket 데이터 필요
+
+final class UserData: Codable {
     var familyName: String
     var name: String
     var email: String
     var password: String
     
     init(familyName: String, name: String, email: String, password: String) {
-//        self.uuid = NSUUID().uuidString
         self.familyName = familyName
         self.name = name
         self.email = email
         self.password = password
+        self.tickets = tickets
     }
 }
