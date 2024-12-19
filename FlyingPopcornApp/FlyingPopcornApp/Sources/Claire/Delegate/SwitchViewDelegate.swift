@@ -7,6 +7,7 @@
 
 protocol SigninViewDelegate: AnyObject {
     func didTapSignupButton()
+    func moveToMain()
 }
 
 protocol SignupViewDelegate: AnyObject {

@@ -26,7 +26,7 @@ final class SignupView: UIView {
     )
     
     // 입력정보 부족시 띄울 알러트
-    var showAlert: ((String, String) -> Void)?
+    var showAlert: ((String, String, (() -> Void)?) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -99,29 +99,49 @@ final class SignupView: UIView {
         }
     }
     
-    private func checkIsEmpty(user: UserData) -> Bool {
-        return user.familyName?.isEmpty ?? true ||
-               user.name?.isEmpty ?? true ||
-               user.email?.isEmpty ?? true ||
-               user.password?.isEmpty ?? true
+    private func checkIsEmpty() -> Bool {
+        let familyName = familyNameTextField.text
+        let name = nameTextField.text
+        let email = emailTextField.text
+        let password = passwordTextField.text
+        
+        return familyName?.isEmpty ?? true ||
+               name?.isEmpty ?? true ||
+               email?.isEmpty ?? true ||
+               password?.isEmpty ?? true
     }
     
     @objc private func saveUser() {
-        let user = UserData.loginedUser
+        
+        let familyName = familyNameTextField.text
+        let name = nameTextField.text
+        let email = emailTextField.text
+        let password = passwordTextField.text
         
         // 1. 입력 정보 값이 비어있는 경우 (+ nil 체크)
-        if checkIsEmpty(user: user) {
-            showAlert?("가입 오류", "모든 항목을 기입해주세요.")
+        if checkIsEmpty() {
+            showAlert?("가입 오류", "모든 항목을 기입해주세요.", nil)
             
         // 2. 유효하지 않은 이메일일 경우
-        } else if !emailTextField.isValidEmail(email: user.email!) {
-            showAlert?("이메일 오류", "올바른 이메일을 입력해주세요.")
+        } else if !emailTextField.isValidEmail(email: email!) {
+            showAlert?("이메일 오류", "올바른 이메일을 입력해주세요.", nil)
             
         // 3. 유저 정보 저장
         } else {
-            UserDefaultsHelper.userDefaultsHelper.saveUserData(user: user)
-            // TODO: 저장 되었을 경우 화면 이동
-            showAlert?("테스트", "저장완료.")
+            UserData.loginedUser.updateUserInfo(
+                familyName: familyName!,
+                name: name!,
+                email: email!,
+                password: password!,
+                tickets: []
+            )
+            UserDefaultsHelper.userDefaultsHelper.saveUserData(user: UserData.loginedUser)
+            // 저장 되었을 경우 로그인 화면 이동
+            showAlert?("가입 완료", "회원가입이 완료되었습니다.") { [weak self] in
+                            self?.delegate?.didTapSigninButton()
+                        }
+    
+            
         }
         
     }

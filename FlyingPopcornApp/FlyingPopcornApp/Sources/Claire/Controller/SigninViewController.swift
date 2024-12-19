@@ -18,13 +18,15 @@ class SigninViewController: UIViewController, SigninViewDelegate {
         
         signinView.delegate = self
 
-        let alert = { [weak self] title, message in
+        let alert = { [weak self] (title: String, message: String, completion: (() -> Void)?) in
             let alertController = UIAlertController(
                 title: title,
                 message: message,
                 preferredStyle: .alert
             )
-            let alertAction = UIAlertAction(title: "확인", style: .default)
+            let alertAction = UIAlertAction(title: "확인", style: .default) { _ in
+                completion?()
+            }
             alertController.addAction(alertAction)
             self?.present(alertController, animated: true)
         }
@@ -41,6 +43,20 @@ class SigninViewController: UIViewController, SigninViewDelegate {
         signupViewController.modalPresentationStyle = .fullScreen
         present(signupViewController, animated: true)
     }
+    
+    func moveToMain() {
+        
+        print(UserData.loginedUser)
+        
+        let movieNetwork = MovieNetwork(network: Network<MovieListModel>(endPoint: "https://api.themoviedb.org/3"))
+
+        let tabBarViewController = BottomTabbarViewController(movieNetwork: movieNetwork)
+        
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            sceneDelegate.window?.rootViewController = tabBarViewController
+        }
+    }
+
 }
 
 // 키보드 숨기기

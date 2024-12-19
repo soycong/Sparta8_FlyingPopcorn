@@ -39,6 +39,7 @@ final class SignSwitchLabel: UIView {
         switchButton.setTitle(buttonTitle, for: .normal)
         switchButton.setTitleColor(.fpRed, for: .normal)
         switchButton.titleLabel?.font = .systemFont(ofSize: 14)
+        switchButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
         questionLabel.snp.makeConstraints { make in
             make.top.bottom.leading.equalToSuperview()
@@ -47,6 +48,9 @@ final class SignSwitchLabel: UIView {
             make.top.bottom.trailing.equalToSuperview()
             make.leading.equalTo(questionLabel.snp.trailing).offset(2)
         }
-
+    }
+    
+    @objc private func buttonTapped() {
+        buttonEvent()
     }
 }
