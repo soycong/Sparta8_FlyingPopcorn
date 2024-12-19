@@ -7,11 +7,30 @@
 
 import Foundation
 
+struct Tickets {
+    static var bookedTickets: [Ticket] = []
+}
+
 struct Ticket {
-    let movie: String
+    let movie: Movie
     let date: Date
     let format: String
     let quantity: Int
+}
+
+struct Cinema {
+    static let name: String = "Salt and Butter Popcorn Cinema"
+    static let availableFormat: [String] = ["2D", "3D", "IMAX"]
+    static let schedule: [Date] = [
+        Date.now - TimeInterval(60 * 60 * 3 + 9320),
+        Date.now - TimeInterval(60 * 60 * 2 + 5135),
+        Date.now - TimeInterval(60 * 60),
+        Date.now,
+        Date.now + TimeInterval(60 * 60 * 3 + 1248),
+        Date.now + TimeInterval(60 * 60 * 5 + 3358),
+        Date.now + TimeInterval(60 * 60 * 7 + 7593),
+    ]
+    
 }
 
 extension Date {
@@ -25,7 +44,7 @@ extension Date {
     private static let dayOnlyFormatter = {
         let formatter = Date.FormatStyle()
             .day()
-            .locale(Locale(identifier: "ko_KR"))
+            .locale(Locale(identifier: "en_US"))
         return formatter
     }()
     
@@ -33,6 +52,14 @@ extension Date {
         let formatter = Date.FormatStyle()
             .weekday()
             .locale(Locale(identifier: "ko_KR"))
+        return formatter
+    }()
+    
+    private static let hourAndMinuteOnlyFormatter = {
+        let formatter = Date.FormatStyle()
+            .hour()
+            .minute()
+            .locale(Locale(identifier: "en_US"))
         return formatter
     }()
     
@@ -46,5 +73,9 @@ extension Date {
     
     internal var weekdayOnly: String {
         return Date.weekdayOnlyFormatter.format(self)
+    }
+    
+    internal var hourAndMinuteOnly: String {
+        return Date.hourAndMinuteOnlyFormatter.format(self)
     }
 }
