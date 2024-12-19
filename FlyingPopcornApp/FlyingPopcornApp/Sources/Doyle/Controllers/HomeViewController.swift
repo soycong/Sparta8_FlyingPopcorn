@@ -21,12 +21,12 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Properties
     private var filters: [String] {
-        return ["All"] + Movie.genreMap.values.sorted()
+        return ["전체"] + Movie.genreMap.values.sorted()
     }
     private var allNowShowingMovies: [Movie] = []
-    private var allComingSoonMovies: [Movie] = []
+    private var allPopularMovies: [Movie] = []
     private var filteredNowShowingMovies: [Movie] = []
-    private var filteredComingSoonMovies: [Movie] = []
+    private var filteredPopularMovies: [Movie] = []
     
     private let homeView = HomeView()
     
@@ -94,8 +94,8 @@ final class HomeViewController: UIViewController {
             defer { group.leave() }
             switch result {
             case .success(let movieListModel):
-                self?.allComingSoonMovies = movieListModel.results
-                self?.filteredComingSoonMovies = movieListModel.results
+                self?.allPopularMovies = movieListModel.results
+                self?.filteredPopularMovies = movieListModel.results
             case .failure(let error):
                 print("Failed to fetch popular movies: \(error)")
             }
@@ -110,12 +110,12 @@ final class HomeViewController: UIViewController {
     // MARK: - Filter Logic
     private func applyFilter(index: Int) {
         let filter = filters[index]
-        if filter == "All" {
+        if filter == "전체" {
             filteredNowShowingMovies = allNowShowingMovies
-            filteredComingSoonMovies = allComingSoonMovies
+            filteredPopularMovies = allPopularMovies
         } else {
             filteredNowShowingMovies = allNowShowingMovies.filter { $0.genres.contains(filter) }
-            filteredComingSoonMovies = allComingSoonMovies.filter { $0.genres.contains(filter) }
+            filteredPopularMovies = allPopularMovies.filter { $0.genres.contains(filter) }
         }
         
         print("[HomeViewController] Filter Selected: \(filter)")
@@ -209,7 +209,7 @@ extension HomeViewController: UICollectionViewDataSource {
         switch section {
         case 0: return filters.count
         case 1: return filteredNowShowingMovies.count
-        case 2: return filteredComingSoonMovies.count
+        case 2: return filteredPopularMovies.count
         default: return 0
         }
     }
@@ -226,7 +226,7 @@ extension HomeViewController: UICollectionViewDataSource {
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomePosterCell.identifier, for: indexPath) as! HomePosterCell
-            cell.configure(with: filteredComingSoonMovies[indexPath.item])
+            cell.configure(with: filteredPopularMovies[indexPath.item])
             return cell
         default:
             return UICollectionViewCell()
@@ -249,20 +249,40 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: - UICollectionViewDelegate
+// MARK: - UICOllectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 선택된 영화 가져오기
-        let selectedMovie: Movie
-        
-        if indexPath.section == 1 {
-            selectedMovie = filteredNowShowingMovies[indexPath.item]
-        } else {
-            selectedMovie = filteredComingSoonMovies[indexPath.item]
+        switch indexPath.section {
+        case 0: // Filter Section
+            applyFilter(index: indexPath.item)
+            filters.enumerated().forEach { index, _ in
+                let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? HomeFilterCell
+                cell?.updateSelectionState(isSelected: index == indexPath.item)
+            }
+        case 1: // Now Showing Section
+            let selectedMovie = filteredNowShowingMovies[indexPath.item]
+            print("[HomeViewController] Selected Now Showing Movie: \(selectedMovie.title)")
+            
+            // MovieDetailViewController로 영화 데이터 전달
+            let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie) // 생성자 주입
+            navigationController?.pushViewController(detailVC, animated: true)
+        case 2: // Coming Soon Section
+            let selectedMovie = filteredPopularMovies[indexPath.item]
+            print("[HomeViewController] Selected Coming Soon Movie: \(selectedMovie.title)")
+            
+            // MovieDetailViewController로 영화 데이터 전달
+            let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie) // 생성자 주입
+            navigationController?.pushViewController(detailVC, animated: true)
+        default:
+            break
         }
-        
-        // MovieDetailViewController로 영화 데이터 전달
-        let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie) // 생성자 주입
-        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            let cell = collectionView.cellForItem(at: indexPath) as? HomeFilterCell
+            cell?.updateSelectionState(isSelected: false)
+        }
     }
 }
