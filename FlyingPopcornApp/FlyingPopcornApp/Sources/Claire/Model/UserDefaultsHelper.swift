@@ -9,7 +9,7 @@ import Foundation
 
 final class UserDefaultsHelper {
     // 싱글톤으로 사용할 헬퍼
-    static let userDefaultsHelper = UserDefaultsHelper()
+    static let shared = UserDefaultsHelper()
     
     private let userKey = "userData"
     private let familyNameKey = "familyName"
@@ -80,7 +80,7 @@ final class UserDefaultsHelper {
         let userDictionary = getUserDictionary()
         guard let userData = userDictionary[email] else { return }
         
-        UserData.loginedUser.updateUserInfo(
+        UserData.shared.updateUserInfo(
             familyName: userData[familyNameKey] as? String ?? "",
             name: userData[nameKey] as? String ?? "",
             email: email,

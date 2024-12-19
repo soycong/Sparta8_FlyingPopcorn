@@ -9,7 +9,7 @@ import Foundation
 
 final class UserData {
     // 싱글톤으로 사용할 유저 데이터
-    static let loginedUser = UserData()
+    static let shared = UserData()
     
     private(set) var familyName: String?
     private(set) var name: String?

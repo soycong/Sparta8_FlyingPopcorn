@@ -4,6 +4,7 @@
 //
 //  Created by CHYUN on 12/17/24.
 //
+
 import UIKit
 
 // 가입 화면
@@ -128,14 +129,14 @@ final class SignupView: UIView {
             
         // 3. 유저 정보 저장
         } else {
-            UserData.loginedUser.updateUserInfo(
+            UserData.shared.updateUserInfo(
                 familyName: familyName!,
                 name: name!,
                 email: email!,
                 password: password!,
                 tickets: []
             )
-            UserDefaultsHelper.userDefaultsHelper.saveUserData(user: UserData.loginedUser)
+            UserDefaultsHelper.shared.saveUserData(user: UserData.shared)
             // 저장 되었을 경우 로그인 화면 이동
             showAlert?("가입 완료", "회원가입이 완료되었습니다.") { [weak self] in
                             self?.delegate?.didTapSigninButton()

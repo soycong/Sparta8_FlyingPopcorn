@@ -6,9 +6,14 @@
 //
 
 import UIKit
+
 import SnapKit
 
-class SignupViewController: UIViewController, SignupViewDelegate {
+protocol SignupViewDelegate: AnyObject {
+    func didTapSigninButton()
+}
+
+final class SignupViewController: UIViewController, SignupViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()

@@ -1,5 +1,5 @@
 //
-//  DummyDataModel.swift
+//  TicketCinemaModel.swift
 //  FlyingPopcornApp
 //
 //  Created by 김하민 on 12/18/24.
@@ -38,8 +38,6 @@ struct Cinema {
         Date.now + TimeInterval(60 * 60 * 5 + 3358) + TimeInterval(60 * 60 * 24),
         Date.now + TimeInterval(60 * 60 * 7 + 7593) + TimeInterval(60 * 60 * 24),
     ]
-    
-    
     
     static let scheduleInWeekDays: [Date] = {
         let calendar = Calendar.current

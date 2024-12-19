@@ -6,9 +6,10 @@
 //
 
 import Foundation
+
 import Alamofire
 
-class Network<T: Decodable> {
+final class Network<T: Decodable> {
     private let endPoint: String
     
     init(endPoint: String) {

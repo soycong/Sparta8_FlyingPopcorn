@@ -100,7 +100,7 @@ private extension MovieDetailViewController {
     
     @objc func bookPushView() {
         // UserData 싱글톤 가져오기
-        let userData = UserData.loginedUser
+        let userData = UserData.shared
         
         // 로그인 여부 체크
         if userData.email == nil {

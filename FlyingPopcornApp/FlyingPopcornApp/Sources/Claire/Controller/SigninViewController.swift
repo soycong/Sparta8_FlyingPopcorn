@@ -6,9 +6,15 @@
 //
 
 import UIKit
+
 import SnapKit
 
-class SigninViewController: UIViewController, SigninViewDelegate {
+protocol SigninViewDelegate: AnyObject {
+    func didTapSignupButton()
+    func moveToMain()
+}
+
+final class SigninViewController: UIViewController, SigninViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
@@ -46,7 +52,7 @@ class SigninViewController: UIViewController, SigninViewDelegate {
     
     func moveToMain() {
         // 데이터 체크
-        print("family-name: \(String(describing: UserData.loginedUser.familyName)), name: \(String(describing: UserData.loginedUser.name)), email: \(String(describing: UserData.loginedUser.email)), tickets: \(UserData.loginedUser.tickets)")
+        print("family-name: \(String(describing: UserData.shared.familyName)), name: \(String(describing: UserData.shared.name)), email: \(String(describing: UserData.shared.email)), tickets: \(UserData.shared.tickets)")
 
         let movieNetwork = MovieNetwork(network: Network<MovieListModel>(endPoint: "https://api.themoviedb.org/3"))
         let tabBarViewController = BottomTabbarViewController(movieNetwork: movieNetwork)

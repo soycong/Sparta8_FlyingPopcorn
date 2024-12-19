@@ -4,6 +4,7 @@
 //
 //  Created by CHYUN on 12/16/24.
 //
+
 import UIKit
 
 // 로그인 화면
@@ -109,13 +110,13 @@ final class SigninView: UIView {
             
         // 3. 이메일과 비밀번호 일치하는지 검사
         } else {
-            switch UserDefaultsHelper.userDefaultsHelper.checkUserData(email: email, password: password).response {
+            switch UserDefaultsHelper.shared.checkUserData(email: email, password: password).response {
             // 3-1. 이메일과 비밀번호 일치
             case true:
                 // 현재 사용자 이메일 저장
-                UserDefaultsHelper.userDefaultsHelper.saveCurrentUser(email: email)
+                UserDefaultsHelper.shared.saveCurrentUser(email: email)
                 // UserData 업데이트
-                UserDefaultsHelper.userDefaultsHelper.loadUserData(email: email)
+                UserDefaultsHelper.shared.loadUserData(email: email)
                 // 화면 이동
                 showAlert?("로그인 성공", "환영합니다!") { [weak self] in
                     self?.delegate?.moveToMain()

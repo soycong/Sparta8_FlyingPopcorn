@@ -63,7 +63,7 @@ extension MyPageViewController: MyPageViewDelegate {
 // 유저 데이터 업데이트
 extension MyPageViewController {
     private func updateUserInformation() {
-        let userData = UserData.loginedUser
+        let userData = UserData.shared
         myPageView.updateUserInformation(with: userData)
     }
 }
