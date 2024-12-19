@@ -30,9 +30,10 @@ final class BookingViewController: UIViewController {
         $0.layer.cornerRadius = 24
     }
     
-//    convenience init(movie: Movie) {
-//        self.init(movie: movie)
-//    }
+    init(movie: Movie) {
+        self.movie = movie
+        super.init(nibName: nil, bundle: nil)
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

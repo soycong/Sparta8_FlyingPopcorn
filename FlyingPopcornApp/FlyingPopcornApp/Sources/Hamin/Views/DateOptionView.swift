@@ -62,8 +62,9 @@ final class DateOptionView: UIView {
 
 extension DateOptionView: DateOptionCellDelegate {
     func dateOptionTapped(_ sender: DateButton) {
+        guard let date = sender.date else { return }
         
-        print("selected date: \(sender.date.dayOnly) \(sender.date.weekdayOnly)")
+        print("selected date: \(date.dayOnly) \(date.weekdayOnly)")
         
         if let previousButton = selectedDate {
             UIView.animate(withDuration: 0.3) {
