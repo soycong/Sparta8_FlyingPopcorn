@@ -19,6 +19,7 @@ final class MyPageViewController: UIViewController {
         view.backgroundColor = UIColor(named: "fp100")
         
         myPageView.delegate = self
+        myPageView.loginDelegate = self
         
         configureUI()
         updateUserInformation()
@@ -65,5 +66,14 @@ extension MyPageViewController {
     private func updateUserInformation() {
         let userData = UserData.loginedUser
         myPageView.updateUserInformation(with: userData)
+    }
+}
+
+extension MyPageViewController: MyPageViewLoginDelegate {
+    func myPageViewDidRequestLogin() {
+        let signinVC = SigninViewController()
+        let navController = UINavigationController(rootViewController: signinVC)
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
     }
 }

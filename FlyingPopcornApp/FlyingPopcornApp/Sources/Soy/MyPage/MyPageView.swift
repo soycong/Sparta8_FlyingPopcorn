@@ -10,6 +10,11 @@ import UIKit
 import SnapKit
 import Then
 
+//로그인 화면 없을 경우 델리게이트
+protocol MyPageViewLoginDelegate: AnyObject {
+    func myPageViewDidRequestLogin()
+}
+
 protocol MyPageViewDelegate: AnyObject {
     func numberOfItems() -> Int
     func ticket(at index: Int) -> Ticket
@@ -17,6 +22,7 @@ protocol MyPageViewDelegate: AnyObject {
 
 final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
     weak var delegate: MyPageViewDelegate?
+    weak var loginDelegate: MyPageViewLoginDelegate?
 
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
@@ -26,6 +32,7 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
         super.init(frame: .zero)
         self.backgroundColor = UIColor(named: "fp100")
         configureTableView()
+        userInformationView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -122,5 +129,11 @@ extension MyPageView {
         } else {
             userInformationView.showLoginRequired()
         }
+    }
+}
+
+extension MyPageView: UserInformationViewDelegate {
+    func userInformationViewDidTapForLogin() {
+        loginDelegate?.myPageViewDidRequestLogin()
     }
 }

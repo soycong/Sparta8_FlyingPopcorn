@@ -10,7 +10,13 @@ import UIKit
 import SnapKit
 import Then
 
+protocol UserInformationViewDelegate: AnyObject {
+    func userInformationViewDidTapForLogin()
+}
+
 final class UserInformationView: UIView {
+    weak var delegate: UserInformationViewDelegate?
+
     private let profileImageView = UIImageView().then {
         $0.image = UIImage(systemName: "person.crop.circle.fill")?.withRenderingMode(.alwaysTemplate)  // 시스템 이미지 설정
         $0.tintColor = .gray
@@ -74,6 +80,7 @@ final class UserInformationView: UIView {
         
         configureUI()
         configureConstraints()
+        configureTapGesture()
     }
     
     required init?(coder: NSCoder) {
@@ -127,5 +134,20 @@ extension UserInformationView {
     func showLoginRequired() {
         userNicknameLabel.text = "로그인이 필요합니다."
         userEmailLabel.text = ""
+    }
+}
+
+// 탭 하면 로그인 화면으로 이동
+extension UserInformationView {
+    private func configureTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.addGestureRecognizer(tapGesture)
+        self.isUserInteractionEnabled = true
+    }
+    
+    @objc private func handleTap() {
+        if userNicknameLabel.text == "로그인이 필요합니다." {
+            delegate?.userInformationViewDidTapForLogin()
+        }
     }
 }
