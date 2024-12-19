@@ -31,6 +31,7 @@ final class DateOptionView: UIView {
     convenience init(with dateOptions: [Date]) {
         self.init()
         self.dateOptions = dateOptions
+        print("DateOptionView: \(dateOptions)")
     }
     
     override init(frame: CGRect) {
@@ -81,13 +82,13 @@ extension DateOptionView: DateOptionCellDelegate {
         if let previousButton = selectedDate {
             UIView.animate(withDuration: 0.3) {
                 previousButton.backgroundColor = .available
-                previousButton.tintColor = .fp300
+                previousButton.tintColor = .fp500
             }
         }
         
         UIView.animate(withDuration: 0.3) {
             sender.backgroundColor = .fpIvory
-            sender.tintColor = .fp700
+            sender.tintColor = .fp900
         }
         delegate?.dateTapped(sender)
         selectedDate = sender

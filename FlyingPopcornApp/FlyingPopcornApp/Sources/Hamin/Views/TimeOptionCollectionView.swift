@@ -88,7 +88,7 @@ extension UIColor {
     static let unavailable = UIColor.fp200
     static let selected = UIColor.fpRed
 
-    static let availableText = UIColor.fp300
+    static let availableText = UIColor.fp500
     static let unavailableText = UIColor.fp50
     static let selectedText = UIColor.fp00
 }
