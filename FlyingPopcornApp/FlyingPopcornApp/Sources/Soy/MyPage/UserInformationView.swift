@@ -110,15 +110,22 @@ final class UserInformationView: UIView {
             make.trailing.equalTo(self.verticalStackView.snp.trailing)
         }
         
-//        editButton.snp.makeConstraints { make in
-//            make.width.equalTo(profileImageView.snp.height)
-//            make.trailing.equalTo(self.horizontalStackView.snp.trailing)
-//        }
+        //        editButton.snp.makeConstraints { make in
+        //            make.width.equalTo(profileImageView.snp.height)
+        //            make.trailing.equalTo(self.horizontalStackView.snp.trailing)
+        //        }
+    }
+}
+
+//유저 데이터 업데이트
+extension UserInformationView {
+    func updateDisplay(name: String, email: String) {
+        userNicknameLabel.text = name
+        userEmailLabel.text = email
     }
     
-    // 싱글톤 코드?
-    func updateUserInfo(with userData: UserData) {
-        userNicknameLabel.text = "\(userData.familyName) \(userData.name)"
-        userEmailLabel.text = userData.email
+    func showLoginRequired() {
+        userNicknameLabel.text = "로그인이 필요합니다."
+        userEmailLabel.text = ""
     }
 }

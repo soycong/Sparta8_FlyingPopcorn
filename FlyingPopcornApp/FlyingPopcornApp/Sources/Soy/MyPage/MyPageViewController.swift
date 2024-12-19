@@ -21,7 +21,7 @@ final class MyPageViewController: UIViewController {
         myPageView.delegate = self
         
         configureUI()
-        // loadUserData() 싱글톤?
+        updateUserInformation()
         loadTickets()
     }
     
@@ -60,11 +60,10 @@ extension MyPageViewController: MyPageViewDelegate {
     }
 }
 
-// 싱글톤?
-//extension MyPageViewController {
-//    private func loadUserData() {
-//        if let userData = UserDefaultsHelper.shared.getUserData() {
-//            myPageView.userInformationView.updateUserInfo(with: userData)
-//        }
-//    }
-//}
+// 유저 데이터 업데이트
+extension MyPageViewController {
+    private func updateUserInformation() {
+        let userData = UserData.loginedUser
+        myPageView.updateUserInformation(with: userData)
+    }
+}
