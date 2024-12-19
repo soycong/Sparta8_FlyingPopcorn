@@ -10,20 +10,22 @@ import UIKit
 import SnapKit
 import Then
 
+protocol DateOptionViewDelegate: AnyObject {
+    func dateTapped(_ sender: DateButton)
+}
+
 final class DateOptionView: UIView {
     
-    var selectedDate: UIButton?
+    weak var delegate: DateOptionViewDelegate?
+    var selectedDate: DateButton?
     
     private let dateOptionCollectionView: DateOptionCollectionView = .init()
-    private let dateOptions = [
-        "15\n일",
-        "16\n월",
-        "17\n화",
-        "18\n수",
-        "19\n목",
-        "20\n금",
-        "21\n토",
-    ]
+    private var dateOptions: [Date] = []
+    
+    convenience init(with dateOptions: [Date]) {
+        self.init()
+        self.dateOptions = dateOptions
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,6 +45,10 @@ final class DateOptionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setDelegate(to target: DateOptionViewDelegate) {
+        self.delegate = target
+    }
+    
     private func addSubviews() {
         addSubview(dateOptionCollectionView)
     }
@@ -55,10 +61,10 @@ final class DateOptionView: UIView {
 }
 
 extension DateOptionView: DateOptionCellDelegate {
-    func dateOptionTapped(_ sender: UIButton) {
-        guard let title = sender.titleLabel?.text else { return }
+    func dateOptionTapped(_ sender: DateButton) {
+        guard let date = sender.date else { return }
         
-        print("selected date: \(title)")
+        print("selected date: \(date.dayOnly) \(date.weekdayOnly)")
         
         if let previousButton = selectedDate {
             UIView.animate(withDuration: 0.3) {
@@ -71,7 +77,7 @@ extension DateOptionView: DateOptionCellDelegate {
             sender.backgroundColor = .fpIvory
             sender.tintColor = .fp700
         }
-        
+        delegate?.dateTapped(sender)
         selectedDate = sender
     }
 }

@@ -9,16 +9,22 @@ import UIKit
 
 import SnapKit
 
+protocol TimeOptionViewDelegate: AnyObject {
+    
+}
+
 final class TimeOptionView: UIView {
     
+    weak var delegate: TimeOptionViewDelegate?
     var selectedTime: UIButton?
     
     private let timeOptionCollectionView: TimeOptionCollectionView = .init()
-    private let timeOptions = [
-        "09:30 AM", "10:30 AM", "11:30 AM",
-        "12:30 PM", "02:30 PM", "03:30 PM",
-        "04:30 PM", "05:30 PM", "06:30 PM",
-    ]
+    private var timeOptions: [Date] = []
+    
+    convenience init(with timeOptions: [Date]) {
+        self.init()
+        self.timeOptions = timeOptions
+    }
         
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -89,7 +95,7 @@ extension TimeOptionView: UICollectionViewDataSource, UICollectionViewDelegate {
                 withReuseIdentifier: TimeOptionCell.id,
                 for: indexPath) as! TimeOptionCell
 
-        cell.setButton(to: timeOptions[indexPath.item], delegate: self)
+        cell.setButton(to: timeOptions[indexPath.item].hourAndMinuteOnly, delegate: self)
 
         return cell
     }

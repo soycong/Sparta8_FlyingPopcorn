@@ -14,7 +14,12 @@ final class FormatOptionView: UIView {
     var selectedFormat: UIButton?
     
     private let formatOptionCollectionView: FormatOptionCollectionView = .init()
-    private let formatOptions = ["2D", "3D", "IMAX"]
+    private var formatOptions: [String] = []
+    
+    convenience init(with formatOptions: [String]) {
+        self.init()
+        self.formatOptions = formatOptions
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
