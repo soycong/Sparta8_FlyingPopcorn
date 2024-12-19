@@ -48,10 +48,10 @@ final class SigninView: UIView {
         
         subTitleLabel.text = "로그인을 위해 정보를 입력해주세요."
         subTitleLabel.font = .systemFont(ofSize: 16, weight: .regular)
-        subTitleLabel.textColor = UIColor.systemGray4
+        subTitleLabel.textColor = .fp300
         
         withoutSigninButton.setTitle("로그인 없이 둘러보기 >", for: .normal)
-        withoutSigninButton.setTitleColor(UIColor(named: "FPRed"), for: .normal)
+        withoutSigninButton.setTitleColor(.fpRed, for: .normal)
         withoutSigninButton.titleLabel?.font = .systemFont(ofSize: 14)
         withoutSigninButton.addTarget(self, action: #selector(takeAroundWithout), for: .touchUpInside)
         
@@ -108,7 +108,7 @@ final class SigninView: UIView {
             
         // 3. 이메일과 비밀번호 일치하는지 검사
         } else {
-            switch UserDefaultsHelper().checkUserData(email: email, password: password).response {
+            switch UserDefaultsHelper.userDefaultsHelper.checkUserData(email: email, password: password).response {
             // 3-1. 이메일과 비밀번호 일치
             case true:
                 // TODO: 값이 올바를 경우 화면 이동 - result.user 싱글톤?

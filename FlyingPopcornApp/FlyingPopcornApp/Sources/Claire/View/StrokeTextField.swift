@@ -27,7 +27,7 @@ class StrokeTextField: UITextField {
                                                    attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
 
         layer.borderWidth = 1
-        layer.borderColor = UIColor(named: "450")?.cgColor
+        layer.borderColor = UIColor.fp400.cgColor
         layer.cornerRadius = 8
         layer.masksToBounds = true
         

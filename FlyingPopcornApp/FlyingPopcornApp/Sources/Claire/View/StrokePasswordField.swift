@@ -32,7 +32,7 @@ final class StrokePasswordField: StrokeTextField {
     // 비밀번호 눈 이미지
     private func setPasswordShownButtonImage() {
         eyeButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
-        eyeButton.tintColor = UIColor(named: "300")
+        eyeButton.tintColor = .fp300
         eyeButton.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
         
         let rightPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 40))
