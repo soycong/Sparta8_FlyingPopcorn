@@ -42,7 +42,7 @@ final class MovieSearchViewController: UIViewController {
     
     // API에서 영화 목록 가져오기
     private func fetchMovies() {
-        movieNetwork?.getUpcomingMovies { [weak self] result in
+        movieNetwork?.getNowPlayingList { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let movieList):
@@ -86,8 +86,13 @@ extension MovieSearchViewController: MovieSearchViewDelegate {
     
     func didSelectMovie(at index: Int) {
         let selectedMovie = searchedMovies[index]
-       // let movieDetailVC = MovieDetailViewController(movieID: selectedMovie.id)
-        let movieDetailVC = MyPageViewController() //임의로 설정
-        navigationController?.pushViewController(movieDetailVC, animated: true)
+
+        if let movieNetwork = self.movieNetwork {
+            let movieDetailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie)
+            movieDetailVC.hidesBottomBarWhenPushed = true // 탭바 숨기기 설정
+            navigationController?.pushViewController(movieDetailVC, animated: true)
+        } else {
+            print("Error: MovieNetwork is nil")
+        }
     }
 }
