@@ -120,7 +120,7 @@ extension FormatOptionView: UICollectionViewDelegateFlowLayout {
         let availableWidth = collectionView.bounds.width - totalSpacing
         let cellWidth = availableWidth / numberOfCellsInRow
 
-        return CGSize(width: cellWidth, height: 50)
+        return CGSize(width: cellWidth, height: 40)
     }
 }
 

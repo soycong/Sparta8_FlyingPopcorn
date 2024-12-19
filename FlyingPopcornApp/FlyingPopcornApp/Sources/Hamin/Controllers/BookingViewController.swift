@@ -120,15 +120,22 @@ final class BookingViewController: UIViewController {
             make.bottom.leading.trailing.equalToSuperview()
         }
         
-        confirmButton.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview().inset(24)
-            make.height.equalTo(48)
+        dateOptionView.snp.makeConstraints { make in
+            make.bottom.equalTo(formatOptionView.snp.top).offset(-40)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(100)
         }
         
-        colorGuideView.snp.makeConstraints { make in
-            make.width.equalTo(confirmButton.snp.width)
-            make.bottom.equalTo(confirmButton.snp.top).offset(-50)
-            make.centerX.equalTo(confirmButton)
+        formatOptionView.snp.makeConstraints { make in
+            make.bottom.equalTo(timeOptionView.snp.top).offset(-40)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(70)
+        }
+        
+        timeOptionView.snp.makeConstraints { make in
+            make.bottom.equalTo(quantityOptionView.snp.top).offset(-40)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(190)
         }
         
         quantityOptionView.snp.makeConstraints { make in
@@ -137,22 +144,15 @@ final class BookingViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(16)
         }
         
-        timeOptionView.snp.makeConstraints { make in
-            make.bottom.equalTo(quantityOptionView.snp.top).offset(-40)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(200)
+        colorGuideView.snp.makeConstraints { make in
+            make.width.equalTo(confirmButton.snp.width)
+            make.bottom.equalTo(confirmButton.snp.top).offset(-50)
+            make.centerX.equalTo(confirmButton)
         }
         
-        formatOptionView.snp.makeConstraints { make in
-            make.bottom.equalTo(timeOptionView.snp.top).offset(-40)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(90)
-        }
-        
-        dateOptionView.snp.makeConstraints { make in
-            make.bottom.equalTo(formatOptionView.snp.top).offset(-40)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(100)
+        confirmButton.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview().inset(24)
+            make.height.equalTo(48)
         }
     }
     
