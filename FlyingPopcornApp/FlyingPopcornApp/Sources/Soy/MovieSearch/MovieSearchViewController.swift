@@ -83,4 +83,11 @@ extension MovieSearchViewController: MovieSearchViewDelegate {
     func movie(at index: Int) -> Movie {
         return searchedMovies[index]
     }
+    
+    func didSelectMovie(at index: Int) {
+        let selectedMovie = searchedMovies[index]
+       // let movieDetailVC = MovieDetailViewController(movieID: selectedMovie.id)
+        let movieDetailVC = MyPageViewController() //임의로 설정
+        navigationController?.pushViewController(movieDetailVC, animated: true)
+    }
 }

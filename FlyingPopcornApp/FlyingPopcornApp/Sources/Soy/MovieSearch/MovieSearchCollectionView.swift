@@ -13,6 +13,7 @@ import Then
 protocol MovieSearchViewDelegate: AnyObject {
     func numberOfItems() -> Int
     func movie(at index: Int) -> Movie
+    func didSelectMovie(at index: Int)
 }
 
 final class MovieSearchCollectionView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -83,5 +84,9 @@ final class MovieSearchCollectionView: UIView, UICollectionViewDataSource, UICol
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.didSelectMovie(at: indexPath.row)
     }
 }
