@@ -203,7 +203,7 @@ final class BookingViewController: UIViewController {
 
 extension BookingViewController: DateOptionViewDelegate {
     func dateTapped(_ sender: DateButton) {
-        timeOptionView.selectedTime = nil
+        timeOptionView.resetCells()
         guard let date = sender.date else { return }
         let selectedDate = Calendar.current.startOfDay(for: date)
         
