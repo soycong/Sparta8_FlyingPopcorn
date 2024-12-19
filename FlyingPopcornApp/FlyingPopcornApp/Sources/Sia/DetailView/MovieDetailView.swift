@@ -167,7 +167,7 @@ final class MovieDetailView: UIView {
         
         secondStackView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
-            make.leading.trailing.equalTo(roundView).inset(16)
+            make.leading.equalTo(roundView).inset(16)
             make.height.equalTo(20)
         }
 
