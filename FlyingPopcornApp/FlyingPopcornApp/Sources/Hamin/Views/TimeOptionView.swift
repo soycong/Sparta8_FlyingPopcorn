@@ -9,21 +9,21 @@ import UIKit
 
 import SnapKit
 
-protocol TimeOptionViewDelegate: AnyObject {
-    
-}
-
 final class TimeOptionView: UIView {
     
-    weak var delegate: TimeOptionViewDelegate?
     var selectedTime: UIButton?
     
+    private let timeOptionTitle = UILabel().then {
+        $0.text = "상영 시간"
+        $0.font = .boldSystemFont(ofSize: 16)
+        $0.textAlignment = .left
+    }
     private let timeOptionCollectionView: TimeOptionCollectionView = .init()
     private var timeOptions: [Date] = []
     
     convenience init(with timeOptions: [Date]) {
         self.init()
-        self.timeOptions = timeOptions
+        self.timeOptions = []
     }
         
     override init(frame: CGRect) {
@@ -44,13 +44,24 @@ final class TimeOptionView: UIView {
     }
     
     private func addSubviews() {
+        addSubview(timeOptionTitle)
         addSubview(timeOptionCollectionView)
     }
     
     private func setConstraints() {
-        timeOptionCollectionView.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+        timeOptionTitle.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview()
         }
+        
+        timeOptionCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(timeOptionTitle.snp.bottom).offset(10)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+    }
+    
+    func setTimetable(with table: [Date]) {
+        timeOptions = table
+        timeOptionCollectionView.reloadData()
     }
     
 }
@@ -115,6 +126,6 @@ extension TimeOptionView: UICollectionViewDelegateFlowLayout {
         let availableWidth = collectionView.bounds.width - totalSpacing
         let cellWidth = availableWidth / numberOfCellsInRow
 
-        return CGSize(width: cellWidth, height: 50)
+        return CGSize(width: cellWidth, height: 45)
     }
 }

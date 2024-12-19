@@ -19,6 +19,12 @@ final class DateOptionView: UIView {
     weak var delegate: DateOptionViewDelegate?
     var selectedDate: DateButton?
     
+    private let dateOptionTitle = UILabel().then {
+        $0.text = "상영 날짜"
+        $0.font = .boldSystemFont(ofSize: 16)
+        $0.textAlignment = .left
+    }
+    
     private let dateOptionCollectionView: DateOptionCollectionView = .init()
     private var dateOptions: [Date] = []
     
@@ -36,7 +42,7 @@ final class DateOptionView: UIView {
         dateOptionCollectionView.delegate = self
         // TO-DO: enable scroll?
         dateOptionCollectionView.isScrollEnabled = true
-        
+        backgroundColor = .clear
         addSubviews()
         setConstraints()
     }
@@ -50,12 +56,18 @@ final class DateOptionView: UIView {
     }
     
     private func addSubviews() {
+        addSubview(dateOptionTitle)
         addSubview(dateOptionCollectionView)
     }
     
     private func setConstraints() {
+        dateOptionTitle.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview()
+        }
+        
         dateOptionCollectionView.snp.makeConstraints { make in
-            make.top.trailing.leading.bottom.equalToSuperview()
+            make.top.equalTo(dateOptionTitle.snp.bottom).offset(10)
+            make.trailing.leading.bottom.equalToSuperview()
         }
     }
 }

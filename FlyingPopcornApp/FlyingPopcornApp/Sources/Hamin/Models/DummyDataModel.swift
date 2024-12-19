@@ -29,7 +29,19 @@ struct Cinema {
         Date.now + TimeInterval(60 * 60 * 3 + 1248),
         Date.now + TimeInterval(60 * 60 * 5 + 3358),
         Date.now + TimeInterval(60 * 60 * 7 + 7593),
+        
+        Date.now - TimeInterval(60 * 60 * 3 + 9320),
+        Date.now - TimeInterval(60 * 60 * 2 + 5135),
+        Date.now - TimeInterval(60 * 60),
+        Date.now,
+        Date.now + TimeInterval(60 * 60 * 3 + 1248) + TimeInterval(60 * 60 * 24),
+        Date.now + TimeInterval(60 * 60 * 5 + 3358) + TimeInterval(60 * 60 * 24),
+        Date.now + TimeInterval(60 * 60 * 7 + 7593) + TimeInterval(60 * 60 * 24),
     ]
+    
+    static func filteredByWeekDays() {
+        self.schedule
+    }
     
 }
 
