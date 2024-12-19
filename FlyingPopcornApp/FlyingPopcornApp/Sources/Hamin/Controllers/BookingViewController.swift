@@ -18,14 +18,12 @@ final class BookingViewController: UIViewController {
     
     private let redBackdrop = UIView().then {
         $0.backgroundColor = .fpRed
-        $0.layer.zPosition = 0
     }
     
     private let roundView = UIView().then {
         $0.backgroundColor = .fp00
         $0.layer.cornerRadius = 20
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        $0.layer.zPosition = 1
         $0.clipsToBounds = true
     }
     
@@ -34,6 +32,13 @@ final class BookingViewController: UIViewController {
     private let formatOptionView: FormatOptionView = .init(with: Cinema.availableFormat)
     private let quantityOptionView: QuantityOptionView = .init()
     private let colorGuideView: ColorGuideView = .init()
+    
+    private let verticalStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 20
+        $0.alignment = .leading
+        $0.distribution = .equalSpacing
+    }
     
     // TO-DO: 모든 옵션을 선택하지 않았으면 버튼 회색처리 + 탭 안되게
     private let confirmButton = UIButton().then {
@@ -98,62 +103,69 @@ final class BookingViewController: UIViewController {
     }
 
     private func setViews() {
+        view.addSubview(confirmButton)
         view.addSubview(redBackdrop)
         view.addSubview(dateOptionView)
         view.addSubview(roundView)
         
-        roundView.addSubview(formatOptionView)
-        roundView.addSubview(timeOptionView)
-        roundView.addSubview(quantityOptionView)
-        roundView.addSubview(colorGuideView)
-        roundView.addSubview(confirmButton)
+        roundView.addSubview(verticalStackView)
+        verticalStackView.addArrangedSubViews([formatOptionView,
+                                               timeOptionView,
+                                               quantityOptionView,
+                                               colorGuideView])
+        // 버튼이 최상단에 보이도록 설정
+        view.bringSubviewToFront(confirmButton)
     }
     
     private func setConstraints() {
-        redBackdrop.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(formatOptionView.snp.top)
+        confirmButton.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview().inset(24)
+            make.height.equalTo(48)
         }
         
-        roundView.snp.makeConstraints { make in
-            make.top.equalTo(redBackdrop.snp.bottom).offset(-20)
-            make.bottom.leading.trailing.equalToSuperview()
+        redBackdrop.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         
         dateOptionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(formatOptionView.snp.top).offset(-40)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(100)
         }
         
+        roundView.snp.makeConstraints { make in
+            make.top.equalTo(dateOptionView.snp.bottom).offset(20)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        verticalStackView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(redBackdrop.snp.bottom)
+        }
+        
         formatOptionView.snp.makeConstraints { make in
-            make.bottom.lessThanOrEqualTo(timeOptionView.snp.top).offset(-40)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.top.equalTo(roundView.snp.top).offset(40)
+            make.leading.trailing.equalTo(roundView).inset(16)
             make.height.equalTo(70)
         }
         
         timeOptionView.snp.makeConstraints { make in
-            make.bottom.lessThanOrEqualTo(quantityOptionView.snp.top).offset(-40)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.top.equalTo(formatOptionView.snp.bottom).offset(40)
+            make.leading.trailing.equalTo(roundView).inset(16)
             make.height.equalTo(190)
         }
         
         quantityOptionView.snp.makeConstraints { make in
+            make.top.equalTo(timeOptionView.snp.bottom).offset(40)
+            make.leading.trailing.equalTo(roundView).inset(16)
             make.height.equalTo(50)
-            make.bottom.lessThanOrEqualTo(colorGuideView.snp.top).offset(-40)
-            make.leading.trailing.equalToSuperview().inset(16)
         }
         
         colorGuideView.snp.makeConstraints { make in
-            make.width.equalTo(confirmButton.snp.width)
-            make.bottom.lessThanOrEqualTo(confirmButton.snp.top).offset(-50)
+            make.top.equalTo(quantityOptionView.snp.bottom).offset(40)
             make.centerX.equalTo(confirmButton)
-        }
-        
-        confirmButton.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview().inset(24)
-            make.height.equalTo(48)
+            make.width.equalTo(confirmButton.snp.width)
         }
     }
     
