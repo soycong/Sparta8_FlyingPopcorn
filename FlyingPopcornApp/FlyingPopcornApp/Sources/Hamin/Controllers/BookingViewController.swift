@@ -177,19 +177,19 @@ final class BookingViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
             print("확인 버튼 누름")
             
-//            self.confirmBooking()
+            self.confirmBooking()
             
-            
+            self.navigationController?.popToRootViewController(animated: true)
         }))
 
-//        alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: { _ in
-//            print("취소됨")
-//        }))
-
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: nil))
 
         self.present(alert, animated: true, completion: nil)
         
+        
+    }
+    
+    func confirmBooking() {
         let bookedTicket = Ticket(movie: movie,
                                   date: dateOptionView.selectedDate?.date ?? Date.distantPast,
                                   format: (formatOptionView.selectedFormat?.titleLabel?.text)!,
@@ -198,20 +198,7 @@ final class BookingViewController: UIViewController {
         Tickets.bookedTickets.append(bookedTicket)
         
         print("Ticket 생성됨: \(String(describing: bookedTicket))")
-        
-        self.navigationController?.popToRootViewController(animated: true)
     }
-    
-//    func confirmBooking() {
-//        let bookedTicket = Ticket(movie: movie,
-//                                  date: dateOptionView.selectedDate?.date ?? Date.distantPast,
-//                                  format: (formatOptionView.selectedFormat?.titleLabel?.text)!,
-//                                  quantity: quantityOptionView.selectedQuantity)
-//        
-//        Tickets.bookedTickets.append(bookedTicket)
-//        
-//        print("Ticket 생성됨: \(String(describing: bookedTicket))")
-//    }
 }
 
 extension BookingViewController: DateOptionViewDelegate {
