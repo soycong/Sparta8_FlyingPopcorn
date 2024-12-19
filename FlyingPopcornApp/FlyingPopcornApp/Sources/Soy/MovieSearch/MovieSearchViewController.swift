@@ -16,14 +16,21 @@ final class MovieSearchViewController: UIViewController {
     
     private var movieNetwork: MovieNetwork?
     
+    // MARK: Initializer
+    init(movieNetwork: MovieNetwork) {
+        self.movieNetwork = movieNetwork
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view = movieSearchView
         movieSearchView.delegate = self
-        
-        let networkProvider = NetworkProvider()
-        movieNetwork = networkProvider.makeMovieNetwork()
         
         configureUI()
         fetchMovies()

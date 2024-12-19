@@ -8,24 +8,9 @@
 import UIKit
 
 final class HomeViewController: UIViewController {
+    // MARK: - Properties
     private let movieNetwork: MovieNetwork
     
-    private var selectedFilterIndex: Int = 0 {
-        willSet {
-            applyFilter(index: newValue)
-        }
-    }
-    
-    init(movieNetwork: MovieNetwork) {
-        self.movieNetwork = movieNetwork
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Properties
     private var filters: [String] {
         return ["전체"] + Movie.genreMap.values.sorted()
     }
@@ -35,6 +20,22 @@ final class HomeViewController: UIViewController {
     private var filteredPopularMovies: [Movie] = []
     
     private let homeView = HomeView()
+    
+    private var selectedFilterIndex: Int = 0 {
+        willSet {
+            applyFilter(index: newValue)
+        }
+    }
+    
+    // MARK: - Initializer
+    init(movieNetwork: MovieNetwork) {
+        self.movieNetwork = movieNetwork
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycle
     override func loadView() {
@@ -68,7 +69,10 @@ final class HomeViewController: UIViewController {
         let collectionView = homeView.collectionView
         collectionView.dataSource = self
         collectionView.delegate = self
+        
         collectionView.allowsMultipleSelection = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
         
         collectionView.register(HomeFilterCell.self, forCellWithReuseIdentifier: HomeFilterCell.identifier)
         collectionView.register(HomeMovieCell.self, forCellWithReuseIdentifier: HomeMovieCell.identifier)
@@ -77,6 +81,8 @@ final class HomeViewController: UIViewController {
         collectionView.register(HomeEmptyStateCell.self, forCellWithReuseIdentifier: HomeEmptyStateCell.identifier)
         
         collectionView.collectionViewLayout = createCompositionalLayout()
+        
+
     }
     
     // MARK: - Fetch Movies Data
