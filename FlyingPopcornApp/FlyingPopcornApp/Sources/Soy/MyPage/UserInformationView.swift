@@ -12,7 +12,8 @@ import Then
 
 final class UserInformationView: UIView {
     private let profileImageView = UIImageView().then {
-        $0.image = UIImage(named: "MoviePoster2")
+        $0.image = UIImage(systemName: "person.crop.circle.fill")?.withRenderingMode(.alwaysTemplate)  // 시스템 이미지 설정
+        $0.tintColor = .gray
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
