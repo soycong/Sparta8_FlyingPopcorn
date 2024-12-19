@@ -23,6 +23,7 @@ final class MyPageViewController: UIViewController {
         
         configureUI()
         configureData()
+        // loadUserData() 싱글톤?
     }
     
     private func configureUI() {
@@ -47,3 +48,12 @@ extension MyPageViewController: MyPageViewDelegate {
         return movies[index]
     }
 }
+
+// 싱글톤?
+//extension MyPageViewController {
+//    private func loadUserData() {
+//        if let userData = UserDefaultsHelper.shared.getUserData() {
+//            myPageView.userInformationView.updateUserInfo(with: userData)
+//        }
+//    }
+//}
