@@ -53,8 +53,8 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
         }
         
         tableView.snp.makeConstraints { make in
-            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(16)
-            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).offset(-16)
+            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing)
             make.top.equalTo(self.userInformationView.snp.bottom)
             make.bottom.equalTo(self.snp.bottom)
         }
@@ -73,7 +73,7 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
         headerView.addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(headerView.snp.leading)
+            make.leading.equalTo(headerView.snp.leading).offset(16)
             make.trailing.equalTo(headerView.snp.trailing)
             make.centerY.equalTo(headerView.snp.centerY)
         }

@@ -34,9 +34,9 @@ final class MyPageViewController: UIViewController {
 extension MyPageViewController: MyPageViewDelegate {
     private func configureData() {
         movies = [
-            DummyMovieData(title: "Coco", genre: "Animation", posterImageName: "MoviePoster1", runTime: "1", schedule: "1"),
-            DummyMovieData(title: "Joker", genre: "Thriller", posterImageName: "MoviePoster2", runTime: "2", schedule: "2"),
-            DummyMovieData(title: "The Avengers", genre: "Action", posterImageName: "MoviePoster3", runTime: "3", schedule: "3"),
+            DummyMovieData(title: "Coco", genre: "Animation", posterImageName: "MoviePoster1", runTime: "2024년 12월 23일", schedule: "13:30"),
+            DummyMovieData(title: "Joker", genre: "Thriller", posterImageName: "MoviePoster2", runTime: "2024년 12월 30일", schedule: "14:30"),
+            DummyMovieData(title: "The Avengers", genre: "Action", posterImageName: "MoviePoster3", runTime: "2024년 12월 30일", schedule: "15:30"),
         ]
     }
     

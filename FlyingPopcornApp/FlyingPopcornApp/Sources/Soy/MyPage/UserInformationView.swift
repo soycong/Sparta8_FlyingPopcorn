@@ -12,7 +12,8 @@ import Then
 
 final class UserInformationView: UIView {
     private let profileImageView = UIImageView().then {
-        $0.image = UIImage(named: "MoviePoster2")
+        $0.image = UIImage(systemName: "person.crop.circle.fill")?.withRenderingMode(.alwaysTemplate)  // 시스템 이미지 설정
+        $0.tintColor = .gray
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
@@ -46,7 +47,7 @@ final class UserInformationView: UIView {
         $0.distribution = .fill
     }
     
-    private lazy var horizontalStackView = UIStackView(arrangedSubviews: [profileImageView, verticalStackView, editButton]).then {
+    private lazy var horizontalStackView = UIStackView(arrangedSubviews: [profileImageView, verticalStackView]).then {
         $0.axis = .horizontal
         $0.spacing = 5
         $0.alignment = .center
@@ -109,10 +110,10 @@ final class UserInformationView: UIView {
             make.trailing.equalTo(self.verticalStackView.snp.trailing)
         }
         
-        editButton.snp.makeConstraints { make in
-            make.width.equalTo(profileImageView.snp.height)
-            make.trailing.equalTo(self.horizontalStackView.snp.trailing)
-        }
+//        editButton.snp.makeConstraints { make in
+//            make.width.equalTo(profileImageView.snp.height)
+//            make.trailing.equalTo(self.horizontalStackView.snp.trailing)
+//        }
     }
     
     // 싱글톤 코드?
