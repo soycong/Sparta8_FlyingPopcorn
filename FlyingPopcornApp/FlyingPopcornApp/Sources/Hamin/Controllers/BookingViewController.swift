@@ -121,32 +121,33 @@ final class BookingViewController: UIViewController {
         }
         
         dateOptionView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(formatOptionView.snp.top).offset(-40)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(100)
         }
         
         formatOptionView.snp.makeConstraints { make in
-            make.bottom.equalTo(timeOptionView.snp.top).offset(-40)
+            make.bottom.lessThanOrEqualTo(timeOptionView.snp.top).offset(-40)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(70)
         }
         
         timeOptionView.snp.makeConstraints { make in
-            make.bottom.equalTo(quantityOptionView.snp.top).offset(-40)
+            make.bottom.lessThanOrEqualTo(quantityOptionView.snp.top).offset(-40)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(190)
         }
         
         quantityOptionView.snp.makeConstraints { make in
             make.height.equalTo(50)
-            make.bottom.equalTo(colorGuideView.snp.top).offset(-40)
+            make.bottom.lessThanOrEqualTo(colorGuideView.snp.top).offset(-40)
             make.leading.trailing.equalToSuperview().inset(16)
         }
         
         colorGuideView.snp.makeConstraints { make in
             make.width.equalTo(confirmButton.snp.width)
-            make.bottom.equalTo(confirmButton.snp.top).offset(-50)
+            make.bottom.lessThanOrEqualTo(confirmButton.snp.top).offset(-50)
             make.centerX.equalTo(confirmButton)
         }
         
