@@ -98,27 +98,27 @@ private extension MovieDetailViewController {
         movieDetailView.bookingButton.addTarget(self, action: #selector(bookPushView), for: .touchUpInside)
     }
     
-    @objc func bookPushView() {        
-        // TODO: - 로그인 여부 체크
-        //let userDefaultsHelper = UserDefaultsHelper()
-        //let userDictionary = userDefaultsHelper.getUserDictionary()
+    @objc func bookPushView() {
+        // UserData 싱글톤 가져오기
+        let userData = UserData.loginedUser
         
-        // 데이터가 없으면 로그인 화면으로 이동
-//        if userDictionary.isEmpty {
-//            let signUpVC = SignupViewController()
-//            let signUpNavController = UINavigationController(rootViewController: signUpVC)
-//            signUpNavController.modalPresentationStyle = .fullScreen
-//            
-//            // 현재 윈도우 가져와서 루트 변경
-//            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? UIWindowSceneDelegate,
-//               let window = sceneDelegate.window {
-//                window?.rootViewController = signUpNavController
-//                window?.makeKeyAndVisible()
-//            }
-//        } else {
+        // 로그인 여부 체크
+        if userData.email == nil {
+            // 데이터가 없으면 로그인 화면으로 이동
+            let signUpVC = SignupViewController()
+            let signUpNavController = UINavigationController(rootViewController: signUpVC)
+            signUpNavController.modalPresentationStyle = .fullScreen
+            
+            // 현재 윈도우 가져와서 루트 변경
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? UIWindowSceneDelegate,
+               let window = sceneDelegate.window {
+                window?.rootViewController = signUpNavController
+                window?.makeKeyAndVisible()
+            }
+        } else {
             // 데이터가 있으면 예매 화면으로 이동
             let bookingVC = BookingViewController(movie: movie) // 생성자 주입
             navigationController?.pushViewController(bookingVC, animated: true)
-//        }
+        }
     }
 }
