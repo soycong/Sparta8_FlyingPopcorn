@@ -28,7 +28,7 @@ final class MovieSearchCollectionView: UIView, UICollectionViewDataSource, UICol
         }
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-            $0.backgroundColor = UIColor(named: "fp100")
+            $0.backgroundColor = .fp100
             $0.showsVerticalScrollIndicator = false // 스크롤바 지우기
             $0.dataSource = self
             $0.delegate = self
@@ -51,14 +51,12 @@ final class MovieSearchCollectionView: UIView, UICollectionViewDataSource, UICol
     
     func configureCollectionView() {
         collectionView.register(MovieSearchCollectionViewCell.self, forCellWithReuseIdentifier: "MovieSearchCollectionViewCell")
-        //collectionView.dataSource = self
-        //collectionView.delegate = self
+
         self.addSubview(collectionView)
     }
     
     private func configureConstraints() {
         collectionView.snp.makeConstraints { make in
-            //make.edges.equalTo(self.safeAreaLayoutGuide)
             make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(16)
             make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).offset(-16)
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(0)

@@ -30,7 +30,7 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        self.backgroundColor = UIColor(named: "fp100")
+        self.backgroundColor = .fp100
         configureTableView()
         userInformationView.delegate = self
     }
@@ -45,7 +45,7 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
         tableView.delegate = self
         
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(named: "fp100")
+        tableView.backgroundColor = .fp100
         
         tableView.showsVerticalScrollIndicator = false //스크롤바 제거
         
@@ -74,7 +74,7 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
         let titleLabel = UILabel().then {
             $0.text = "🍿 최근 예매 목록"
             $0.font = UIFont.boldSystemFont(ofSize: 18)
-            $0.textColor = .black
+            $0.textColor = .fp950
         }
         
         headerView.addSubview(titleLabel)

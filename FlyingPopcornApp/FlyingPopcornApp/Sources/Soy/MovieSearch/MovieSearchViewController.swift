@@ -31,11 +31,12 @@ final class MovieSearchViewController: UIViewController {
     
     private func configureUI() {
         title = "Search"
-        view.backgroundColor = UIColor(named: "fp100")
+        view.backgroundColor = .fp00
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Movies"
+        searchController.searchBar.placeholder = "영화 제목을 입력해주세요."
+        searchController.searchBar.tintColor = .fpRed
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }

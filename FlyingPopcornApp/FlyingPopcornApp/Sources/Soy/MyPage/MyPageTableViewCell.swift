@@ -10,37 +10,32 @@ import UIKit
 final class MyPageTableViewCell: UITableViewCell {
     
     private let movieImageView = UIImageView().then {
-        $0.image = UIImage(named: "MoviePoster2")
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
     }
     
     private let movieTitleLabel = UILabel().then {
-        $0.text = "MovieTitle"
         $0.font = .boldSystemFont(ofSize: 20)
-        $0.textColor = UIColor(named: "grayDark3")
+        $0.textColor = .fp900
         $0.textAlignment = .left
     }
     
     private let movieGenreLabel = UILabel().then {
-        $0.text = "MovieGenre"
         $0.font = .systemFont(ofSize: 14)
-        $0.textColor = UIColor(named: "grayLight3")
+        $0.textColor = .fp900
         $0.textAlignment = .left
     }
     
     private let movieRunTimeLabel = UILabel().then {
-        $0.text = "movieRunTime"
         $0.font = .systemFont(ofSize: 14)
-        $0.textColor = UIColor(named: "grayLight3")
+        $0.textColor = .fp900
         $0.textAlignment = .left
     }
     
     private let movieScheduleLabel = UILabel().then {
-        $0.text = "movieSchedule"
         $0.font = .systemFont(ofSize: 14)
-        $0.textColor = UIColor(named: "grayLight3")
+        $0.textColor = .fp900
         $0.textAlignment = .left
     }
 
@@ -70,7 +65,7 @@ final class MyPageTableViewCell: UITableViewCell {
         $0.spacing = 16
         $0.alignment = .center
         $0.distribution = .fill
-        $0.backgroundColor = .white
+        $0.backgroundColor = .fp00
         
         $0.layer.cornerRadius = 16
         $0.layer.shadowColor = UIColor.black.cgColor

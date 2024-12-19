@@ -28,14 +28,14 @@ final class UserInformationView: UIView {
     private let userNicknameLabel = UILabel().then {
         $0.text = "NickName"
         $0.font = .boldSystemFont(ofSize: 14)
-        $0.textColor = UIColor(named: "grayDark3")
+        $0.textColor = .fp900
         $0.textAlignment = .left
     }
     
     private let userEmailLabel = UILabel().then {
         $0.text = "NickName@Email.com"
         $0.font = .systemFont(ofSize: 10)
-        $0.textColor = UIColor(named: "grayLight3")
+        $0.textColor = .fp900
         $0.textAlignment = .left
     }
     
@@ -75,7 +75,7 @@ final class UserInformationView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = .fp00
         //self.layer.cornerRadius = 16
         
         configureUI()
