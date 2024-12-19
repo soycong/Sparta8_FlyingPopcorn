@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/69b6b1d6-1ab4-4474-a4fc-fc6d09471228)# 🍿 FlyingPopcorn
+# 🍿 FlyingPopcorn
 팀 2DongJin의 영화 예매 앱 프로젝트, FlyingPopcorn입니다.
 
 ## 📚 Tech Stacks
