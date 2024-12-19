@@ -87,6 +87,17 @@ extension Date {
         return formatter
     }()
     
+    private static let standardFormatter = {
+        let formatter = Date.FormatStyle()
+            .month()
+            .day()
+            .weekday()
+            .hour()
+            .minute()
+            .locale(Locale(identifier: "ko_KR"))
+        return formatter
+    }()
+    
     internal var monthOnly: String {
         return Date.monthOnlyFormatter.format(self)
     }
@@ -101,5 +112,9 @@ extension Date {
     
     internal var hourAndMinuteOnly: String {
         return Date.hourAndMinuteOnlyFormatter.format(self)
+    }
+    
+    internal var standard: String {
+        return Date.standardFormatter.format(self)
     }
 }
