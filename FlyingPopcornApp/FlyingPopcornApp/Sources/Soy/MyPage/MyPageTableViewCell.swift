@@ -91,13 +91,6 @@ final class MyPageTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        //contentView.frame = self.bounds
-        //contentView.frame = self.bounds.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-        //contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
-    }
-    
     private func configureUI() {
         self.addSubview(horizontalStackView)
     }
@@ -131,11 +124,16 @@ final class MyPageTableViewCell: UITableViewCell {
 }
 
 extension MyPageTableViewCell {
-    func configureData(with movie: DummyMovieData) {
-        movieImageView.image = UIImage(named: movie.posterImageName)
-        movieTitleLabel.text = movie.title
-        movieGenreLabel.text = movie.genre
-        movieRunTimeLabel.text = movie.runTime
-        movieScheduleLabel.text = movie.schedule
+    func configureData(with ticket: Ticket) {
+        if let url = URL(string: ticket.movie.posterURL) {
+            movieImageView.loadImage(from: url)
+        } else {
+            movieImageView.image = UIImage(named: "placeholder")
+        }
+        
+        movieTitleLabel.text = ticket.movie.title
+        movieGenreLabel.text = "\(ticket.movie.genres.first ?? "") · \(ticket.format)"
+        movieRunTimeLabel.text = ticket.date.formatted(date: .long, time: .omitted)
+        movieScheduleLabel.text = ticket.date.hourAndMinuteOnly
     }
 }

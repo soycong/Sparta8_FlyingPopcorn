@@ -12,7 +12,7 @@ import Then
 
 protocol MyPageViewDelegate: AnyObject {
     func numberOfItems() -> Int
-    func movie(at index: Int) -> DummyMovieData
+    func ticket(at index: Int) -> Ticket
 }
 
 final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
@@ -37,7 +37,7 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
         tableView.dataSource = self
         tableView.delegate = self
         
-        tableView.separatorStyle = .none // 구분선 제거
+        tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor(named: "fp100")
         
         tableView.showsVerticalScrollIndicator = false //스크롤바 제거
@@ -97,11 +97,15 @@ final class MyPageView: UIView, UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageTableViewCell", for: indexPath) as! MyPageTableViewCell
         cell.selectionStyle = .none
         cell.backgroundColor = .clear
-        
-        if let movie = delegate?.movie(at: indexPath.row) {
-            cell.configureData(with: movie)
+
+        if let ticket = delegate?.ticket(at: indexPath.row) {
+            cell.configureData(with: ticket)
         }
         
         return cell
+    }
+    
+    func insertRows(at indexPaths: [IndexPath], with animation: UITableView.RowAnimation) {
+        tableView.insertRows(at: indexPaths, with: animation)
     }
 }
