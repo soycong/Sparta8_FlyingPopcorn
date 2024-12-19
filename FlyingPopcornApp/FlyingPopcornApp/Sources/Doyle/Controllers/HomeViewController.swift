@@ -10,6 +10,12 @@ import UIKit
 final class HomeViewController: UIViewController {
     private let movieNetwork: MovieNetwork
     
+    private var selectedFilterIndex: Int = 0 {
+        willSet {
+            applyFilter(index: newValue)
+        }
+    }
+    
     init(movieNetwork: MovieNetwork) {
         self.movieNetwork = movieNetwork
         super.init(nibName: nil, bundle: nil)
@@ -21,17 +27,18 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Properties
     private var filters: [String] {
-        return ["All"] + Movie.genreMap.values.sorted()
+        return ["전체"] + Movie.genreMap.values.sorted()
     }
     private var allNowShowingMovies: [Movie] = []
-    private var allComingSoonMovies: [Movie] = []
+    private var allPopularMovies: [Movie] = []
     private var filteredNowShowingMovies: [Movie] = []
-    private var filteredComingSoonMovies: [Movie] = []
+    private var filteredPopularMovies: [Movie] = []
     
     private let homeView = HomeView()
     
     // MARK: - LifeCycle
     override func loadView() {
+//        homeView.searchButton.addTarget(self, action: #selector(goToSearchPage), for: .touchUpInside)
         self.view = homeView
     }
     
@@ -42,16 +49,32 @@ final class HomeViewController: UIViewController {
         applyFilter(index: 0)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // 이 화면에 들어올 때 Navigation Bar 숨기기
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // 이 화면을 떠날 때 Navigation Bar 다시 보이게 하기
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     // MARK: - Setup
     private func setupCollectionView() {
         let collectionView = homeView.collectionView
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.allowsMultipleSelection = false
         
-        collectionView.register(DYFilterCell.self, forCellWithReuseIdentifier: DYFilterCell.identifier)
-        collectionView.register(DYMovieCell.self, forCellWithReuseIdentifier: DYMovieCell.identifier)
-        collectionView.register(DYPosterCell.self, forCellWithReuseIdentifier: DYPosterCell.identifier)
-        collectionView.register(DYHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DYHeaderView.identifier)
+        collectionView.register(HomeFilterCell.self, forCellWithReuseIdentifier: HomeFilterCell.identifier)
+        collectionView.register(HomeMovieCell.self, forCellWithReuseIdentifier: HomeMovieCell.identifier)
+        collectionView.register(HomePosterCell.self, forCellWithReuseIdentifier: HomePosterCell.identifier)
+        collectionView.register(HomeHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HomeHeaderView.identifier)
+        collectionView.register(HomeEmptyStateCell.self, forCellWithReuseIdentifier: HomeEmptyStateCell.identifier)
         
         collectionView.collectionViewLayout = createCompositionalLayout()
     }
@@ -79,8 +102,8 @@ final class HomeViewController: UIViewController {
             defer { group.leave() }
             switch result {
             case .success(let movieListModel):
-                self?.allComingSoonMovies = movieListModel.results
-                self?.filteredComingSoonMovies = movieListModel.results
+                self?.allPopularMovies = movieListModel.results
+                self?.filteredPopularMovies = movieListModel.results
             case .failure(let error):
                 print("Failed to fetch popular movies: \(error)")
             }
@@ -95,12 +118,12 @@ final class HomeViewController: UIViewController {
     // MARK: - Filter Logic
     private func applyFilter(index: Int) {
         let filter = filters[index]
-        if filter == "All" {
+        if filter == "전체" {
             filteredNowShowingMovies = allNowShowingMovies
-            filteredComingSoonMovies = allComingSoonMovies
+            filteredPopularMovies = allPopularMovies
         } else {
             filteredNowShowingMovies = allNowShowingMovies.filter { $0.genres.contains(filter) }
-            filteredComingSoonMovies = allComingSoonMovies.filter { $0.genres.contains(filter) }
+            filteredPopularMovies = allPopularMovies.filter { $0.genres.contains(filter) }
         }
         
         print("[HomeViewController] Filter Selected: \(filter)")
@@ -109,7 +132,16 @@ final class HomeViewController: UIViewController {
         homeView.collectionView.reloadData()
     }
     
-    // MARK: - Compositional Layout
+    // MARK: - Button Action for Search Bar
+    @objc func goToSearchPage() {
+        if let tabBar = self.tabBarController {
+            tabBar.selectedIndex = 1 // 검색 페이지로 이동
+        }
+    }
+}
+
+// MARK: - CollectionView: Compositional Layout
+extension HomeViewController {
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { sectionIndex, _ in
             switch sectionIndex {
@@ -165,7 +197,7 @@ final class HomeViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = 16
-        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 16, trailing: 0)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(26))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -184,8 +216,8 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0: return filters.count
-        case 1: return filteredNowShowingMovies.count
-        case 2: return filteredComingSoonMovies.count
+        case 1: return filteredNowShowingMovies.isEmpty ? 1 : filteredNowShowingMovies.count
+        case 2: return filteredPopularMovies.isEmpty ? 1 : filteredPopularMovies.count
         default: return 0
         }
     }
@@ -193,24 +225,40 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DYFilterCell.identifier, for: indexPath) as! DYFilterCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeFilterCell.identifier, for: indexPath) as! HomeFilterCell
             cell.configure(with: filters[indexPath.item])
+            cell.updateSelectionState(isSelected: indexPath.item == selectedFilterIndex)
             return cell
+            
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DYMovieCell.identifier, for: indexPath) as! DYMovieCell
-            cell.configure(with: filteredNowShowingMovies[indexPath.item])
-            return cell
+            if filteredNowShowingMovies.isEmpty {
+                let emptyCell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeEmptyStateCell.identifier, for: indexPath) as! HomeEmptyStateCell
+                emptyCell.configure(with: "현재 상영 중인 영화가 없습니다.", andSize: 16)
+                return emptyCell
+            } else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeMovieCell.identifier, for: indexPath) as! HomeMovieCell
+                cell.configure(with: filteredNowShowingMovies[indexPath.item])
+                return cell
+            }
+            
         case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DYPosterCell.identifier, for: indexPath) as! DYPosterCell
-            cell.configure(with: filteredComingSoonMovies[indexPath.item])
-            return cell
+            if filteredPopularMovies.isEmpty {
+                let emptyCell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeEmptyStateCell.identifier, for: indexPath) as! HomeEmptyStateCell
+                emptyCell.configure(with: "해당되는 영화가 없습니다.", andSize: 12)
+                return emptyCell
+            } else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomePosterCell.identifier, for: indexPath) as! HomePosterCell
+                cell.configure(with: filteredPopularMovies[indexPath.item])
+                return cell
+            }
+            
         default:
             return UICollectionViewCell()
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DYHeaderView.identifier, for: indexPath) as! DYHeaderView
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeaderView.identifier, for: indexPath) as! HomeHeaderView
         
         switch indexPath.section {
         case 0:
@@ -225,20 +273,53 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: - UICollectionViewDelegate
+// MARK: - UICOllectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 선택된 영화 가져오기
-        let selectedMovie: Movie
-        
-        if indexPath.section == 1 {
-            selectedMovie = filteredNowShowingMovies[indexPath.item]
-        } else {
-            selectedMovie = filteredComingSoonMovies[indexPath.item]
+        switch indexPath.section {
+        case 0: // Filter Section
+            let previousIndex = selectedFilterIndex
+            selectedFilterIndex = indexPath.item
+            collectionView.reloadItems(at: [IndexPath(item: previousIndex, section: 0), IndexPath(item: selectedFilterIndex, section: 0)])
+            
+        case 1: // Now Showing Section
+            guard !filteredNowShowingMovies.isEmpty else {
+                print("[HomeViewController] No movies available in 'Now Showing' section.")
+                return
+            }
+            
+            let selectedMovie = filteredNowShowingMovies[indexPath.item]
+            print("[HomeViewController] Selected Now Showing Movie: \(selectedMovie.title)")
+            
+            // MovieDetailViewController로 영화 데이터 전달
+            let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie) // 생성자 주입
+            detailVC.hidesBottomBarWhenPushed = true // 탭바 숨기기 설정
+            navigationController?.pushViewController(detailVC, animated: true)
+            
+        case 2: // Coming Soon Section
+            guard !filteredPopularMovies.isEmpty else {
+                print("[HomeViewController] No movies available in 'Popular Picks' section.")
+                return
+            }
+            
+            let selectedMovie = filteredPopularMovies[indexPath.item]
+            print("[HomeViewController] Selected Popular Movie: \(selectedMovie.title)")
+            
+            // MovieDetailViewController로 영화 데이터 전달
+            let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie) // 생성자 주입
+            detailVC.hidesBottomBarWhenPushed = true // 탭바 숨기기 설정
+            navigationController?.pushViewController(detailVC, animated: true)
+            
+        default:
+            break
         }
-        
-        // MovieDetailViewController로 영화 데이터 전달
-        let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie) // 생성자 주입
-        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            let cell = collectionView.cellForItem(at: indexPath) as? HomeFilterCell
+            cell?.updateSelectionState(isSelected: false)
+        }
     }
 }

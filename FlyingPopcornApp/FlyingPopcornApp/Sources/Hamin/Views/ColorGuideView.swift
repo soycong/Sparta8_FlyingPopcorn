@@ -12,15 +12,17 @@ import SnapKit
 final class ColorGuideView: UIView {
     private let colorGuide: ColorGuide = .init()
     
+    
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         
-        backgroundColor = .systemBackground
+        backgroundColor = .fp00
         
         addSubview(colorGuide)
         
         colorGuide.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(30)
+            make.height.equalTo(24)
         }
     }
     

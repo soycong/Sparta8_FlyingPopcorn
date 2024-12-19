@@ -13,6 +13,11 @@ final class FormatOptionView: UIView {
    
     var selectedFormat: UIButton?
     
+    private let formatOptionTitle = UILabel().then {
+        $0.text = "관람 가능 포맷"
+        $0.font = .boldSystemFont(ofSize: 16)
+        $0.textAlignment = .left
+    }
     private let formatOptionCollectionView: FormatOptionCollectionView = .init()
     private var formatOptions: [String] = []
     
@@ -39,12 +44,18 @@ final class FormatOptionView: UIView {
     }
     
     private func addSubviews() {
+        addSubview(formatOptionTitle)
         addSubview(formatOptionCollectionView)
     }
     
     private func setConstraints() {
+        formatOptionTitle.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview()
+        }
+        
         formatOptionCollectionView.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(formatOptionTitle.snp.bottom).offset(10)
+            make.leading.trailing.bottom.equalToSuperview()
         }
     }
 }
@@ -109,7 +120,7 @@ extension FormatOptionView: UICollectionViewDelegateFlowLayout {
         let availableWidth = collectionView.bounds.width - totalSpacing
         let cellWidth = availableWidth / numberOfCellsInRow
 
-        return CGSize(width: cellWidth, height: 50)
+        return CGSize(width: cellWidth, height: 40)
     }
 }
 
