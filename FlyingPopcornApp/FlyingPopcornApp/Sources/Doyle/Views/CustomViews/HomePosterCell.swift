@@ -1,5 +1,5 @@
 //
-//  DYPosterCell.swift
+//  HomePosterCell.swift
 //  FlyingPopcornApp
 //
 //  Created by t0000-m0112 on 2024-12-16.
@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 import Then
 
-final class DYPosterCell: UICollectionViewCell {
-    static let identifier = "DYPosterCell"
+final class HomePosterCell: UICollectionViewCell {
+    static let identifier = "HomePosterCell"
     
     private let imageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill

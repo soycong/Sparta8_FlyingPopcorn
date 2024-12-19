@@ -33,7 +33,7 @@ final class HomeView: UIView {
     // MARK: - Initializer
     override init(frame: CGRect) {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
-            // Placeholder: HomeViewController에서 처리될 레이아웃 로직
+            // HomeViewController에서 처리될 레이아웃 로직
             return NSCollectionLayoutSection(group: NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)), subitems: []))
         }
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)

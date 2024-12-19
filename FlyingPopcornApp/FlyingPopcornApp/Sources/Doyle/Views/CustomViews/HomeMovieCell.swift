@@ -1,5 +1,5 @@
 //
-//  DYMovieCell.swift
+//  HomeMovieCell.swift
 //  FlyingPopcornApp
 //
 //  Created by t0000-m0112 on 2024-12-16.
@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 import Then
 
-final class DYMovieCell: UICollectionViewCell {
-    static let identifier = "DYMovieCell"
+final class HomeMovieCell: UICollectionViewCell {
+    static let identifier = "HomeMovieCell"
     
     // MARK: - UI
     

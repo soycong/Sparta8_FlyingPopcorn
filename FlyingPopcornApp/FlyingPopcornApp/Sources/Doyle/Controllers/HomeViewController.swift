@@ -48,10 +48,10 @@ final class HomeViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        collectionView.register(DYFilterCell.self, forCellWithReuseIdentifier: DYFilterCell.identifier)
-        collectionView.register(DYMovieCell.self, forCellWithReuseIdentifier: DYMovieCell.identifier)
-        collectionView.register(DYPosterCell.self, forCellWithReuseIdentifier: DYPosterCell.identifier)
-        collectionView.register(DYHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DYHeaderView.identifier)
+        collectionView.register(HomeFilterCell.self, forCellWithReuseIdentifier: HomeFilterCell.identifier)
+        collectionView.register(HomeMovieCell.self, forCellWithReuseIdentifier: HomeMovieCell.identifier)
+        collectionView.register(HomePosterCell.self, forCellWithReuseIdentifier: HomePosterCell.identifier)
+        collectionView.register(HomeHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HomeHeaderView.identifier)
         
         collectionView.collectionViewLayout = createCompositionalLayout()
     }
@@ -193,15 +193,15 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DYFilterCell.identifier, for: indexPath) as! DYFilterCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeFilterCell.identifier, for: indexPath) as! HomeFilterCell
             cell.configure(with: filters[indexPath.item])
             return cell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DYMovieCell.identifier, for: indexPath) as! DYMovieCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeMovieCell.identifier, for: indexPath) as! HomeMovieCell
             cell.configure(with: filteredNowShowingMovies[indexPath.item])
             return cell
         case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DYPosterCell.identifier, for: indexPath) as! DYPosterCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomePosterCell.identifier, for: indexPath) as! HomePosterCell
             cell.configure(with: filteredComingSoonMovies[indexPath.item])
             return cell
         default:
@@ -210,7 +210,7 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DYHeaderView.identifier, for: indexPath) as! DYHeaderView
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeaderView.identifier, for: indexPath) as! HomeHeaderView
         
         switch indexPath.section {
         case 0:
