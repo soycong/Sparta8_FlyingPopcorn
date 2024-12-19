@@ -8,12 +8,26 @@
 import UIKit
 
 import SnapKit
+import Then
 
 final class BookingViewController: UIViewController {
     
     var movie: Movie
     
     private let cinemaModel: Cinema = .init()
+    
+    private let redBackdrop = UIView().then {
+        $0.backgroundColor = .fpRed
+        $0.layer.zPosition = 0
+    }
+    
+    private let roundView = UIView().then {
+        $0.backgroundColor = .fp00
+        $0.layer.cornerRadius = 20
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        $0.layer.zPosition = 1
+        $0.clipsToBounds = true
+    }
     
     private let dateOptionView: DateOptionView = .init(with: Cinema.schedule)
     private let timeOptionView: TimeOptionView = .init()
@@ -38,9 +52,22 @@ final class BookingViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .clear
+        appearance.shadowColor = .clear
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setNavigationBar()
         view.backgroundColor = .fp00
         
         setViews()
@@ -48,17 +75,51 @@ final class BookingViewController: UIViewController {
         setConstraints()
         dateOptionView.setDelegate(to: self)
     }
+    
+    private func setNavigationBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.shadowColor = nil
+        appearance.shadowImage = UIImage()
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+        let naviLeftItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
+                                           style: .plain,
+                                           target: self,
+                                           action: #selector(handleBackButton))
+        naviLeftItem.tintColor = .fp00
+        navigationItem.leftBarButtonItem = naviLeftItem
+    }
+    
+    @objc private func handleBackButton() {
+        navigationController?.popViewController(animated: true)
+    }
 
     private func setViews() {
+        view.addSubview(redBackdrop)
         view.addSubview(dateOptionView)
-        view.addSubview(formatOptionView)
-        view.addSubview(timeOptionView)
-        view.addSubview(quantityOptionView)
-        view.addSubview(colorGuideView)
-        view.addSubview(confirmButton)
+        view.addSubview(roundView)
+        
+        roundView.addSubview(formatOptionView)
+        roundView.addSubview(timeOptionView)
+        roundView.addSubview(quantityOptionView)
+        roundView.addSubview(colorGuideView)
+        roundView.addSubview(confirmButton)
     }
     
     private func setConstraints() {
+        redBackdrop.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(formatOptionView.snp.top)
+        }
+        
+        roundView.snp.makeConstraints { make in
+            make.top.equalTo(redBackdrop.snp.bottom).offset(-20)
+            make.bottom.leading.trailing.equalToSuperview()
+        }
+        
         confirmButton.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview().inset(24)
             make.height.equalTo(48)
@@ -154,6 +215,7 @@ final class BookingViewController: UIViewController {
 
 extension BookingViewController: DateOptionViewDelegate {
     func dateTapped(_ sender: DateButton) {
+        timeOptionView.selectedTime = nil
         guard let date = sender.date else { return }
         let selectedDate = Calendar.current.startOfDay(for: date)
         

@@ -42,7 +42,7 @@ final class DateOptionView: UIView {
         dateOptionCollectionView.delegate = self
         // TO-DO: enable scroll?
         dateOptionCollectionView.isScrollEnabled = true
-        
+        backgroundColor = .clear
         addSubviews()
         setConstraints()
     }

@@ -16,6 +16,7 @@ final class DateOptionCollectionView: UICollectionView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         self.init(frame: .zero, collectionViewLayout: layout)
+        backgroundColor = .clear
     }
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
@@ -40,7 +41,7 @@ final class DateOptionCell: UICollectionViewCell {
         $0.layer.cornerRadius = 16
         // TO-DO: get right button colors
         $0.backgroundColor = .available
-        $0.tintColor = .fp00
+        $0.tintColor = .clear
         
         $0.titleLabel?.numberOfLines = 2
         $0.titleLabel?.textAlignment = .center
