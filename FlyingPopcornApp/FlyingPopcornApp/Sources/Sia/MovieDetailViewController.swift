@@ -7,18 +7,11 @@
 
 import UIKit
 
-protocol MovieDetailDelegate: AnyObject {
-    // 예매하기 버튼 탭시 movieId 전달
-    func didTapBokkingButton(movieId: Int)
-}
-
 final class MovieDetailViewController: UIViewController {
     private let movieDetailView = MovieDetailView()
     private let movieNetwork: MovieNetwork
     private var movie: Movie // 영화
-    
-    weak var delegate: MovieDetailDelegate?
-    
+        
     init(movieNetwork: MovieNetwork, movie: Movie) {
         self.movieNetwork = movieNetwork
         self.movie = movie
@@ -35,8 +28,6 @@ final class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 네트워크 상태 확인
-        //checkNetworkAndFetchMovieDetail()
         setupNavigationBar()
         bookingButton()
         fetchMovieDetail()
@@ -77,19 +68,12 @@ private extension MovieDetailViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    func checkNetworkAndFetchMovieDetail() {
-        if NetworkMonitor.shared.isConnected {
-            fetchMovieDetail()
-        } else {
-            showAlert(message: "네트워크가 연결되지 않았습니다. 인터넷 연결을 확인해주세요.")
-        }
-    }
-    
     // 영화 상세 정보 네트워크 요청
     func fetchMovieDetail() {
-        movieNetwork.getMovieDetail(movieID: movieID) { [weak self] result in
+        movieNetwork.getMovieDetail(movieID: movie.id) { [weak self] result in
             switch result {
             case .success(let movie):
+                self?.movie = movie
                 self?.movieDetailView.configureView(with: movie)
             case .failure(let error):
                 print("Failed to fetch movie detail: \(error)")
@@ -107,15 +91,7 @@ private extension MovieDetailViewController {
         // TODO: - 로그인 여부 체크
         
         // 로그인 완료 후 예매하기 버튼 탭시
-        delegate?.didTapBokkingButton(movieId: movieID)
-    }
-}
-
-private extension MovieDetailViewController {
-    // 네트워크 연결이 없을 때 alert
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default))
-        present(alert, animated: true)
+        let bookingVC = BookingViewController(movie: movie) // 생성자 주입
+        navigationController?.pushViewController(bookingVC, animated: true)
     }
 }
