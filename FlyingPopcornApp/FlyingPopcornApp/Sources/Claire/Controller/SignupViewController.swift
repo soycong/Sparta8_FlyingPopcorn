@@ -8,10 +8,15 @@
 import UIKit
 import SnapKit
 
-class SignupViewController: UIViewController {
+class SignupViewController: UIViewController, SignupViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        
+        let signupView = SignupView()
+        view.addSubview(signupView)
+        
+        signupView.delegate = self
         
         let alert = { [weak self] title, message in
             let alertController = UIAlertController(
@@ -24,13 +29,14 @@ class SignupViewController: UIViewController {
             self?.present(alertController, animated: true)
         }
 
-        let signupView = SignupView()
-        view.addSubview(signupView)
         signupView.showAlert = alert
         signupView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.top.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
+    }
+    
+    func didTapSigninButton() {
+        dismiss(animated: true)
     }
 }
 

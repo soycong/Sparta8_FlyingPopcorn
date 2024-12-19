@@ -8,6 +8,8 @@ import UIKit
 
 // 가입 화면
 final class SignupView: UIView {
+    weak var delegate: SignupViewDelegate?
+    
     private let titleLabel = UILabel()
     private let subTitleLabel = UILabel()
     private let nameStackView = UIStackView()
@@ -130,7 +132,7 @@ final class SignupView: UIView {
     }
     
     @objc private func switchToSignin() {
-        
+        delegate?.didTapSigninButton()
     }
     
 }
