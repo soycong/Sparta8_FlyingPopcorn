@@ -10,6 +10,12 @@ import UIKit
 final class HomeViewController: UIViewController {
     private let movieNetwork: MovieNetwork
     
+    private var selectedFilterIndex: Int = 0 {
+        willSet {
+            applyFilter(index: newValue)
+        }
+    }
+    
     init(movieNetwork: MovieNetwork) {
         self.movieNetwork = movieNetwork
         super.init(nibName: nil, bundle: nil)
@@ -62,6 +68,7 @@ final class HomeViewController: UIViewController {
         let collectionView = homeView.collectionView
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.allowsMultipleSelection = false
         
         collectionView.register(HomeFilterCell.self, forCellWithReuseIdentifier: HomeFilterCell.identifier)
         collectionView.register(HomeMovieCell.self, forCellWithReuseIdentifier: HomeMovieCell.identifier)
@@ -189,7 +196,7 @@ extension HomeViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = 16
-        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 16, trailing: 0)
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(26))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -219,6 +226,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeFilterCell.identifier, for: indexPath) as! HomeFilterCell
             cell.configure(with: filters[indexPath.item])
+            cell.updateSelectionState(isSelected: indexPath.item == selectedFilterIndex)
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeMovieCell.identifier, for: indexPath) as! HomeMovieCell
@@ -255,11 +263,9 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0: // Filter Section
-            applyFilter(index: indexPath.item)
-            filters.enumerated().forEach { index, _ in
-                let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? HomeFilterCell
-                cell?.updateSelectionState(isSelected: index == indexPath.item)
-            }
+            let previousIndex = selectedFilterIndex
+            selectedFilterIndex = indexPath.item
+            collectionView.reloadItems(at: [IndexPath(item: previousIndex, section: 0), IndexPath(item: selectedFilterIndex, section: 0)])
         case 1: // Now Showing Section
             let selectedMovie = filteredNowShowingMovies[indexPath.item]
             print("[HomeViewController] Selected Now Showing Movie: \(selectedMovie.title)")
@@ -270,7 +276,7 @@ extension HomeViewController: UICollectionViewDelegate {
             navigationController?.pushViewController(detailVC, animated: true)
         case 2: // Coming Soon Section
             let selectedMovie = filteredPopularMovies[indexPath.item]
-            print("[HomeViewController] Selected Coming Soon Movie: \(selectedMovie.title)")
+            print("[HomeViewController] Selected Popular Movie: \(selectedMovie.title)")
             
             // MovieDetailViewController로 영화 데이터 전달
             let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie) // 생성자 주입

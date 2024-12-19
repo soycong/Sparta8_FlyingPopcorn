@@ -14,7 +14,7 @@ final class HomeFilterCell: UICollectionViewCell {
     static let identifier = "HomeFilterCell"
     
     private let filterLabel = HomePaddedLabel().then {
-        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.font = UIFont.boldSystemFont(ofSize: 12)
         $0.textAlignment = .center
     }
     
