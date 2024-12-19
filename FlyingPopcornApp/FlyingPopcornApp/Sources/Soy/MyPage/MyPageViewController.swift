@@ -10,9 +10,8 @@ import UIKit
 final class MyPageViewController: UIViewController {
     //private let userInformationView = UserInformationView()
     private let myPageView = MyPageView()
+    private var tickets: [Ticket] = []
     
-    private var movies: [DummyMovieData] = [] // 전체 데이터
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,8 +21,13 @@ final class MyPageViewController: UIViewController {
         myPageView.delegate = self
         
         configureUI()
-        configureData()
         // loadUserData() 싱글톤?
+        loadTickets()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadTickets()
     }
     
     private func configureUI() {
@@ -32,20 +36,27 @@ final class MyPageViewController: UIViewController {
 }
 
 extension MyPageViewController: MyPageViewDelegate {
-    private func configureData() {
-        movies = [
-            DummyMovieData(title: "Coco", genre: "Animation", posterImageName: "MoviePoster1", runTime: "2024년 12월 23일", schedule: "13:30"),
-            DummyMovieData(title: "Joker", genre: "Thriller", posterImageName: "MoviePoster2", runTime: "2024년 12월 30일", schedule: "14:30"),
-            DummyMovieData(title: "The Avengers", genre: "Action", posterImageName: "MoviePoster3", runTime: "2024년 12월 30일", schedule: "15:30"),
-        ]
+
+    private func loadTickets() { //변경 되었다면 업데이트
+        let oldCount = tickets.count
+        let newTickets = Tickets.bookedTickets
+        
+        if oldCount < newTickets.count {
+            let insertedIndexes = Array(oldCount..<newTickets.count)
+            tickets = newTickets
+            
+            let indexPaths = insertedIndexes.map { IndexPath(row: $0, section: 0) }
+            myPageView.insertRows(at: indexPaths, with: .automatic)
+        }
     }
     
     func numberOfItems() -> Int {
-        return movies.count
+        print("티켓 개수 \(tickets.count)")
+        return tickets.count
     }
     
-    func movie(at index: Int) -> DummyMovieData {
-        return movies[index]
+    func ticket(at index: Int) -> Ticket {
+        return tickets[index]
     }
 }
 
