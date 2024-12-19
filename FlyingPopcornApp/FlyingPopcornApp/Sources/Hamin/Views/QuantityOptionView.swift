@@ -12,7 +12,7 @@ import Then
 
 final class QuantityOptionView: UIView {
     
-    var selectedQuantity = 0
+    var selectedQuantity = 1
     
     private let label = UILabel().then {
         $0.text = "수량"

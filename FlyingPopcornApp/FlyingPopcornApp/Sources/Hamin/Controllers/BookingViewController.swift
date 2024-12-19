@@ -179,13 +179,13 @@ final class BookingViewController: UIViewController {
     
     @objc private func onTap() {
         print("confirmButton Tapped")
-        guard let time = dateOptionView.selectedDate?.date?.description,
+        guard let time = dateOptionView.selectedDate?.date,
               let format = formatOptionView.selectedFormat?.titleLabel?.text else { return }
         let quantity = quantityOptionView.selectedQuantity.description
         
         // TO-DO: alert창 띄워서 예매 목록 or 홈화면으로 가게 선택
         let alert = UIAlertController(title: "예매 내역 확인",
-                                      message: "영화: \(movie.title)\n 시간: \(time)\n 포맷: \(format)\n 수량: \(quantity)",
+                                      message: "영화: \(movie.title)\n 시간: \(time.standard)\n 포맷: \(format)\n 수량: \(quantity)",
                                       preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
