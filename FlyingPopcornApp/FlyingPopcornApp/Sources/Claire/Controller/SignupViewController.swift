@@ -18,13 +18,15 @@ class SignupViewController: UIViewController, SignupViewDelegate {
         
         signupView.delegate = self
         
-        let alert = { [weak self] title, message in
+        let alert = { [weak self] (title: String, message: String, completion: (() -> Void)?) in
             let alertController = UIAlertController(
                 title: title,
                 message: message,
                 preferredStyle: .alert
             )
-            let alertAction = UIAlertAction(title: "확인", style: .default)
+            let alertAction = UIAlertAction(title: "확인", style: .default) { _ in
+                completion?()
+            }
             alertController.addAction(alertAction)
             self?.present(alertController, animated: true)
         }
