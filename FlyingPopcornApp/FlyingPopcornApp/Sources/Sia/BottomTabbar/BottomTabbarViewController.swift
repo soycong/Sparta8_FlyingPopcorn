@@ -49,22 +49,26 @@ private extension BottomTabbarViewController {
         tabBar.scrollEdgeAppearance = appearanceTabbar
     }
     
+    //각각 네비게이션컨트롤러 지정
     func setupTabBarItem() {
         let homeVC = HomeViewController(movieNetwork: movieNetwork)
+        let homeNavVC = UINavigationController(rootViewController: homeVC)
         homeVC.tabBarItem = UITabBarItem(title: "Home",
-                                         image: UIImage(named: "icHomeOff"),
-                                         selectedImage: UIImage(named: "icHomeOff"))
+                                            image: UIImage(named: "icHomeOff"),
+                                            selectedImage: UIImage(named: "icHomeOff"))
         
         let movieSearchVC = MovieSearchViewController()
-        movieSearchVC.tabBarItem = UITabBarItem(title: "Search",
-                                                image: UIImage(named: "icSearchOff"),
-                                                selectedImage: UIImage(named: "icSearchOff"))
+        let searchNavVC = UINavigationController(rootViewController: movieSearchVC)
+        searchNavVC.tabBarItem = UITabBarItem(title: "Search",
+                                              image: UIImage(named: "icSearchOff"),
+                                              selectedImage: UIImage(named: "icSearchOff"))
         
         let myPageVC = MyPageViewController()
-        myPageVC.tabBarItem = UITabBarItem(title: "My",
-                                           image: UIImage(named: "icMyOff"),
-                                           selectedImage: UIImage(named: "icMyOff"))
+        let myPageNavVC = UINavigationController(rootViewController: myPageVC)
+        myPageNavVC.tabBarItem = UITabBarItem(title: "My",
+                                              image: UIImage(named: "icMyOff"),
+                                              selectedImage: UIImage(named: "icMyOff"))
         
-        viewControllers = [homeVC, movieSearchVC, myPageVC]
+        viewControllers = [homeNavVC, searchNavVC, myPageNavVC]
     }
 }

@@ -21,10 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let movieNetwork = MovieNetwork(network: Network<MovieListModel>(endPoint: "https://api.themoviedb.org/3"))
         
         let tabBarVC = BottomTabbarViewController(movieNetwork: movieNetwork)
-        let navigationController = UINavigationController(rootViewController: tabBarVC)
         
-        // UINavigationController를 루트로 설정
-        window?.rootViewController = navigationController
+        window?.rootViewController = tabBarVC
         window?.makeKeyAndVisible()
     }
 
