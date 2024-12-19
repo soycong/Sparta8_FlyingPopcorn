@@ -84,7 +84,8 @@ final class SigninView: UIView {
         
         withoutSigninButton.snp.makeConstraints { make in
             make.top.equalTo(signinButton.snp.bottom)
-            make.leading.trailing.height.equalTo(emailTextField)
+            make.height.equalTo(emailTextField)
+            make.centerX.equalTo(signinButton.snp.centerX)
         }
         
         signSwitchLabel.snp.makeConstraints { make in

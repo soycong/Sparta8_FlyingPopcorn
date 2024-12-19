@@ -45,13 +45,11 @@ class SigninViewController: UIViewController, SigninViewDelegate {
     }
     
     func moveToMain() {
-        
-        print(UserData.loginedUser)
-        
-        let movieNetwork = MovieNetwork(network: Network<MovieListModel>(endPoint: "https://api.themoviedb.org/3"))
+        // 데이터 체크
+        print("family-name: \(String(describing: UserData.loginedUser.familyName)), name: \(String(describing: UserData.loginedUser.name)), email: \(String(describing: UserData.loginedUser.email)), tickets: \(UserData.loginedUser.tickets)")
 
+        let movieNetwork = MovieNetwork(network: Network<MovieListModel>(endPoint: "https://api.themoviedb.org/3"))
         let tabBarViewController = BottomTabbarViewController(movieNetwork: movieNetwork)
-        
         if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
             sceneDelegate.window?.rootViewController = tabBarViewController
         }

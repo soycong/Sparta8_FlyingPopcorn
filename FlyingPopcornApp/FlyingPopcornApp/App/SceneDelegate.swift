@@ -28,6 +28,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             // 저장된 사용자 정보로 UserData 업데이트
             UserDefaultsHelper.userDefaultsHelper.loadUserData(email: userEmail)
             
+            // 데이터 체크
+            print("family-name: \(String(describing: UserData.loginedUser.familyName)), name: \(String(describing: UserData.loginedUser.name)), email: \(String(describing: UserData.loginedUser.email)), tickets: \(UserData.loginedUser.tickets)")
+            
             // 자동 로그인 -> 메인 화면으로 이동
             let tabBarViewController = BottomTabbarViewController(movieNetwork: movieNetwork)
             window?.rootViewController = tabBarViewController
