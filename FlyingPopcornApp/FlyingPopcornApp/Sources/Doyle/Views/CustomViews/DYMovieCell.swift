@@ -124,6 +124,5 @@ final class DYMovieCell: UICollectionViewCell {
         titleLabel.text = movie.title
         genreLabel.text = movie.genres.prefix(2).joined(separator: ", ") // Genres에서 앞의 2개만 표시
         runtimeLabel.text = "\(movie.runtime) min"
-        
     }
 }

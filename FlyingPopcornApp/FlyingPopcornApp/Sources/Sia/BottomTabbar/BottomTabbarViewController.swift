@@ -8,6 +8,16 @@
 import UIKit
 
 final class BottomTabbarViewController: UITabBarController {
+    private let movieNetwork: MovieNetwork
+    
+    init(movieNetwork: MovieNetwork) {
+        self.movieNetwork = movieNetwork
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,18 +39,18 @@ private extension BottomTabbarViewController {
             .foregroundColor: UIColor.gray
         ]
         appearanceTabbar.stackedLayoutAppearance.selected.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "FPRed")!
+            .foregroundColor: UIColor.fpRed
         ]
         
         // 탭바 아이콘 색상 설정
-        appearanceTabbar.stackedLayoutAppearance.selected.iconColor = UIColor(named: "FPRed")
+        appearanceTabbar.stackedLayoutAppearance.selected.iconColor = UIColor.fpRed
         
         tabBar.standardAppearance = appearanceTabbar
         tabBar.scrollEdgeAppearance = appearanceTabbar
     }
     
     func setupTabBarItem() {
-        let homeVC = HomeViewController()
+        let homeVC = HomeViewController(movieNetwork: movieNetwork)
         homeVC.tabBarItem = UITabBarItem(title: "Home",
                                          image: UIImage(named: "icHomeOff"),
                                          selectedImage: UIImage(named: "icHomeOff"))
