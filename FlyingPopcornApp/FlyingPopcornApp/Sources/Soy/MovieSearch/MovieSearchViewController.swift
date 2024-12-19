@@ -42,7 +42,7 @@ final class MovieSearchViewController: UIViewController {
     
     // API에서 영화 목록 가져오기
     private func fetchMovies() {
-        movieNetwork?.getUpcomingMovies { [weak self] result in
+        movieNetwork?.getNowPlayingList { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let movieList):
