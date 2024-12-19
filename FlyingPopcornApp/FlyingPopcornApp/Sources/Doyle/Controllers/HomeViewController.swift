@@ -228,14 +228,17 @@ extension HomeViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // 선택된 영화 가져오기
+        let selectedMovie: Movie
+        
         if indexPath.section == 1 {
-            let selectedMovie = filteredNowShowingMovies[indexPath.item]
-            let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie)
-            navigationController?.pushViewController(detailVC, animated: true)
-        } else if indexPath.section == 2 {
-            let selectedMovie = filteredComingSoonMovies[indexPath.item]
-            let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie)
-            navigationController?.pushViewController(detailVC, animated: true)
+            selectedMovie = filteredNowShowingMovies[indexPath.item]
+        } else {
+            selectedMovie = filteredComingSoonMovies[indexPath.item]
         }
+        
+        // MovieDetailViewController로 영화 데이터 전달
+        let detailVC = MovieDetailViewController(movieNetwork: movieNetwork, movie: selectedMovie) // 생성자 주입
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
