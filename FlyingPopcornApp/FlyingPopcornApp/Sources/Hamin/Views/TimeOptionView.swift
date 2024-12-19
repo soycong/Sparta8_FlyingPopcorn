@@ -11,7 +11,7 @@ import SnapKit
 
 final class TimeOptionView: UIView {
     
-    var selectedTime: UIButton?
+    var selectedTime: DateButton?
     
     private let timeOptionTitle = UILabel().then {
         $0.text = "상영 시간"
@@ -64,10 +64,15 @@ final class TimeOptionView: UIView {
         timeOptionCollectionView.reloadData()
     }
     
+    func resetCells() {
+        selectedTime?.backgroundColor = .available
+        selectedTime?.tintColor = .availableText
+    }
+    
 }
 
 extension TimeOptionView: TimeOptionCellDelegate {
-    func timeOptionTapped(_ sender: UIButton) {
+    func timeOptionTapped(_ sender: DateButton) {
         guard let title = sender.titleLabel?.text else { return }
         
         print("tapped: \(title)")

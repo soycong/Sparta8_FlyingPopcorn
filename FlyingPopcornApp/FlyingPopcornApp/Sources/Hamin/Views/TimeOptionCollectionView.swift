@@ -30,7 +30,7 @@ final class TimeOptionCollectionView: UICollectionView {
 }
 
 protocol TimeOptionCellDelegate: AnyObject {
-    func timeOptionTapped(_ sender: UIButton)
+    func timeOptionTapped(_ sender: DateButton)
 }
 
 final class TimeOptionCell: UICollectionViewCell {
@@ -73,7 +73,7 @@ final class TimeOptionCell: UICollectionViewCell {
     }
     
     // 
-    @objc private func onTap(_ sender: UIButton) {
+    @objc private func onTap(_ sender: DateButton) {
         
         delegate?.timeOptionTapped(sender)
         
@@ -88,7 +88,7 @@ extension UIColor {
     static let unavailable = UIColor.fp200
     static let selected = UIColor.fpRed
 
-    static let availableText = UIColor.fp300
+    static let availableText = UIColor.fp500
     static let unavailableText = UIColor.fp50
     static let selectedText = UIColor.fp00
 }
