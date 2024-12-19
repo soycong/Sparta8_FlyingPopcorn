@@ -57,7 +57,7 @@ private extension BottomTabbarViewController {
                                             image: UIImage(named: "icHomeOff"),
                                             selectedImage: UIImage(named: "icHomeOff"))
         
-        let movieSearchVC = MovieSearchViewController()
+        let movieSearchVC = MovieSearchViewController(movieNetwork: movieNetwork)
         let searchNavVC = UINavigationController(rootViewController: movieSearchVC)
         searchNavVC.tabBarItem = UITabBarItem(title: "Search",
                                               image: UIImage(named: "icSearchOff"),
