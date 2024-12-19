@@ -15,12 +15,12 @@ final class UserData {
     private(set) var name: String?
     private(set) var email: String?
     private(set) var password: String?
-    private(set) var tickets: Ticket?
+    private(set) var tickets: [Ticket] = []
     
     // 외부 초기화 방지
     private init() {}
     
-    func updateUserInfo(familyName: String, name: String, email: String, password: String, tickets: Ticket) {
+    func updateUserInfo(familyName: String, name: String, email: String, password: String, tickets: [Ticket]) {
         self.familyName = familyName
         self.name = name
         self.email = email
@@ -34,6 +34,6 @@ final class UserData {
         name = nil
         email = nil
         password = nil
-        tickets = nil
+        tickets = []
     }
 }
