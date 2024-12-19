@@ -33,11 +33,11 @@ final class SignSwitchLabel: UIView {
         }
         
         questionLabel.text = question
-        questionLabel.textColor = UIColor(named: "150")
+        questionLabel.textColor = .fp200
         questionLabel.font = .systemFont(ofSize: 14)
         
         switchButton.setTitle(buttonTitle, for: .normal)
-        switchButton.setTitleColor(UIColor(named: "FPRed"), for: .normal)
+        switchButton.setTitleColor(.fpRed, for: .normal)
         switchButton.titleLabel?.font = .systemFont(ofSize: 14)
         
         questionLabel.snp.makeConstraints { make in

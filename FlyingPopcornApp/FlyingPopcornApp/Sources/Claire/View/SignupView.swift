@@ -100,31 +100,26 @@ final class SignupView: UIView {
     }
     
     private func checkIsEmpty(user: UserData) -> Bool {
-        return user.familyName.isEmpty ||
-               user.name.isEmpty ||
-               user.email.isEmpty ||
-               user.password.isEmpty
+        return user.familyName?.isEmpty ?? true ||
+               user.name?.isEmpty ?? true ||
+               user.email?.isEmpty ?? true ||
+               user.password?.isEmpty ?? true
     }
     
     @objc private func saveUser() {
-        let user = UserData(
-            familyName: familyNameTextField.text ?? "",
-            name: nameTextField.text ?? "",
-            email: emailTextField.text ?? "",
-            password: passwordTextField.text ?? ""
-        )
+        let user = UserData.loginedUser
         
-        // 1. 입력 정보 값이 비어있는 경우
+        // 1. 입력 정보 값이 비어있는 경우 (+ nil 체크)
         if checkIsEmpty(user: user) {
             showAlert?("가입 오류", "모든 항목을 기입해주세요.")
             
         // 2. 유효하지 않은 이메일일 경우
-        } else if !emailTextField.isValidEmail(email: user.email) {
+        } else if !emailTextField.isValidEmail(email: user.email!) {
             showAlert?("이메일 오류", "올바른 이메일을 입력해주세요.")
             
         // 3. 유저 정보 저장
         } else {
-            UserDefaultsHelper().saveUserData(user: user)
+            UserDefaultsHelper.userDefaultsHelper.saveUserData(user: user)
             // TODO: 저장 되었을 경우 화면 이동
             showAlert?("테스트", "저장완료.")
         }

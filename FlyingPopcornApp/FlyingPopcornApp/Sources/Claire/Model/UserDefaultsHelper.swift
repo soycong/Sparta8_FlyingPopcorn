@@ -7,7 +7,10 @@
 
 import Foundation
 
-struct UserDefaultsHelper {
+final class UserDefaultsHelper {
+    // 싱글톤으로 사용할 헬퍼
+    static let userDefaultsHelper = UserDefaultsHelper()
+    
     private let userKey = "userData"
     private let familyNameKey = "familyName"
     private let nameKey = "name"
@@ -16,21 +19,23 @@ struct UserDefaultsHelper {
     private let ticketsKey = "tickets"
     private let defaults = UserDefaults.standard
     
+    // 외부 초기화 방지
+    private init() {}
 
     func saveUserData(user: UserData) {
-
         var userDictionary = getUserDictionary()
         
+        guard let email = user.email else { return }
+        
         let userData: [String: Any] = [
-            familyNameKey: user.familyName,
-            nameKey: user.name,
-            emailKey: user.email,
-            passwordKey: user.password,
-//            ticketsKey: user.tickets
+            familyNameKey: user.familyName ?? "",
+            nameKey: user.name ?? "",
+            emailKey: email,
+            passwordKey: user.password ?? "",
+            ticketsKey: user.tickets as Any
         ]
         
-        userDictionary[user.email] = userData
-        
+        userDictionary[email] = userData
         defaults.set(userDictionary, forKey: userKey)
     }
     
@@ -50,5 +55,4 @@ struct UserDefaultsHelper {
         }
         return [:]
     }
-
 }
