@@ -8,7 +8,6 @@
 import UIKit
 
 final class MyPageViewController: UIViewController {
-    //private let userInformationView = UserInformationView()
     private let myPageView = MyPageView()
     private var tickets: [Ticket] = []
     

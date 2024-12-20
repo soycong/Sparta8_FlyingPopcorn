@@ -76,11 +76,9 @@ final class UserInformationView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .fp00
-        //self.layer.cornerRadius = 16
         
         configureUI()
         configureConstraints()
-        //configureTapGesture()
         configureButton()
     }
     
