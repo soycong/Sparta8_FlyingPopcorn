@@ -37,7 +37,7 @@ final class MyPageViewController: UIViewController {
 }
 
 extension MyPageViewController: MyPageViewDelegate {
-
+    
     private func loadTickets() { //변경 되었다면 업데이트
         let oldCount = tickets.count
         let newTickets = Tickets.bookedTickets
@@ -65,6 +65,12 @@ extension MyPageViewController {
     private func updateUserInformation() {
         let userData = UserData.shared
         myPageView.updateUserInformation(with: userData)
+        
+        if userData.email == nil {
+            tickets = []
+            Tickets.bookedTickets = []
+            myPageView.reloadData()
+        }
     }
 }
 
