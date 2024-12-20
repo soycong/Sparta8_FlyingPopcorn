@@ -93,4 +93,28 @@ extension MyPageViewController: MyPageViewLoginDelegate {
             
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func myPageViewDidRequestLogOut() {
+        let alert = UIAlertController(title: "로그아웃 하시겠습니까?", message: "",
+                                      preferredStyle: .alert)
+                
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+            print("확인 버튼 누름")
+            
+            // 로그인 화면으로 이동
+            let signInVC = SigninViewController()
+            let signInNavController = UINavigationController(rootViewController: signInVC)
+            signInNavController.modalPresentationStyle = .fullScreen
+            
+            // 현재 윈도우 가져와서 루트 변경
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? UIWindowSceneDelegate,
+               let window = sceneDelegate.window {
+                window?.rootViewController = signInNavController
+                window?.makeKeyAndVisible()
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: nil))
+            
+        self.present(alert, animated: true, completion: nil)
+    }
 }

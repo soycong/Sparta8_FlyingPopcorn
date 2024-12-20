@@ -12,6 +12,7 @@ import Then
 
 protocol UserInformationViewDelegate: AnyObject {
     func userInformationViewDidTapForLogin()
+    func userInformationViewDidTapForLogOut()
 }
 
 final class UserInformationView: UIView {
@@ -40,7 +41,7 @@ final class UserInformationView: UIView {
     }
     
     private let logInOutButton = UIButton().then {
-        $0.setTitleColor(.blue, for: .normal)
+        $0.tintColor = .fp900
         $0.backgroundColor = .clear
         $0.layer.cornerRadius = 8
     }
@@ -153,7 +154,7 @@ extension UserInformationView {
             delegate?.userInformationViewDidTapForLogin()
         } else {
             UserData.shared.clearUserData()
-            delegate?.userInformationViewDidTapForLogin()
+            delegate?.userInformationViewDidTapForLogOut()
         }
     }
 }

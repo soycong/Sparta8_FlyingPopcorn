@@ -13,6 +13,7 @@ import Then
 //로그인 화면 없을 경우 델리게이트
 protocol MyPageViewLoginDelegate: AnyObject {
     func myPageViewDidRequestLogin()
+    func myPageViewDidRequestLogOut()
 }
 
 protocol MyPageViewDelegate: AnyObject {
@@ -135,5 +136,9 @@ extension MyPageView {
 extension MyPageView: UserInformationViewDelegate {
     func userInformationViewDidTapForLogin() {
         loginDelegate?.myPageViewDidRequestLogin()
+    }
+    
+    func userInformationViewDidTapForLogOut() {
+        loginDelegate?.myPageViewDidRequestLogOut()
     }
 }
