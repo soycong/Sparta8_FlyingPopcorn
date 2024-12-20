@@ -59,14 +59,19 @@ final class TimeOptionView: UIView {
         }
     }
     
-    func setTimetable(with table: [Date]) {
-        timeOptions = table
-        timeOptionCollectionView.reloadData()
+    func setTimeOptions(with options: [Date]) {
+        timeOptions = options
     }
     
     func resetCells() {
         selectedTime?.backgroundColor = .available
         selectedTime?.tintColor = .availableText
+        
+        timeOptionCollectionView.reloadData()
+    }
+    
+    func resetTimeOptions() {
+        timeOptions = []
     }
     
 }
@@ -111,7 +116,7 @@ extension TimeOptionView: UICollectionViewDataSource, UICollectionViewDelegate {
                 withReuseIdentifier: TimeOptionCell.id,
                 for: indexPath) as! TimeOptionCell
 
-        cell.setButton(to: timeOptions[indexPath.item].hourAndMinuteOnly, delegate: self)
+        cell.setButton(to: timeOptions[indexPath.item], delegate: self)
 
         return cell
     }

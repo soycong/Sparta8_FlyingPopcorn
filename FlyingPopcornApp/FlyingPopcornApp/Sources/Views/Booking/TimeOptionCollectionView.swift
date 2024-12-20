@@ -38,7 +38,7 @@ final class TimeOptionCell: UICollectionViewCell {
     weak var delegate: TimeOptionCellDelegate?
     static let id = "TimeOptionCell"
     
-    private let timeOptionButton = UIButton(type: .system).then {
+    private let timeOptionButton = DateButton(type: .system).then {
         $0.layer.cornerRadius = 16
         $0.backgroundColor = .available
         $0.tintColor = .availableText
@@ -67,8 +67,9 @@ final class TimeOptionCell: UICollectionViewCell {
         }
     }
     
-    func setButton(to title: String, delegate: TimeOptionCellDelegate?) {
-        timeOptionButton.setTitle(title, for: .normal)
+    func setButton(to date: Date, delegate: TimeOptionCellDelegate?) {
+        timeOptionButton.date = date
+        timeOptionButton.setTitle(date.hourAndMinuteOnly, for: .normal)
         self.delegate = delegate
     }
     
@@ -83,12 +84,4 @@ final class TimeOptionCell: UICollectionViewCell {
 
 
 
-extension UIColor {
-    static let available = UIColor.fpRedLight1
-    static let unavailable = UIColor.fp200
-    static let selected = UIColor.fpRed
 
-    static let availableText = UIColor.fp500
-    static let unavailableText = UIColor.fp50
-    static let selectedText = UIColor.fp00
-}

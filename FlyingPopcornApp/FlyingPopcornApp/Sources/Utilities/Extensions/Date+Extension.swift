@@ -1,59 +1,11 @@
 //
-//  TicketCinemaModel.swift
+//  Date+Extension.swift
 //  FlyingPopcornApp
 //
-//  Created by 김하민 on 12/18/24.
+//  Created by 김하민 on 12/20/24.
 //
 
 import Foundation
-
-struct Tickets {
-    static var bookedTickets: [Ticket] = []
-}
-
-struct Ticket {
-    let movie: Movie
-    let date: Date
-    let format: String
-    let quantity: Int
-}
-
-struct Cinema {
-    static let name: String = "Salt and Butter Popcorn Cinema"
-    static let availableFormat: [String] = ["2D", "3D", "IMAX"]
-    static let schedule: [Date] = [
-        Date.now - TimeInterval(60 * 60 * 3 + 9320),
-        Date.now - TimeInterval(60 * 60 * 2 + 5135),
-        Date.now - TimeInterval(60 * 60),
-        Date.now,
-        Date.now + TimeInterval(60 * 60 * 3 + 1248),
-        Date.now + TimeInterval(60 * 60 * 5 + 3358),
-        Date.now + TimeInterval(60 * 60 * 7 + 7593),
-        
-        Date.now - TimeInterval(60 * 60 * 3 + 9320),
-        Date.now - TimeInterval(60 * 60 * 2 + 5135),
-        Date.now - TimeInterval(60 * 60),
-        Date.now,
-        Date.now + TimeInterval(60 * 60 * 3 + 1248) + TimeInterval(60 * 60 * 24),
-        Date.now + TimeInterval(60 * 60 * 5 + 3358) + TimeInterval(60 * 60 * 24),
-        Date.now + TimeInterval(60 * 60 * 7 + 7593) + TimeInterval(60 * 60 * 24),
-    ]
-    
-    static let scheduleInWeekDays: [Date] = {
-        let calendar = Calendar.current
-        var uniqueDatesByWeekday: [Int: Date] = [:]
-        
-        for date in schedule {
-            let weekday = calendar.component(.weekday, from: date)
-            if uniqueDatesByWeekday[weekday] == nil {
-                uniqueDatesByWeekday[weekday] = date
-            }
-        }
-        print(uniqueDatesByWeekday)
-        return Array(uniqueDatesByWeekday.values)
-    }()
-    
-}
 
 extension Date {
     private static let monthOnlyFormatter = {
@@ -115,4 +67,16 @@ extension Date {
     internal var standard: String {
         return Date.standardFormatter.format(self)
     }
+    
+    static let theDay = {
+        return Date(timeIntervalSinceReferenceDate: 756347400)
+    }()
+    
+    static let oneHour = {
+        return TimeInterval(TimeInterval(60 * 60))
+    }()
+    
+    static let oneDay = {
+        return TimeInterval(TimeInterval(60 * 60 * 24))
+    }()
 }
