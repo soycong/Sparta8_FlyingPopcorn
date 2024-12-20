@@ -226,6 +226,6 @@ extension BookingViewController: DateOptionViewDelegate {
             Calendar.current.isDate(date, inSameDayAs: selectedDate)
         }
         
-        timeOptionView.setTimetable(with: filteredDate)
+        timeOptionView.setTimeOptions(with: filteredDate)
     }
 }

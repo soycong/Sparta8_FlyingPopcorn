@@ -59,14 +59,19 @@ final class TimeOptionView: UIView {
         }
     }
     
-    func setTimetable(with table: [Date]) {
-        timeOptions = table
-        timeOptionCollectionView.reloadData()
+    func setTimeOptions(with options: [Date]) {
+        timeOptions = options
     }
     
     func resetCells() {
         selectedTime?.backgroundColor = .available
         selectedTime?.tintColor = .availableText
+        
+        timeOptionCollectionView.reloadData()
+    }
+    
+    func resetTimeOptions() {
+        timeOptions = []
     }
     
 }
