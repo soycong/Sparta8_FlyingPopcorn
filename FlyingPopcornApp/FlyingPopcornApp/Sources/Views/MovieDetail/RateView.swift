@@ -22,7 +22,7 @@ final class RateView: UIView {
     
     lazy var stackView = UIStackView().then { $0.axis = .horizontal
         $0.spacing = 8
-        $0.alignment = .leading
+        $0.alignment = .center
         $0.distribution = .fillEqually
         $0.backgroundColor = .clear
     }
@@ -67,7 +67,7 @@ final class RateView: UIView {
         
         while starImages.count < maxStars {
             let imageView = UIImageView()
-            imageView.contentMode = .scaleAspectFit
+            imageView.contentMode = .scaleAspectFill
             starImages.append(imageView)
             stackView.addArrangedSubview(imageView)
         }
