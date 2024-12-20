@@ -40,8 +40,8 @@ final class DateOptionCell: UICollectionViewCell {
     private let dateOptionButton = DateButton(type: .system).then {
         $0.layer.cornerRadius = 16
         // TO-DO: get right button colors
-        $0.backgroundColor = .available
-        $0.tintColor = .fp500
+        $0.backgroundColor = .fpClear
+        $0.tintColor = .white
         
         $0.titleLabel?.numberOfLines = 2
         $0.titleLabel?.textAlignment = .center
