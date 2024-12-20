@@ -19,11 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // MovieNetwork 초기화
         let movieNetwork = MovieNetwork(network: Network<MovieListModel>(endPoint: "https://api.themoviedb.org/3"))
-        
-        //        let tabBarViewController = BottomTabbarViewController(movieNetwork: movieNetwork)
-        //        window?.rootViewController = tabBarViewController
-        
-        /// 저장된 유저 체크
+
+        // 저장된 유저 체크
         if let userEmail = UserDefaultsHelper.shared.getCurrentUser() {
             // 저장된 사용자 정보로 UserData 업데이트
             UserDefaultsHelper.shared.loadUserData(email: userEmail)
@@ -35,18 +32,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let tabBarViewController = BottomTabbarViewController(movieNetwork: movieNetwork)
             window?.rootViewController = tabBarViewController
         } else {
-            // 마스터 로그인 저장
-            let masterEmail = "pop@corn.com"
-            let masterPassword = "flying"
-            
-            /// 마스터 계정이 없는 경우에만 생성
-            if !UserDefaultsHelper.shared.checkUserData(email: masterEmail, password: masterPassword).response {
+            // 마스터 계정이 없는 경우에만 생성
+            if !UserDefaultsHelper.shared.checkUserData(email: UserDefaultsHelper.masterEmail, password: UserDefaultsHelper.masterPassword).response {
                 // 마스터 유저 모델 생성
                 UserData.shared.updateUserInfo(
                     familyName: "none",
                     name: "master",
-                    email: "master@pop.com",
-                    password: "1220",
+                    email: UserDefaultsHelper.masterEmail,
+                    password: UserDefaultsHelper.masterPassword,
                     tickets: []
                 )
                 // 마스터 계정 저장후 싱글톤 초기화

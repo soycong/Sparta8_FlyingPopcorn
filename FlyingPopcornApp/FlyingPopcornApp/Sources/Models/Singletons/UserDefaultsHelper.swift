@@ -11,6 +11,10 @@ final class UserDefaultsHelper {
     // 싱글톤으로 사용할 헬퍼
     static let shared = UserDefaultsHelper()
     
+    // 마스터 로그인 저장
+    static let masterEmail = "master@pop.com"
+    static let masterPassword = "1220"
+    
     private let userKey = "userData"
     private let familyNameKey = "familyName"
     private let nameKey = "name"

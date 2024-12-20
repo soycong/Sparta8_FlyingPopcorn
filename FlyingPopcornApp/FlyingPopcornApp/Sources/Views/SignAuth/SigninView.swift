@@ -113,8 +113,10 @@ final class SigninView: UIView {
             switch UserDefaultsHelper.shared.checkUserData(email: email, password: password).response {
             // 3-1. 이메일과 비밀번호 일치
             case true:
-                // 현재 사용자 이메일 저장
-                UserDefaultsHelper.shared.saveCurrentUser(email: email)
+                // 현재 사용자 이메일 저장 (관리자 계정이 아닐때만)
+                if !(email == UserDefaultsHelper.masterEmail) {
+                    UserDefaultsHelper.shared.saveCurrentUser(email: email)
+                }
                 // UserData 업데이트
                 UserDefaultsHelper.shared.loadUserData(email: email)
                 // 화면 이동
