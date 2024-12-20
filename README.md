@@ -91,7 +91,8 @@ Sources/
 ```
 
 ## 🖼️ Preview
-(Coming Soon)
+
+|---|
 
 ## 🏷 Main Features
 #### 로그인/회원가입 화면
