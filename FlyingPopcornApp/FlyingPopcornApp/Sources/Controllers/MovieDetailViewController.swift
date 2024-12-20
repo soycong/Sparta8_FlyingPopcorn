@@ -124,7 +124,7 @@ private extension MovieDetailViewController {
             }
             
             // 취소 버튼 (디테일 화면 스테이..)
-            let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+            let cancelAction = UIAlertAction(title: "취소", style: .destructive)
             
             // 알림창에 액션 추가
             alert.addAction(confirmAction)

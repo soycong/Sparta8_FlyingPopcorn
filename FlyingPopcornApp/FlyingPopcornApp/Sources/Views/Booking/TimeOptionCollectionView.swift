@@ -16,7 +16,7 @@ final class TimeOptionCollectionView: UICollectionView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         self.init(frame: .zero, collectionViewLayout: layout)
-        backgroundColor = .fp50
+        backgroundColor = .fp00
     }
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
