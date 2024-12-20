@@ -188,7 +188,7 @@ final class MovieDetailView: UIView {
         
         scoreLabel.snp.makeConstraints { make in
             make.centerY.equalTo(starView.snp.centerY)
-            make.leading.equalTo(starView.snp.trailing).offset(16)
+            make.leading.equalTo(starView.snp.trailing)
         }
         
         genreView.snp.makeConstraints { make in
