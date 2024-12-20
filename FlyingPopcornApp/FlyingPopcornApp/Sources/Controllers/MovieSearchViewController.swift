@@ -38,7 +38,7 @@ final class MovieSearchViewController: UIViewController {
     
     private func configureUI() {
         title = "Search"
-        view.backgroundColor = .fp00
+        view.backgroundColor = .fp100
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
