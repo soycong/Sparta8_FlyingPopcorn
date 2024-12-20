@@ -43,7 +43,7 @@
 | Name     | GitHub   | Roles    | Main Developments |
 |:--------:| -------- | -------- | ----------------- |
 | 김하민 <br> Hamin Kim | [@dev-hamin-kim](https://github.com/dev-hamin-kim) | Quality Architect <br> Decision Gamemaster | 영화 예매 화면 <br> 영화 예매 처리 모델 |
-| 박시연 <br> Siyeon Park | [@sy0201](https://github.com/sy0201) | Project Coordinator <br> Present Lead | 영화 상세 화면, 하단 탭바 <br> 영화 데이터 네트워크 모델 |
+| 박시연 <br> Siyeon Park | [@sy0201](https://github.com/sy0201) | Project Coordinator <br> Insight Aligner | 영화 상세 화면, 하단 탭바 <br> 영화 데이터 네트워크 모델 |
 | 박채현 <br> Chaehyun Park | [@claire-blue-park](https://github.com/claire-blue-park) | Design Specialist <br> Vibe Energizer | 인트로/로고 디자인, 로그인/회원가입 화면 <br> 회원 정보 관리 모델 |
 | 백서희 <br> Seohui Baek | [@soycong](https://github.com/soycong) | Design Organizer <br> Present Coordinator | 검색 화면, 마이페이지/예매내역 화면 <br> 영화 검색 기능 |
 | 황도일 <br> Doyle Hwang | [@DoyleHWorks](https://github.com/DoyleHWorks) | Team Resource Manager <br> Present Lead | 홈 화면 <br> 팀 리딩, 프로젝트 리소스 관리 |
