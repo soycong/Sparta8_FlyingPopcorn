@@ -39,8 +39,7 @@ final class UserInformationView: UIView {
         $0.textAlignment = .left
     }
     
-    private let editButton = UIButton().then {
-        $0.setTitle("Edit", for: .normal)
+    private let logInOutButton = UIButton().then {
         $0.setTitleColor(.blue, for: .normal)
         $0.backgroundColor = .clear
         $0.layer.cornerRadius = 8
@@ -53,7 +52,7 @@ final class UserInformationView: UIView {
         $0.distribution = .fill
     }
     
-    private lazy var horizontalStackView = UIStackView(arrangedSubviews: [profileImageView, verticalStackView]).then {
+    private lazy var horizontalStackView = UIStackView(arrangedSubviews: [profileImageView, verticalStackView, logInOutButton]).then {
         $0.axis = .horizontal
         $0.spacing = 5
         $0.alignment = .center
@@ -80,7 +79,8 @@ final class UserInformationView: UIView {
         
         configureUI()
         configureConstraints()
-        configureTapGesture()
+        //configureTapGesture()
+        configureButton()
     }
     
     required init?(coder: NSCoder) {
@@ -117,10 +117,10 @@ final class UserInformationView: UIView {
             make.trailing.equalTo(self.verticalStackView.snp.trailing)
         }
         
-        //        editButton.snp.makeConstraints { make in
-        //            make.width.equalTo(profileImageView.snp.height)
-        //            make.trailing.equalTo(self.horizontalStackView.snp.trailing)
-        //        }
+        logInOutButton.snp.makeConstraints { make in
+            make.width.equalTo(profileImageView.snp.height)
+            make.trailing.equalTo(self.horizontalStackView.snp.trailing)
+        }
     }
 }
 
@@ -129,24 +129,30 @@ extension UserInformationView {
     func updateDisplay(name: String, email: String) {
         userNicknameLabel.text = name
         userEmailLabel.text = email
+        
+        logInOutButton.setImage(UIImage(systemName: "rectangle.portrait.and.arrow.right"), for: .normal)
     }
     
     func showLoginRequired() {
         userNicknameLabel.text = "로그인이 필요합니다."
         userEmailLabel.text = ""
+        
+        logInOutButton.setImage(UIImage(systemName: "plus.circle"), for: .normal)
     }
 }
 
-// 탭 하면 로그인 화면으로 이동
 extension UserInformationView {
-    private func configureTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        self.addGestureRecognizer(tapGesture)
-        self.isUserInteractionEnabled = true
+    private func configureButton() {
+        logInOutButton.addTarget(self,
+                                 action: #selector(handleLogInOut),
+                                 for: .touchUpInside)
     }
     
-    @objc private func handleTap() {
+    @objc private func handleLogInOut() {
         if userNicknameLabel.text == "로그인이 필요합니다." {
+            delegate?.userInformationViewDidTapForLogin()
+        } else {
+            UserData.shared.clearUserData()
             delegate?.userInformationViewDidTapForLogin()
         }
     }
