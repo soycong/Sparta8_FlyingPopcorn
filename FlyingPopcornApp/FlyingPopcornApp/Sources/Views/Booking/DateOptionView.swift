@@ -81,8 +81,8 @@ extension DateOptionView: DateOptionCellDelegate {
         
         if let previousButton = selectedDate {
             UIView.animate(withDuration: 0.3) {
-                previousButton.backgroundColor = .available
-                previousButton.tintColor = .fp500
+                previousButton.backgroundColor = .fpClear
+                previousButton.tintColor = .white
             }
         }
         
