@@ -86,7 +86,7 @@ final class RateView: UIView {
     override var intrinsicContentSize: CGSize {
         let starSize: CGFloat = 24
         let spacing: CGFloat = 8 // Space between the stars
-        let width = CGFloat(maxStars) * starSize + CGFloat(maxStars - 1) * spacing
+        let width = CGFloat(maxStars) * starSize + CGFloat(maxStars - 1)
         let height: CGFloat = starSize // Height of one star
         
         return CGSize(width: width, height: height)
