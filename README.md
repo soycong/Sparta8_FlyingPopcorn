@@ -52,7 +52,7 @@
 - **시작일**: 2024/12/13 (금)
 - **종료일**: 2024/12/20 (금)
 
-## 📂 Folder Organization Map
+## 📂 Folder Organization
 ```
 App/
 ├── AppDelegate, Info, LaunchScreen
@@ -91,7 +91,6 @@ Sources/
 ```
 
 ## 🖼️ Preview
-
 |![FlyingPopcorn_Preview_002_resized](https://github.com/user-attachments/assets/5c8c9082-07c1-4771-8001-5831d2d63cc5)|
 |---|
 
