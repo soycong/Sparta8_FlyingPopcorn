@@ -180,8 +180,8 @@ final class BookingViewController: UIViewController {
     
     @objc private func onTap() {
         print("confirmButton Tapped")
-        guard let time = dateOptionView.selectedDate?.date,
-              let format = formatOptionView.selectedFormat?.titleLabel?.text else { return }
+        guard let time = timeOptionView.selectedTime?.date,
+              let format = formatOptionView.selectedFormat?.titleLabel?.text else { return print("error on confirm button") }
         let quantity = quantityOptionView.selectedQuantity.description
         
         // TO-DO: alert창 띄워서 예매 목록 or 홈화면으로 가게 선택

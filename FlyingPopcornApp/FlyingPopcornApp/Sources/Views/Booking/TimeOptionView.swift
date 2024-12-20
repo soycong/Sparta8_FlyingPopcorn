@@ -116,7 +116,7 @@ extension TimeOptionView: UICollectionViewDataSource, UICollectionViewDelegate {
                 withReuseIdentifier: TimeOptionCell.id,
                 for: indexPath) as! TimeOptionCell
 
-        cell.setButton(to: timeOptions[indexPath.item].hourAndMinuteOnly, delegate: self)
+        cell.setButton(to: timeOptions[indexPath.item], delegate: self)
 
         return cell
     }
