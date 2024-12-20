@@ -24,6 +24,11 @@ class StrokeTextField: UITextField {
     private func setupTextField() {
         font = UIFont.systemFont(ofSize: 14)
         backgroundColor = .white
+        
+        autocorrectionType = .no                     // 자동 수정 활성화 여부
+        spellCheckingType = .no                      // 맞춤법 검사 활성화 여부
+        autocapitalizationType = .none               // 자동 대문자 활성화 여부
+        
         attributedPlaceholder = NSAttributedString(string: hintText,
                                                    attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
 
