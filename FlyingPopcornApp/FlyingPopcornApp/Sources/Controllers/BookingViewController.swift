@@ -121,7 +121,8 @@ final class BookingViewController: UIViewController {
     
     private func setConstraints() {
         confirmButton.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview().inset(24)
+            make.leading.trailing.equalToSuperview().inset(24)
+            make.bottom.equalToSuperview().inset(48)
             make.height.equalTo(48)
         }
         

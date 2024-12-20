@@ -140,7 +140,8 @@ final class MovieDetailView: UIView {
         }
         
         bookingButton.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview().inset(24)
+            make.leading.trailing.equalToSuperview().inset(24)
+            make.bottom.equalToSuperview().inset(48)
             make.height.equalTo(48)
         }
         
@@ -264,7 +265,6 @@ final class MovieDetailView: UIView {
         } else {
             scoreLabel.text = "Invalid rating"
         }
-        //runtimeLabel.text = "Runtime: \(movie.runtime) min"
         releaseDateLabel.text = movie.releaseDate
         descriptionLabel.text = movie.overview
         
