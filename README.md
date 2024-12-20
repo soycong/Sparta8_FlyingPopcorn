@@ -45,12 +45,50 @@
 | 김하민 <br> Hamin Kim | [@dev-hamin-kim](https://github.com/dev-hamin-kim) | Quality Architect <br> Decision Gamemaster | 영화 예매 화면 <br> 영화 예매 처리 모델 |
 | 박시연 <br> Siyeon Park | [@sy0201](https://github.com/sy0201) | Project Coordinator <br> Present Lead | 영화 상세 화면, 하단 탭바 <br> 영화 데이터 네트워크 모델 |
 | 박채현 <br> Chaehyun Park | [@claire-blue-park](https://github.com/claire-blue-park) | Design Specialist <br> Vibe Energizer | 인트로/로고 디자인, 로그인/회원가입 화면 <br> 회원 정보 관리 모델 |
-| 백서희 <br> Seohui Baek | [@soycong](https://github.com/soycong) | Design Organizer <br> Present Coordinator | 검색 화면, 마이페이지/예매내역 화면 <br> 영화 검색 모델 |
+| 백서희 <br> Seohui Baek | [@soycong](https://github.com/soycong) | Design Organizer <br> Present Coordinator | 검색 화면, 마이페이지/예매내역 화면 <br> 영화 검색 기능 |
 | 황도일 <br> Doyle Hwang | [@DoyleHWorks](https://github.com/DoyleHWorks) | Team Resource Manager <br> Present Lead | 홈 화면 <br> 팀 리딩, 프로젝트 리소스 관리 |
 
 ## ⏰ Project Scope
-- **시작일**: 2024/12/13
-- **종료일**: 2024/12/20
+- **시작일**: 2024/12/13 (금)
+- **종료일**: 2024/12/20 (금)
+
+## 📂 Folder Organization Map
+```
+App/
+├── AppDelegate, Info, LaunchScreen
+└── SceneDelegate -> 데이터 네트워크 모델 인스턴스 생성, 회원/비회원 확인
+Resources/
+├── Assets, Colors
+└── Secrets -> 암호화된 API Key (.gitignore)
+Sources/
+├── Controllers/
+│   ├── BookingViewController -> 예매 화면
+│   ├── BottomTabbarViewController -> 하단 탭바
+│   ├── HomeViewController -> 홈 화면
+│   ├── MovieDetailViewController -> 영화 상세 화면
+│   ├── MovieSearchViewController -> 영화 검색 화면
+│   ├── MyPageViewController -> 마이페이지 화면
+│   ├── SigninViewController -> 로그인 화면
+│   └── SignupSignupViewController -> 회원가입 화면
+├── Models/
+│   ├── Booking/ 
+│   │   ├── CinemaModel, TicketModel -> 영화 예매 모델
+│   ├── Network/ 
+│   │   ├── Entities/ Movie, MovieResult
+│   │   └── MovieNetwork, Network, NetworkMonitor, NetworkProvider -> 영화 데이터 네트워크 모델
+│   └── Singletons/ 
+│       └── UserData, UserDefaultsHelper -> UserDefaults를 통한 회원 정보 및 예매 내역 관리
+├── Utilities/
+│   ├── Extensions/ ...
+│   └── DummyMovieData
+└── Views/
+    ├── Booking/ ...
+    ├── Home/ ...
+    ├── MovieDetail/ ...
+    ├── MovieSearch/ ...
+    ├── MovieSearch/ ...
+    └── SignAuth/ ...
+```
 
 ## 🖼️ Preview
 (Coming Soon)
@@ -82,12 +120,24 @@
 
 ## ✨ Considerations
 #### 회원/비회원 플로우
-- 회원 정보 유무 여부에 따라 다른 플로우를 제공
-- 비회원은 예매하기와 마이페이지에서 로그인 페이지로 리다이렉트됨
+- 회원 정보 유무에 따라 다른 플로우를 제공
+- 마이페이지에서 로그아웃 버튼을 제공
 
-#### UI/UX 관련
-- 로그인/회원가입 화면은 키보드 패널이 주요 컴포넌트를 가리지 않도록 설계
-- Alert을 통해 예외 처리를 위한 안내, 뒤로 가기 버튼을 제공
+#### 로그인/회원가입 UX
+- 키보드 패널이 주요 컴포넌트를 가리지 않도록 설계
+- 입력란에 자동 완성, 맞춤법 검사를 하지 않도록 설정
+
+#### Alert 기능을 통한 UX 개선
+- 비회원일 시, 예매하기 버튼과 마이페이지에서 로그인 화면 이동 옵션을 제공
+- 로그인/회원가입 화면, 예매 화면 등에서 예외 처리 및 사용자 안내에 활용
+
+#### 개발자 경험 개선
+- MVC 아키텍처를 반영한 파일 및 폴더 구조
+- 마스터 계정: 손쉽게 회원 플로우를 체크할 수 있음
+
+#### API Key 암호화
+- .gitignore로 API Key가 GitHub에 노출되지 않도록 설정
+- 기존에 노출되어버린 API Key는 프로젝트에서 더 이상 사용하지 않도록 폐기
 
 ## 📦 How to Install  
 1. Clone this repository:  
