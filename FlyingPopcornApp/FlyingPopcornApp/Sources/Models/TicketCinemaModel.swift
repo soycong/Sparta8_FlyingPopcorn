@@ -71,7 +71,7 @@ struct Cinema {
         Date.theDay + (Date.oneDay * 5) + (Date.oneHour * 11),
         
         // MARK: - Date data for D+5
-        Date.theDay + (Date.oneDay * 6), // 2024-12-24 09:30:00 KST
+        Date.theDay + (Date.oneDay * 6), // 2024-12-26 09:30:00 KST
         Date.theDay + (Date.oneDay * 6) + (Date.oneHour * 2),
         Date.theDay + (Date.oneDay * 6) + (Date.oneHour * 4),
         Date.theDay + (Date.oneDay * 6) + (Date.oneHour * 6),
