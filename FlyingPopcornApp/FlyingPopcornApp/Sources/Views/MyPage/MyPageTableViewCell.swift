@@ -16,25 +16,25 @@ final class MyPageTableViewCell: UITableViewCell {
     }
     
     private let movieTitleLabel = UILabel().then {
-        $0.font = .boldSystemFont(ofSize: 20)
+        $0.font = .boldSystemFont(ofSize: 22)
         $0.textColor = .fp900
         $0.textAlignment = .left
     }
     
     private let movieGenreLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 14)
+        $0.font = .systemFont(ofSize: 18)
         $0.textColor = .fp900
         $0.textAlignment = .left
     }
     
     private let movieRunTimeLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 14)
+        $0.font = .systemFont(ofSize: 18)
         $0.textColor = .fp900
         $0.textAlignment = .left
     }
     
-    private let movieScheduleLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 14)
+    private let ticketNumberLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 18)
         $0.textColor = .fp900
         $0.textAlignment = .left
     }
@@ -46,7 +46,7 @@ final class MyPageTableViewCell: UITableViewCell {
         $0.distribution = .fill
     }
     
-    private lazy var scheduleInfoStackView = UIStackView(arrangedSubviews: [movieRunTimeLabel, movieScheduleLabel]).then {
+    private lazy var scheduleInfoStackView = UIStackView(arrangedSubviews: [movieRunTimeLabel, ticketNumberLabel]).then {
         $0.axis = .vertical
         $0.spacing = 5
         $0.alignment = .leading
@@ -110,9 +110,9 @@ final class MyPageTableViewCell: UITableViewCell {
             make.trailing.equalToSuperview().inset(15)
         }
         
-        [movieTitleLabel, movieGenreLabel, movieRunTimeLabel, movieScheduleLabel].forEach { label in
+        [movieTitleLabel, movieGenreLabel, movieRunTimeLabel, ticketNumberLabel].forEach { label in
             label.snp.makeConstraints { make in
-                make.height.equalTo(label == movieTitleLabel ? 20 : 14)
+                make.height.equalTo(label == movieTitleLabel ? 22 : 18)
             }
         }
     }
@@ -128,7 +128,7 @@ extension MyPageTableViewCell {
         
         movieTitleLabel.text = ticket.movie.title
         movieGenreLabel.text = "\(ticket.movie.genres.first ?? "") · \(ticket.format)"
-        movieRunTimeLabel.text = ticket.date.formatted(date: .long, time: .omitted)
-        movieScheduleLabel.text = ticket.date.hourAndMinuteOnly
+        movieRunTimeLabel.text = ticket.date.standard
+        ticketNumberLabel.text = "\(ticket.quantity)매"
     }
 }
