@@ -65,7 +65,7 @@ private extension BottomTabbarViewController {
         
         let myPageVC = MyPageViewController()
         let myPageNavVC = UINavigationController(rootViewController: myPageVC)
-        myPageNavVC.tabBarItem = UITabBarItem(title: "My",
+        myPageNavVC.tabBarItem = UITabBarItem(title: "MyPage",
                                               image: UIImage(named: "icMyOff"),
                                               selectedImage: UIImage(named: "icMyOff"))
         
